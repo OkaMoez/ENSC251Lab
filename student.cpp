@@ -87,8 +87,8 @@ std::ostream &operator<<( ostream &output, const InternationalStudent& student) 
            << " from " << student.country()
            << " has a CGPA of " << student.cgpa()
            << ", and a research score of " << student.researchscore()
-           << endl
-           << "    TOELF scores are as follows: Reading " << student.reading()
+           << endl << "                    "
+           << "     [TOELF scores] Reading: " << student.reading()
            << ", Listening: " << student.listening()
            << ", Speaking: " << student.speaking()
            << ", Writing: " << student.writing()

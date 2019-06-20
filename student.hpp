@@ -2,7 +2,7 @@
 #ifndef STUDENT_HPP
 #define STUDENT_HPP
 #include <string> //you will have to use string in C++
-using namespace std; //use namespace std
+using namespace std;
 
 class Student
 {
@@ -107,4 +107,4 @@ public:
 
 std::ostream& operator<<( ostream& output, const InternationalStudent& student);
 
-#endif
+#endif //STUDENT_HPP

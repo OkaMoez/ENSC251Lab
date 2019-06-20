@@ -5,7 +5,8 @@
 #include <sstream> //formatted string processing
 #include <cstdlib> //atof and atoi
 #include <vector> // vectors for holding student objects
-#include "student.hpp" // header file from Lab1
+#include "functions.hpp" // custom functions for Lab 2
+#include "student.hpp" // header file from Lab 1
 
 int main(){
     string line; //Read the domestic-stu.txt file and exit if failed
@@ -119,7 +120,7 @@ int main(){
         writing = atoi(s_writing.c_str());
 
         // create new instance of InternationalStudent, add to vector, increment count
-        InternationalStudent currentIStudent(firstname, "N/A", cgpa, researchscore, country, reading, speaking, listening, writing);
+        InternationalStudent currentIStudent(firstname, lastname, cgpa, researchscore, country, reading, speaking, listening, writing);
         international_students.push_back(currentIStudent);
         unsigned i_count = unsigned(international_student_count++);
 
@@ -132,35 +133,9 @@ int main(){
     // close the file
     internationalFile.close();
 
+    // at this point data has populated the vectors and is ready to use
+    // now request user input
+    start_sort(domestic_students ,international_students);
+
     return 0;
-}
-
-int compare_firstname(string student_a, string student_b){
-    // compare results, 0 is =, -1 is <, 1 is > (alphabetically same case)
-    return student_a.compare(student_b);
-}
-
-int compare_lastname(string student_a, string student_b){
-    // compare results, 0 is =, -1 is <, 1 is > (alphabetically same case)
-    return student_a.compare(student_b);
-}
-
-int compare_cgpa(int student_a, int student_b){
-    // compare results, 0 is =, -1 is <, 1 is >
-    if (student_a == student_b)
-        return 0;
-    else if (student_a < student_b)
-        return (-1);
-    else
-        return 0;
-}
-
-int compare_researchscore(int student_a, int student_b){
-    // compare results, 0 is =, -1 is <, 1 is >
-    if (student_a == student_b)
-        return 0;
-    else if (student_a < student_b)
-        return (-1);
-    else
-        return 0;
 }

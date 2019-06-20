@@ -20,12 +20,20 @@ Note: Lost Marks
     Need to test future builds.
 0.5 - used inheritance instead of getters/setters to link ToelfScore to students
     Fixed.
+Forgot some out-of-place code (vectors, blank fields, etc)
+    Cleaned in Lab_2 [20/06/2019]
 
 ------------------
 Lab 2 Requirements
 ------------------
-1. Inplement arrays/vectors
-2. Comparator functions
-3. Overload << opperator
-4. Sort based on user input, single field
-5.
+1. Inplement arrays/vectors [COMPLETE]
+2. Comparator functions [IN PROGRESS]
+3. Overload << opperator [COMPLETE]
+4. Sort based on user input, single field [IN PROGRESS]
+5. Overall sort [IN PROGRESS]
+6. Unit test [IN PROGRESS]
+7. Comments [IN PROGRESS]
+
+Note:
+Using Templates to handle differing vector inputs, but lots of repeats
+    Maybe look for a cleaner way of handling ~10x repeated templates
