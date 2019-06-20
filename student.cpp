@@ -58,7 +58,17 @@ void ToelfScore::set_reading(int reading) { reading_ = reading; update_total(); 
 void ToelfScore::set_listening(int listening) { listening_ = listening; update_total(); }
 void ToelfScore::set_speaking(int speaking) { speaking_ = speaking; update_total(); }
 void ToelfScore::set_writing(int writing) { writing_ = writing; update_total(); }
-void ToelfScore::update_total() { total_ = reading_ + listening_ + speaking_ + writing_; }
+void ToelfScore::update_total() {
+    total_ = reading_ + listening_ + speaking_ + writing_;
+}
+void ToelfScore::update_requirements(){
+    int min = 20;
+    int min_total = 93;
+    if ((reading() < min) || (listening() < min) || (speaking() < min) || (writing() < min) || (total() < min_total))
+        meets_requirements_ = false;
+    else
+        meets_requirements_ = true;
+}
 
 // InternationalStudent constructor
 InternationalStudent::InternationalStudent() { InternationalStudent("empty", "empty", 0.0, 0, "empty", 0, 0, 0, 0); }

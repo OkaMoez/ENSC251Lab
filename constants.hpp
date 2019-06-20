@@ -14,5 +14,6 @@ const int WRITING = 10;
 const int TOELF_TOTAL = 11;
 const int DOMESTIC = 12;
 const int INTERNATIONAL = 13;
+const int OVERALL = 14;
 
 #endif // CONSTANTS_HPP

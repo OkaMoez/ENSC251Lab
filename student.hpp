@@ -27,13 +27,13 @@ public:
     void set_researchscore(int researchscore);
 
     template <class T>
-    friend int compare_firstname(const T& student_a, const T& student_b);
+    friend int compare_firstname(const T& student1, const T& student2);
     template <class T>
-    friend int compare_lastname(const T& student_a, const T& student_b);
+    friend int compare_lastname(const T& student1, const T& student2);
     template <class T>
-    friend int compare_cgpa(const T& student_a, const T& student_b);
+    friend int compare_cgpa(const T& student1, const T& student2);
     template <class T>
-    friend int compare_researchscore(const T& student_a, const T& student_b);
+    friend int compare_researchscore(const T& student1, const T& student2);
 };
 
 class DomesticStudent : public Student
@@ -47,6 +47,7 @@ public:
 		int researchscore, string province);
 
     string province() const { return province_; }
+    string location() const { return province_; }
 
     void set_province(string province);
 
@@ -63,6 +64,7 @@ private:
 	int speaking_;
 	int writing_;
 	int total_;
+    bool meets_requirements_;
 
 public:
     ToelfScore();
@@ -73,12 +75,16 @@ public:
     int speaking() const { return speaking_; }
     int writing() const { return writing_; }
     int total() const { return total_; }
+    int check_requirements() const { return meets_requirements_; }
 
 	void set_reading(int reading);
     void set_listening(int listening);
     void set_speaking(int speaking);
 	void set_writing(int writing);
 	void update_total();
+    void update_requirements();
+
+
 };
 
 class InternationalStudent : public Student
@@ -94,11 +100,13 @@ public:
         int speaking, int writing);
 
 	string country() const { return country_; }
+    string location() const { return country_; }
     int reading() const { return my_toelf_.reading(); }
     int listening() const { return my_toelf_.listening(); }
     int speaking() const { return my_toelf_.speaking(); }
     int writing() const { return my_toelf_.writing(); }
     int total() const { return my_toelf_.total(); }
+    int check_requirements() const { return my_toelf_.check_requirements(); }
 
     void set_country(string country);
     void set_reading(int reading);

@@ -21,11 +21,9 @@ void start_sort(vector<DomesticStudent> &D_vector,
 
         // first letters are used to forgive typos
         if ((user_input.at(0) == 'D') | (user_input.at(0) == 'd')) {
-            //valid_selection = true; // set loop to end and call sort function
             get_sort_method(DOMESTIC, D_vector);
         }
         else if ((user_input.at(0) == 'I') | (user_input.at(0) == 'i')){
-            //valid_selection = true; // set loop to end and call sort function
             get_sort_method(INTERNATIONAL, I_vector);
         }
         else if ((user_input.at(0) == 'Q') | (user_input.at(0) == 'q'))
@@ -58,23 +56,18 @@ void get_sort_method(int type, vector<T> &loaded_vector){
 
         // first letters are used to forgive typos
         if ((user_input.at(0) == 'F') | (user_input.at(0) == 'f')) {
-            //valid_selection = true; // set loop to end and call sort function
             sort_firstname(type, loaded_vector);
         }
         else if ((user_input.at(0) == 'L') | (user_input.at(0) == 'l')){
-            //valid_selection = true; // set loop to end and call sort function
             sort_lastname(type, loaded_vector);
         }
         else if ((user_input.at(0) == 'C') | (user_input.at(0) == 'c')){
-            //valid_selection = true; // set loop to end and call sort function
             sort_cgpa(type, loaded_vector);
         }
         else if ((user_input.at(0) == 'R') | (user_input.at(0) == 'r')){
-            //valid_selection = true; // set loop to end and call sort function
             sort_researchscore(type, loaded_vector);
         }
         else if ((user_input.at(0) == 'O') | (user_input.at(0) == 'o')){
-            //valid_selection = true; // set loop to end and call sort function
             sort_overall(type, loaded_vector);
         }
         else if ((user_input.at(0) == 'Q') | (user_input.at(0) == 'q'))
@@ -110,7 +103,7 @@ void sort_researchscore(int type, vector<T> &loaded_vector){
 }
 template <class T>
 void sort_overall(int type, vector<T> &loaded_vector){
-    sort(loaded_vector.begin(), loaded_vector.end(), CompareStudent(CGPA));
+    sort(loaded_vector.begin(), loaded_vector.end(), CompareStudent(OVERALL));
     print_vector(type, loaded_vector);
 }
 void sort_country(int type, vector<InternationalStudent> &loaded_vector){
@@ -124,7 +117,7 @@ void sort_province(int type, vector<DomesticStudent> &loaded_vector){
 
 CompareStudent::CompareStudent(int attribute){this->attribute = attribute;}
 template <class T>
-bool CompareStudent::operator()( const T &student1, const T &student2){
+bool CompareStudent::operator()(const T &student1, const T &student2){
         if (attribute == FIRSTNAME){
             compared_value = compare_firstname(student1,student2);
             if (compared_value < 0)
@@ -153,41 +146,63 @@ bool CompareStudent::operator()( const T &student1, const T &student2){
             else
                 return false;
         }
+        else if (attribute == OVERALL){
+            int compared_cgpa = compare_cgpa(student1,student2);
+            int compared_researchscore = compare_researchscore(student1,student2);
+            int compared_location = compare_location(student1,student2);
+            if ((compared_cgpa > 0) || ((compared_cgpa == 0) && (compared_researchscore > 0))
+                || ((compared_cgpa == 0) && (compared_researchscore == 0) && (compared_location < 0)))
+                return true;
+            else
+                return false;
+        }
         else
             return false;
         return false;
 };
 
+
 // friend function implementations
 template <class T>
-int compare_firstname(const T& student_a, const T& student_b){
+int compare_firstname(const T& student1, const T& student2){
     // compare results, 0 is =, 0< is <, 0> is > (alphabetically same case)
-    return student_a.firstname_.compare(student_b.firstname_);
+    return student1.firstname_.compare(student2.firstname_);
 }
 
 template <class T>
-int compare_lastname(const T& student_a, const T& student_b){
+int compare_lastname(const T& student1, const T& student2){
     // compare results, 0 is =, 0< is <, 0> is > (alphabetically same case)
-    return student_a.lastname_.compare(student_b.lastname_);
+    return student1.lastname_.compare(student2.lastname_);
 }
 
 template <class T>
-int compare_cgpa(const T& student_a, const T& student_b){
+int compare_cgpa(const T& student1, const T& student2){
     // compare results, 0 is =, -1 is <, 1 is >
-    if (student_a.cgpa_ == student_b.cgpa_)
+    if (student1.cgpa_ == student2.cgpa_)
         return 0;
-    else if (student_a.cgpa_ < student_b.cgpa_)
+    else if (student1.cgpa_ < student2.cgpa_)
         return (-1);
     else
         return (1);
 }
 
 template <class T>
-int compare_researchscore(const T& student_a, const T& student_b){
+int compare_researchscore(const T& student1, const T& student2){
     // compare results, 0 is =, -1 is <, 1 is >
-    if (student_a.researchscore_ == student_b.researchscore_)
+    if (student1.researchscore_ == student2.researchscore_)
         return 0;
-    else if (student_a.researchscore_ < student_b.researchscore_)
+    else if (student1.researchscore_ < student2.researchscore_)
+        return (-1);
+    else
+        return 1;
+}
+
+template <class T>
+int compare_location(const T& student1, const T& student2){
+    // compare results, 0 is =, -1 is <, 1 is >
+    if (student1.location() == student2.location())
+        return 0;
+    else if (student1.location() < student2.location())
         return (-1);
     else
         return 1;

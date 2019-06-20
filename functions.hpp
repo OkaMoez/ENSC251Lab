@@ -26,6 +26,7 @@ void sort_country(vector<InternationalStudent> &loaded_vector);
 void sort_province(vector<DomesticStudent> &loaded_vector);
 
 struct CompareStudent{ // functor prototype
+    int type;
     int attribute;
     int compared_value;
 
@@ -36,13 +37,15 @@ struct CompareStudent{ // functor prototype
 
 // friend function prototypes
 template <class T>
-int compare_firstname(const T& student_a, const T& student_b);
+int compare_firstname(const T& student1, const T& student2);
 template <class T>
-int compare_lastname(const T& student_a, const T& student_b);
+int compare_lastname(const T& student1, const T& student2);
 template <class T>
-int compare_cgpa(const T& student_a, const T& student_b);
+int compare_cgpa(const T& student1, const T& student2);
 template <class T>
-int compare_researchscore(const T& student_a, const T& student_b);
+int compare_researchscore(const T& student1, const T& student2);
+template <class T>
+int compare_location(int type, const T& student1, const T& student2);
 
 // output function prototypes
 template <class T>
