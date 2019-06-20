@@ -2,9 +2,30 @@
 Brigham Okano's ENSC251 Summer 2019 Semester Lab Project
 
 A student information database with features added throught the course.
-
 Also an opportunity to learn to use git.
 
-Not sure what else to put here.
+------------------
+Lab 1 Requirements [COMPLETE] [9/10]
+------------------
+1. Student class [COMPLETE]
+2. DomesticStudent class [COMPLETE]
+3. InternationalStudent class [COMPLETE]
+4. ToelfScore class [COMPLETE]
+5. getter/setters [COMPLETE]
+5. .hpp/.cpp separation [COMPLETE]
+6. unit test [COMPLETE]
 
-Cheers.
+Note: Lost Marks
+0.5 - didn't complile on server, error with "nullptr"
+    Need to test future builds.
+0.5 - used inheritance instead of getters/setters to link ToelfScore to students
+    Fixed.
+
+------------------
+Lab 2 Requirements
+------------------
+1. Inplement arrays/vectors
+2. Comparator functions
+3. Overload << opperator
+4. Sort based on user input, single field
+5.

@@ -1,5 +1,7 @@
 //student.cpp to implement your classes
+#include <iostream>
 #include "student.hpp"
+using namespace std;
 
 // Student constructor
 Student::Student() { Student("empty", "empty", 0.0, 0); }
@@ -29,6 +31,16 @@ DomesticStudent::DomesticStudent(string firstname, string lastname,
 
 // DomesticStudent member function
 void DomesticStudent::set_province(string province) { province_ = province; }
+
+// overloading << for DomesticStudent
+std::ostream &operator<<( ostream &output, const DomesticStudent& student){
+    output << " " << student.firstname()
+           << " " << student.lastname()
+           << " from " << student.province()
+           << " has a CGPA of " << student.cgpa()
+           << ", and a research score of " << student.researchscore();
+    return output;
+}
 
 // ToelfScore constructor
 ToelfScore::ToelfScore(){ ToelfScore(0, 0, 0, 0); }
@@ -67,3 +79,19 @@ void InternationalStudent::set_reading(int reading) { my_toelf_.set_reading(read
 void InternationalStudent::set_listening(int listening) { my_toelf_.set_speaking(listening);}
 void InternationalStudent::set_speaking(int speaking) { my_toelf_.set_listening(speaking);}
 void InternationalStudent::set_writing(int writing) { my_toelf_.set_writing(writing);}
+
+// overloading << for InternationalStudent
+std::ostream &operator<<( ostream &output, const InternationalStudent& student) {
+    output << " " << student.firstname()
+           << " " << student.lastname()
+           << " from " << student.country()
+           << " has a CGPA of " << student.cgpa()
+           << ", and a research score of " << student.researchscore()
+           << endl
+           << "    TOELF scores are as follows: Reading " << student.reading()
+           << ", Listening: " << student.listening()
+           << ", Speaking: " << student.speaking()
+           << ", Writing: " << student.writing()
+           << ", Total: " << student.total();
+    return output;
+}
