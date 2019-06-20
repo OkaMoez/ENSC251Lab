@@ -24,12 +24,16 @@ public:
 	void set_firstname(string firstname);
 	void set_lastname(string lastname);
 	void set_cgpa(float cgpa);
-	void set_researchscore(int researchscore);
+    void set_researchscore(int researchscore);
 
-    friend int compare_firstname();
-    friend int compare_lastname();
-    friend int compare_cgpa();
-    friend int compare_researchscore();
+    template <class T>
+    friend int compare_firstname(const T& student_a, const T& student_b);
+    template <class T>
+    friend int compare_lastname(const T& student_a, const T& student_b);
+    template <class T>
+    friend int compare_cgpa(const T& student_a, const T& student_b);
+    template <class T>
+    friend int compare_researchscore(const T& student_a, const T& student_b);
 };
 
 class DomesticStudent : public Student
@@ -44,12 +48,12 @@ public:
 
     string province() const { return province_; }
 
-	void set_province(string province);
+    void set_province(string province);
 
     friend ostream& operator<<( ostream& output, const DomesticStudent& student);
 };
 
-std::ostream& operator<<( ostream& output, const DomesticStudent& student);
+//std::ostream& operator<<( ostream& output, const DomesticStudent& student);
 
 class ToelfScore
 {
@@ -105,6 +109,6 @@ public:
     friend ostream& operator<<( ostream& output, const InternationalStudent& student);
 };
 
-std::ostream& operator<<( ostream& output, const InternationalStudent& student);
+//std::ostream& operator<<( ostream& output, const InternationalStudent& student);
 
 #endif //STUDENT_HPP

@@ -25,12 +25,24 @@ void sort_overall(int type, vector<T> &loaded_vector);
 void sort_country(vector<InternationalStudent> &loaded_vector);
 void sort_province(vector<DomesticStudent> &loaded_vector);
 
+struct CompareStudent{ // functor prototype
+    int attribute;
+    int compared_value;
+
+    CompareStudent(int attribute);
+    template <class T>
+    bool operator()( const T &student1, const T &student2);
+};
 
 // friend function prototypes
-int compare_firstname(string student_a, string student_b);
-int compare_lastname(string student_a, string student_b);
-int compare_cgpa(int student_a, int student_b);
-int compare_researchscore(int student_a, int student_b);
+template <class T>
+int compare_firstname(const T& student_a, const T& student_b);
+template <class T>
+int compare_lastname(const T& student_a, const T& student_b);
+template <class T>
+int compare_cgpa(const T& student_a, const T& student_b);
+template <class T>
+int compare_researchscore(const T& student_a, const T& student_b);
 
 // output function prototypes
 template <class T>
