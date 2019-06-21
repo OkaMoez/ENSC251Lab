@@ -27,13 +27,14 @@ Forgot some out-of-place code (vectors, blank fields, etc)
 Lab 2 Requirements
 ------------------
 1. Inplement arrays/vectors [COMPLETE]
-2. Comparator functions [IN PROGRESS]
+2. Comparator functions [COMPLETE]
 3. Overload << opperator [COMPLETE]
-4. Sort based on user input, single field [IN PROGRESS]
-5. Overall sort (C then R then Local, min Toelf) [IN PROGRESS]
-6. Unit test [IN PROGRESS]
-7. Comments [IN PROGRESS]
+4. Sort based on user input, single field [COMPLETE]
+5. Overall sort (C then R then Local, min Toelf) [COMPLETE]
+6. Unit test [COMPLETE]
+7. Comments [COMPLETE]
 
 Note:
 Using Templates to handle differing vector inputs, but lots of repeats
     Maybe look for a cleaner way of handling ~10x repeated templates
+
