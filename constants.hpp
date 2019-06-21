@@ -1,21 +1,27 @@
 #ifndef CONSTANTS_HPP
 #define CONSTANTS_HPP
 
-const int FIRSTNAME = 1;
-const int LASTNAME = 2;
-const int CGPA = 3;
-const int RESEARCHSCORE = 4;
-const int PROVINCE = 5;
-const int COUNTRY = 6;
-const int READING = 7;
-const int LISTENING = 8;
-const int SPEAKING = 9;
-const int WRITING = 10;
-const int TOELF_TOTAL = 11;
-const int DOMESTIC = 12;
-const int INTERNATIONAL = 13;
-const int OVERALL = 14;
-const int SELECT_TOELF = 15;
-const int SELECT_BASIC = 16;
+// Constants are provided for easily passing through functions.
+// Basic Class Constants
+const int kFirstName = 1;
+const int kLastName = 2;
+const int kCgpa = 3;
+const int kResearchScore = 4;
+const int kProvince = 5;
+const int kCountry = 6;
+const int kReading = 7;
+const int kListening = 8;
+const int kSpeaking = 9;
+const int kWriting = 10;
+const int kToelfTotal = 11;
+const int kOverall = 12;
+
+// Object Types
+const int kDomestic = 13;
+const int kInternational = 14;
+
+// Selection Filters
+const int kSelectBasic = 15;
+const int kSelectToelf = 16;
 
 #endif // CONSTANTS_HPP

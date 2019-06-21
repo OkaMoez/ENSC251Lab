@@ -1,4 +1,4 @@
-FirstName,LastName,Country,CGPA,ResearchScore,Reading,Listening,Speaking,Writing
+kFirstName,LastName,Country,Cgpa,ResearchScore,Reading,Listening,Speaking,Writing
 Alex,Zhang,China,3.7,95,24,25,29,26
 Peter,Choi,Korea,4,85,23,19,22,28
 Chaewon,Kim,Korea,3.10,82,22,22,23,27

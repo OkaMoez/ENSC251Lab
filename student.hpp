@@ -1,7 +1,7 @@
-//header file student.hpp to declare your classes
+// Headers contain empty declarations and trivial functions.
 #ifndef STUDENT_HPP
 #define STUDENT_HPP
-#include <string> //you will have to use string in C++
+#include <string>
 using namespace std;
 
 class Student
@@ -26,6 +26,7 @@ public:
 	void set_cgpa(float cgpa);
     void set_researchscore(int researchscore);
 
+    // Friend Functions
     template <class T>
     friend int compare_firstname(const T& student1, const T& student2);
     template <class T>
@@ -47,10 +48,10 @@ public:
 		int researchscore, string province);
 
     string province() const { return province_; }
-    string location() const { return province_; }
 
     void set_province(string province);
 
+    // << Operator Overload
     friend ostream& operator<<( ostream& output, const DomesticStudent& student);
 };
 
@@ -62,7 +63,7 @@ private:
 	int speaking_;
 	int writing_;
 	int total_;
-    bool meets_requirements_;
+    bool meets_requirements_;  // Added for sorting.
 
 public:
     ToelfScore();
@@ -73,13 +74,13 @@ public:
     int speaking() const { return speaking_; }
     int writing() const { return writing_; }
     int total() const { return total_; }
-    bool check_requirements() const { return meets_requirements_; }
+    bool check_requirements() const { return meets_requirements_; }  // Added for sorting.
 
 	void set_reading(int reading);
     void set_listening(int listening);
     void set_speaking(int speaking);
 	void set_writing(int writing);
-    void update_requirements();
+    void update_requirements();  // Added for sorting.
     void update_total();
 };
 
@@ -95,14 +96,13 @@ public:
         int researchscore, string country, int reading, int listening,
         int speaking, int writing);
 
-	string country() const { return country_; }
-    string location() const { return country_; }
+    string country() const { return country_; }
     int reading() const { return my_toelf_.reading(); }
     int listening() const { return my_toelf_.listening(); }
     int speaking() const { return my_toelf_.speaking(); }
     int writing() const { return my_toelf_.writing(); }
     int total() const { return my_toelf_.total(); }
-    bool check_requirements() const { return my_toelf_.check_requirements(); }
+    bool check_requirements() const { return my_toelf_.check_requirements(); }  // Added for sorting.
 
     void set_country(string country);
     void set_reading(int reading);
@@ -110,6 +110,7 @@ public:
     void set_speaking(int speaking);
     void set_writing(int writing);
 
+    // << Operator Overload
     friend ostream& operator<<( ostream& output, const InternationalStudent& student);
 };
 

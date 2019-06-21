@@ -1,3 +1,4 @@
+// Headers contain empty declarations and trivial functions.
 #ifndef FUNCTIONS_HPP
 #define FUNCTIONS_HPP
 #include <string>
@@ -5,13 +6,13 @@
 #include "student.hpp"
 using namespace std;
 
-// user input function prototypes
+// User Input Function Prototypes
 void start_sort(vector<DomesticStudent> &D_vector,
                 vector<InternationalStudent> &I_vector);
-template <class T> // allow function to take either student type
+template <class T> // This allows function to take either student derivative.
 void get_sort_method(int type, vector<T> &loaded_vector);
 
-// sorting function protoypes
+// Sorting Function Protoypes
 template <class T>
 void sort_firstname(vector<T> &loaded_vector);
 template <class T>
@@ -25,7 +26,8 @@ void sort_overall(vector<T> &loaded_vector);
 void sort_country(vector<InternationalStudent> &loaded_vector);
 void sort_province(vector<DomesticStudent> &loaded_vector);
 
-struct CompareStudent{ // functor prototype
+// Sorting Functor Prototype
+struct CompareStudent{ // This is specifically to work with std::sort as a comparator.
     int type;
     int attribute;
     int compared_value;
@@ -35,7 +37,7 @@ struct CompareStudent{ // functor prototype
     bool operator()( const T &student1, const T &student2);
 };
 
-// friend function prototypes
+// Friend Function Prototypes
 template <class T>
 int compare_firstname(const T& student1, const T& student2);
 template <class T>
@@ -44,10 +46,10 @@ template <class T>
 int compare_cgpa(const T& student1, const T& student2);
 template <class T>
 int compare_researchscore(const T& student1, const T& student2);
-template <class T>
-int compare_location(int type, const T& student1, const T& student2);
+int compare_location(const DomesticStudent& student1, const DomesticStudent& student2);
+int compare_location(const InternationalStudent& student1, const InternationalStudent& student2);
 
-// output function prototypes
+// Output Function Prototypes (overloaded)
 void print_vector(int selection, vector<DomesticStudent> &loaded_vector);
 void print_vector(int selection, vector<InternationalStudent> &loaded_vector);
 

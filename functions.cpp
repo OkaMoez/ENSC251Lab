@@ -6,54 +6,52 @@
 #include "student.hpp"
 using namespace std;
 
-// user input function implementations
-// pass vectors by reference for efficiency
+// User Input Function Implementations
+// Vectors are passed by reference for efficiency.
 void start_sort(vector<DomesticStudent> &D_vector,
                 vector<InternationalStudent> &I_vector){
     string user_input;
     cout << "Sort [Domestic] or [International] Students? " << endl;
 
-    bool valid_selection = false;  // loop menu until selection is valid
+    bool valid_selection = false;  // Loop continues until user chooses to quit.
     while (valid_selection != true) {
         cin >> user_input;
         cout << endl;
 
-        // first letters are used to forgive typos
+        // First letters are used to forgive typos.
         if ((user_input.at(0) == 'D') | (user_input.at(0) == 'd')) {
-            get_sort_method(DOMESTIC, D_vector);
+            get_sort_method(kDomestic, D_vector);
         }
         else if ((user_input.at(0) == 'I') | (user_input.at(0) == 'i')){
-            get_sort_method(INTERNATIONAL, I_vector);
+            get_sort_method(kInternational, I_vector);
         }
         else if ((user_input.at(0) == 'Q') | (user_input.at(0) == 'q'))
-            exit(1); // give user a way out
+            valid_selection = true;
         else
-            cout << "Invalid input. " // correct invalid inputs
+            cout << "Invalid input. " // Looped text is to help user correct invalid inputs.
                  << "Please enter [International], [Domestic], or [Quit]."
                  << endl;
     }
 }
 
-template <class T> // allow function to take either student type
+template <class T> // Allows function to take either student type.
 void get_sort_method(int type, vector<T> &loaded_vector){
     string user_input;
     string text;
 
-    if (type == DOMESTIC)
+    if (type == kDomestic)
         text = "domestic";
     else
         text = "international";
 
-    bool valid_selection = false;
-
-    while (valid_selection != true) { // loop menu until selection is valid
+    bool valid_selection = false;  // Loop continues until user chooses to quit.
+    while (valid_selection != true) {
         cout << "Sort " << text << " students by [First] name, [Last] name, "
              << "[CGPA], [Research] score, or [Overall] academics?" << endl;
-
-        cin >> user_input; // take input
+        cin >> user_input;
         cout << endl;
 
-        // first letters are used to forgive typos
+        // First letters are used to forgive typos.
         if ((user_input.at(0) == 'F') | (user_input.at(0) == 'f')) {
             sort_firstname(loaded_vector);
         }
@@ -70,82 +68,82 @@ void get_sort_method(int type, vector<T> &loaded_vector){
             sort_overall(loaded_vector);
         }
         else if ((user_input.at(0) == 'Q') | (user_input.at(0) == 'q'))
-            exit(1); // give user a way out
+            valid_selection = true;
         else
-            cout << "Invalid input. " // correct invalid inputs
+            cout << "Invalid input. " // Looped text is to help user correct invalid inputs.
                  << "Please select [First], [Last], "
                  << "[CGPA], [Research], [Overall], or [Quit]."
                  << endl;
     }
 }
 
-// sorting function implementations
+// Sorting Function Implementations
 template <class T>
 void sort_firstname(vector<T> &loaded_vector){
-    sort(loaded_vector.begin(), loaded_vector.end(), CompareStudent(FIRSTNAME));
-    print_vector(SELECT_BASIC, loaded_vector);
+    sort(loaded_vector.begin(), loaded_vector.end(), CompareStudent(kFirstName));
+    print_vector(kSelectBasic, loaded_vector);
 }
 template <class T>
 void sort_lastname(vector<T> &loaded_vector){
-    sort(loaded_vector.begin(), loaded_vector.end(), CompareStudent(LASTNAME));
-    print_vector(SELECT_BASIC, loaded_vector);
+    sort(loaded_vector.begin(), loaded_vector.end(), CompareStudent(kLastName));
+    print_vector(kSelectBasic, loaded_vector);
 }
 template <class T>
 void sort_cgpa(vector<T> &loaded_vector){
-    sort(loaded_vector.begin(), loaded_vector.end(), CompareStudent(CGPA));
-    print_vector(SELECT_BASIC, loaded_vector);
+    sort(loaded_vector.begin(), loaded_vector.end(), CompareStudent(kCgpa));
+    print_vector(kSelectBasic, loaded_vector);
 }
 template <class T>
 void sort_researchscore(vector<T> &loaded_vector){
-    sort(loaded_vector.begin(), loaded_vector.end(), CompareStudent(RESEARCHSCORE));
-    print_vector(SELECT_BASIC, loaded_vector);
+    sort(loaded_vector.begin(), loaded_vector.end(), CompareStudent(kResearchScore));
+    print_vector(kSelectBasic, loaded_vector);
 }
 template <class T>
 void sort_overall(vector<T> &loaded_vector){
-    sort(loaded_vector.begin(), loaded_vector.end(), CompareStudent(OVERALL));
-    print_vector(SELECT_TOELF, loaded_vector);
+    sort(loaded_vector.begin(), loaded_vector.end(), CompareStudent(kOverall));
+    print_vector(kSelectToelf, loaded_vector);
 }
 void sort_country(vector<InternationalStudent> &loaded_vector){
-    sort(loaded_vector.begin(), loaded_vector.end(), CompareStudent(COUNTRY));
-    print_vector(SELECT_BASIC, loaded_vector);
+    sort(loaded_vector.begin(), loaded_vector.end(), CompareStudent(kCountry));
+    print_vector(kSelectBasic, loaded_vector);
 }
 void sort_province(vector<DomesticStudent> &loaded_vector){
-    sort(loaded_vector.begin(), loaded_vector.end(), CompareStudent(PROVINCE));
-    print_vector(SELECT_BASIC, loaded_vector);
+    sort(loaded_vector.begin(), loaded_vector.end(), CompareStudent(kProvince));
+    print_vector(kSelectBasic, loaded_vector);
 }
 
 CompareStudent::CompareStudent(int attribute){this->attribute = attribute;}
 template <class T>
 bool CompareStudent::operator()(const T &student1, const T &student2){
-        if (attribute == FIRSTNAME){
+        if (attribute == kFirstName){
             compared_value = compare_firstname(student1,student2);
             if (compared_value < 0)
                 return true;
             else
                 return false;
         }
-        else if (attribute == LASTNAME){
+        else if (attribute == kLastName){
             compared_value = compare_lastname(student1,student2);
             if (compared_value < 0)
                 return true;
             else
                 return false;
         }
-        else if (attribute == CGPA){
+        else if (attribute == kCgpa){
             compared_value = compare_cgpa(student1,student2);
             if (compared_value > 0)
                 return true;
             else
                 return false;
         }
-        else if (attribute == RESEARCHSCORE){
+        else if (attribute == kResearchScore){
             compared_value = compare_researchscore(student1,student2);
             if (compared_value > 0)
                 return true;
             else
                 return false;
         }
-        else if (attribute == OVERALL){
+        else if (attribute == kOverall){
             int compared_cgpa = compare_cgpa(student1,student2);
             int compared_researchscore = compare_researchscore(student1,student2);
             int compared_location = compare_location(student1,student2);
@@ -160,23 +158,20 @@ bool CompareStudent::operator()(const T &student1, const T &student2){
         return false;
 };
 
-
-// friend function implementations
+// Friend Function Implementations
+// These compare student derivative objects.
+// Their output can be interpreted as follows: 0 is =, 0< is <, 0> is >.
+// Char comparisons at a<z<A<Z.
 template <class T>
 int compare_firstname(const T& student1, const T& student2){
-    // compare results, 0 is =, 0< is <, 0> is > (alphabetically same case)
     return student1.firstname_.compare(student2.firstname_);
 }
-
 template <class T>
 int compare_lastname(const T& student1, const T& student2){
-    // compare results, 0 is =, 0< is <, 0> is > (alphabetically same case)
     return student1.lastname_.compare(student2.lastname_);
 }
-
 template <class T>
 int compare_cgpa(const T& student1, const T& student2){
-    // compare results, 0 is =, -1 is <, 1 is >
     if (student1.cgpa_ == student2.cgpa_)
         return 0;
     else if (student1.cgpa_ < student2.cgpa_)
@@ -184,10 +179,8 @@ int compare_cgpa(const T& student1, const T& student2){
     else
         return (1);
 }
-
 template <class T>
 int compare_researchscore(const T& student1, const T& student2){
-    // compare results, 0 is =, -1 is <, 1 is >
     if (student1.researchscore_ == student2.researchscore_)
         return 0;
     else if (student1.researchscore_ < student2.researchscore_)
@@ -195,49 +188,45 @@ int compare_researchscore(const T& student1, const T& student2){
     else
         return 1;
 }
-
-template <class T>
-int compare_location(const T& student1, const T& student2){
-    // compare results, 0 is =, -1 is <, 1 is >
-    if (student1.location() == student2.location())
+// Compare location is overloaded to allow comparing both province and country.
+// This was an issue previously using templates.
+int compare_location(const DomesticStudent& student1, const DomesticStudent& student2){
+    if (student1.province() == student2.province())
         return 0;
-    else if (student1.location() < student2.location())
+    else if (student1.province() < student2.province())
+        return (-1);
+    else
+        return 1;
+}
+int compare_location(const InternationalStudent& student1, const InternationalStudent& student2){
+    if (student1.country() == student2.country())
+        return 0;
+    else if (student1.country() < student2.country())
         return (-1);
     else
         return 1;
 }
 
-// printing function implementation (overloaded)
+// Printing Function Implementation (overloaded)
 void print_vector(int selection, vector<DomesticStudent> &loaded_vector){
     for(int i=0; i < signed(loaded_vector.size()); i++){
-        if (selection != 0)
+        if (selection != 0) // for possible future filters/to remove warning
         cout << "Domestic student " << (i+1)
              << loaded_vector[unsigned(i)]
              << endl;;
     }
 }
 
-string ez_check(bool a){
-    if (a == true)
-        return "True";
-    if (a == false)
-        return "False";
-    else {
-        return "Oops";
-    }
-}
-
 void print_vector(int selection, vector<InternationalStudent> &loaded_vector){
     int student_num = 1;
-    if (selection == SELECT_TOELF)
-        cout << "toelf" << endl;
     for(int i=0; i < signed(loaded_vector.size()); i++){
-        if (selection == SELECT_BASIC){
+        if (selection == kSelectBasic){ // Regular filter/no filter prints all.
             cout << "International student " << (student_num)
                  << loaded_vector[unsigned(i)] << endl;
             student_num++;
         }
-        else if ((selection == SELECT_TOELF) && (loaded_vector[unsigned(i)].check_requirements() == true)){
+        // Toelf filter avoids printing objects under cut-off during overall sorting.
+        else if ((selection == kSelectToelf) && (loaded_vector[unsigned(i)].check_requirements() == true)){
             cout << "International student " << (student_num)
                  << loaded_vector[unsigned(i)] << endl;
             student_num++;

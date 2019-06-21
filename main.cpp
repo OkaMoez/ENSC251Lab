@@ -5,6 +5,7 @@
 #include <sstream> //formatted string processing
 #include <cstdlib> //atof and atoi
 #include <vector> // vectors for holding student objects
+#include <algorithm> // for tranforming strings etc
 #include "functions.hpp" // custom functions for Lab 2
 #include "student.hpp" // header file from Lab 1
 
@@ -39,21 +40,13 @@ int main(){
         float cgpa;
         int researchscore;
 
-        // get firstName separated by comma
+        // get firstname, lastname, province, cpga, and researchScore
+        // separated by commas, and convert as needed
         getline(ss, firstname, ',');
-
-        // get lastName separated by comma
         getline(ss, lastname, ',');
-
-        // get province separated by comma
         getline(ss, province, ',');
-
-        // get cpga separated by comma, and convert string to float
         getline(ss, s_cgpa, ',');
         cgpa = strtof(s_cgpa.c_str(), NULL); // replaced atof with strtof to remove warning
-        //Using NULL to maybe dodge compile error on servers, but give local warning
-
-        // get researchScore separated by comma, and convert it to int
         getline(ss, s_researchscore, ',');
         researchscore = atoi(s_researchscore.c_str());
 
@@ -101,10 +94,14 @@ int main(){
         int researchscore, reading, listening, speaking, writing;
 
         // get data from file as done previously above, converting as needed
-        getline(ss, firstname, ','); // retrieve student first name
-        getline(ss, lastname, ','); // retrieve student last name
+        getline(ss, firstname, ','); // retrieve student first name and condition
+        transform(firstname.begin(), firstname.end(), firstname.begin(), ::tolower);
+        firstname[0] = toupper(firstname[0]);
+        getline(ss, lastname, ','); // retrieve student last name and condition
+        transform(lastname.begin(), lastname.end(), lastname.begin(), ::tolower);
+        lastname[0] = toupper(lastname[0]);
         getline(ss, country, ','); // retrieve student home country
-        getline(ss, s_cgpa, ','); // retrieve student CGPA and convert
+        getline(ss, s_cgpa, ','); // retrieve student cgpa and convert
         cgpa = strtof(s_cgpa.c_str(), NULL); // replaced as above
         getline(ss, s_researchscore, ','); // retrieve student research score and convert
         researchscore = atoi(s_researchscore.c_str());
@@ -135,7 +132,7 @@ int main(){
 
     // at this point data has populated the vectors and is ready to use
     // now request user input
-    start_sort(domestic_students ,international_students);
+    start_sort(domestic_students, international_students);
 
     return 0;
 }
