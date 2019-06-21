@@ -54,8 +54,6 @@ public:
     friend ostream& operator<<( ostream& output, const DomesticStudent& student);
 };
 
-//std::ostream& operator<<( ostream& output, const DomesticStudent& student);
-
 class ToelfScore
 {
 private:
@@ -75,16 +73,14 @@ public:
     int speaking() const { return speaking_; }
     int writing() const { return writing_; }
     int total() const { return total_; }
-    int check_requirements() const { return meets_requirements_; }
+    bool check_requirements() const { return meets_requirements_; }
 
 	void set_reading(int reading);
     void set_listening(int listening);
     void set_speaking(int speaking);
 	void set_writing(int writing);
-	void update_total();
     void update_requirements();
-
-
+    void update_total();
 };
 
 class InternationalStudent : public Student
@@ -106,7 +102,7 @@ public:
     int speaking() const { return my_toelf_.speaking(); }
     int writing() const { return my_toelf_.writing(); }
     int total() const { return my_toelf_.total(); }
-    int check_requirements() const { return my_toelf_.check_requirements(); }
+    bool check_requirements() const { return my_toelf_.check_requirements(); }
 
     void set_country(string country);
     void set_reading(int reading);
@@ -116,7 +112,5 @@ public:
 
     friend ostream& operator<<( ostream& output, const InternationalStudent& student);
 };
-
-//std::ostream& operator<<( ostream& output, const InternationalStudent& student);
 
 #endif //STUDENT_HPP

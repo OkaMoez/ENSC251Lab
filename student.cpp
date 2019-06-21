@@ -60,6 +60,7 @@ void ToelfScore::set_speaking(int speaking) { speaking_ = speaking; update_total
 void ToelfScore::set_writing(int writing) { writing_ = writing; update_total(); }
 void ToelfScore::update_total() {
     total_ = reading_ + listening_ + speaking_ + writing_;
+    update_requirements();
 }
 void ToelfScore::update_requirements(){
     int min = 20;

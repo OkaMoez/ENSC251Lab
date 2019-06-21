@@ -7,16 +7,15 @@
 using namespace std;
 
 // user input function implementations
-// pass vectors by reference for speed
+// pass vectors by reference for efficiency
 void start_sort(vector<DomesticStudent> &D_vector,
                 vector<InternationalStudent> &I_vector){
     string user_input;
     cout << "Sort [Domestic] or [International] Students? " << endl;
 
-    bool valid_selection = false;
-
-    while (valid_selection != true) { // loop menu until selection is valid
-        cin >> user_input; // take input
+    bool valid_selection = false;  // loop menu until selection is valid
+    while (valid_selection != true) {
+        cin >> user_input;
         cout << endl;
 
         // first letters are used to forgive typos
@@ -56,19 +55,19 @@ void get_sort_method(int type, vector<T> &loaded_vector){
 
         // first letters are used to forgive typos
         if ((user_input.at(0) == 'F') | (user_input.at(0) == 'f')) {
-            sort_firstname(type, loaded_vector);
+            sort_firstname(loaded_vector);
         }
         else if ((user_input.at(0) == 'L') | (user_input.at(0) == 'l')){
-            sort_lastname(type, loaded_vector);
+            sort_lastname(loaded_vector);
         }
         else if ((user_input.at(0) == 'C') | (user_input.at(0) == 'c')){
-            sort_cgpa(type, loaded_vector);
+            sort_cgpa(loaded_vector);
         }
         else if ((user_input.at(0) == 'R') | (user_input.at(0) == 'r')){
-            sort_researchscore(type, loaded_vector);
+            sort_researchscore(loaded_vector);
         }
         else if ((user_input.at(0) == 'O') | (user_input.at(0) == 'o')){
-            sort_overall(type, loaded_vector);
+            sort_overall(loaded_vector);
         }
         else if ((user_input.at(0) == 'Q') | (user_input.at(0) == 'q'))
             exit(1); // give user a way out
@@ -82,37 +81,37 @@ void get_sort_method(int type, vector<T> &loaded_vector){
 
 // sorting function implementations
 template <class T>
-void sort_firstname(int type, vector<T> &loaded_vector){
+void sort_firstname(vector<T> &loaded_vector){
     sort(loaded_vector.begin(), loaded_vector.end(), CompareStudent(FIRSTNAME));
-    print_vector(type, loaded_vector);
+    print_vector(SELECT_BASIC, loaded_vector);
 }
 template <class T>
-void sort_lastname(int type, vector<T> &loaded_vector){
+void sort_lastname(vector<T> &loaded_vector){
     sort(loaded_vector.begin(), loaded_vector.end(), CompareStudent(LASTNAME));
-    print_vector(type, loaded_vector);
+    print_vector(SELECT_BASIC, loaded_vector);
 }
 template <class T>
-void sort_cgpa(int type, vector<T> &loaded_vector){
+void sort_cgpa(vector<T> &loaded_vector){
     sort(loaded_vector.begin(), loaded_vector.end(), CompareStudent(CGPA));
-    print_vector(type, loaded_vector);
+    print_vector(SELECT_BASIC, loaded_vector);
 }
 template <class T>
-void sort_researchscore(int type, vector<T> &loaded_vector){
+void sort_researchscore(vector<T> &loaded_vector){
     sort(loaded_vector.begin(), loaded_vector.end(), CompareStudent(RESEARCHSCORE));
-    print_vector(type, loaded_vector);
+    print_vector(SELECT_BASIC, loaded_vector);
 }
 template <class T>
-void sort_overall(int type, vector<T> &loaded_vector){
+void sort_overall(vector<T> &loaded_vector){
     sort(loaded_vector.begin(), loaded_vector.end(), CompareStudent(OVERALL));
-    print_vector(type, loaded_vector);
+    print_vector(SELECT_TOELF, loaded_vector);
 }
-void sort_country(int type, vector<InternationalStudent> &loaded_vector){
+void sort_country(vector<InternationalStudent> &loaded_vector){
     sort(loaded_vector.begin(), loaded_vector.end(), CompareStudent(COUNTRY));
-    print_vector(type, loaded_vector);
+    print_vector(SELECT_BASIC, loaded_vector);
 }
-void sort_province(int type, vector<DomesticStudent> &loaded_vector){
+void sort_province(vector<DomesticStudent> &loaded_vector){
     sort(loaded_vector.begin(), loaded_vector.end(), CompareStudent(PROVINCE));
-    print_vector(type, loaded_vector);
+    print_vector(SELECT_BASIC, loaded_vector);
 }
 
 CompareStudent::CompareStudent(int attribute){this->attribute = attribute;}
@@ -208,18 +207,40 @@ int compare_location(const T& student1, const T& student2){
         return 1;
 }
 
-// printing function implementation
-template <class T>
-void print_vector(int type, vector<T> &loaded_vector){
-    string text;
-    if (type == DOMESTIC)
-        text = "Domestic";
-    else
-        text = "International";
-
+// printing function implementation (overloaded)
+void print_vector(int selection, vector<DomesticStudent> &loaded_vector){
     for(int i=0; i < signed(loaded_vector.size()); i++){
-        cout << text << " student " << (i+1)
+        if (selection != 0)
+        cout << "Domestic student " << (i+1)
              << loaded_vector[unsigned(i)]
-             << endl;
+             << endl;;
+    }
+}
+
+string ez_check(bool a){
+    if (a == true)
+        return "True";
+    if (a == false)
+        return "False";
+    else {
+        return "Oops";
+    }
+}
+
+void print_vector(int selection, vector<InternationalStudent> &loaded_vector){
+    int student_num = 1;
+    if (selection == SELECT_TOELF)
+        cout << "toelf" << endl;
+    for(int i=0; i < signed(loaded_vector.size()); i++){
+        if (selection == SELECT_BASIC){
+            cout << "International student " << (student_num)
+                 << loaded_vector[unsigned(i)] << endl;
+            student_num++;
+        }
+        else if ((selection == SELECT_TOELF) && (loaded_vector[unsigned(i)].check_requirements() == true)){
+            cout << "International student " << (student_num)
+                 << loaded_vector[unsigned(i)] << endl;
+            student_num++;
+        }
     }
 }

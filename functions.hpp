@@ -13,15 +13,15 @@ void get_sort_method(int type, vector<T> &loaded_vector);
 
 // sorting function protoypes
 template <class T>
-void sort_firstname(int type, vector<T> &loaded_vector);
+void sort_firstname(vector<T> &loaded_vector);
 template <class T>
-void sort_lastname(int type, vector<T> &loaded_vector);
+void sort_lastname(vector<T> &loaded_vector);
 template <class T>
-void sort_cgpa(int type, vector<T> &loaded_vector);
+void sort_cgpa(vector<T> &loaded_vector);
 template <class T>
-void sort_researchscore(int type, vector<T> &loaded_vector);
+void sort_researchscore(vector<T> &loaded_vector);
 template <class T>
-void sort_overall(int type, vector<T> &loaded_vector);
+void sort_overall(vector<T> &loaded_vector);
 void sort_country(vector<InternationalStudent> &loaded_vector);
 void sort_province(vector<DomesticStudent> &loaded_vector);
 
@@ -48,7 +48,7 @@ template <class T>
 int compare_location(int type, const T& student1, const T& student2);
 
 // output function prototypes
-template <class T>
-void print_vector(int type, vector<T> &loaded_vector);
+void print_vector(int selection, vector<DomesticStudent> &loaded_vector);
+void print_vector(int selection, vector<InternationalStudent> &loaded_vector);
 
 #endif // FUNCTIONS_HPP
