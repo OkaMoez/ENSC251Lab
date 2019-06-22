@@ -4,82 +4,61 @@
 #include <fstream> //file processing
 #include <sstream> //formatted string processing
 #include <cstdlib> //atof and atoi
-#include <vector>
-#include "student.hpp"
+#include <vector> // vectors for holding student objects
+#include <algorithm> // for tranforming strings etc
+#include "functions.hpp" // custom functions for Lab 2
+#include "student.hpp" // header file from Lab 1
 
-/*I provide example code here to help you read the input
- *data from a file, so that you can focus on creating
- *and manipulating classes and objects
- */
 int main(){
-    //Read the domestic-stu.txt file and exit if failed
-    string line;
+    string line; //Read the domestic-stu.txt file and exit if failed
     ifstream domesticFile("domestic-stu.txt");
     if(!domesticFile.is_open()) {
         cout << "Unable to open file domestic-stu.txt" << endl;
         return -1;
     }
 
-    //Read the first line of domestic-stu.txt, which specifies
-    //the file format. And then print it out to the screen
+    // Read the first line of domestic-stu.txt, which specifies
+    // the file format and(don't) print it out to the screen
     getline(domesticFile, line);
     //cout << "File format: " << line << endl;
 
-    /*Keep reading the rest of the lines in domestic-stu.txt.
-    * In the example code here, I will read each data separated
-    * by a comma, and then print it out to the screen.
-    * In your lab assignment 1, you should use these read data
-    * to initialize your DomesticStudent object. Then you can
-    * use get and set functions to manipulate your object, and
-    * print the object content to the screen
-    */
-    int domestic_student_count = 1;
+    // Keep reading the rest of the lines in domestic-stu.txt.
+    // read data separated by commas, and print to screen
+    int domestic_student_count = 0;
+
+    // initialize InternationalStudent array
+    vector<DomesticStudent> domestic_students;
+    domestic_students.reserve(100); // vector size as specified in lab doc
 
     while( getline(domesticFile, line) ) {
-    /*Process each line, get each field separated by a comma.
-    * We use istringstream to handle it.
-    * Note in this example code here, we assume the file format
-    * is perfect and do NOT handle error cases. We will leave the
-    * error and exception handling of file format to Lab Assignment 4
-    */
+    // Process each line, get each field separated by a comma.
+    // using istringstream to handle it
+    // assuming perfect file format until Lab Assignment 4
         istringstream ss(line);
 
         string firstname, lastname, province, s_cgpa, s_researchscore;
         float cgpa;
         int researchscore;
 
-        //get firstName separated by comma
+        // get firstname, lastname, province, cpga, and researchScore
+        // separated by commas, and convert as needed
         getline(ss, firstname, ',');
-
-        //get lastName separated by comma
         getline(ss, lastname, ',');
-
-        //get province separated by comma
         getline(ss, province, ',');
-
-        //get cpga separated by comma, and convert string to float
         getline(ss, s_cgpa, ',');
         cgpa = strtof(s_cgpa.c_str(), NULL); // replaced atof with strtof to remove warning
-
-        //get researchScore separated by comma, and convert it to int
         getline(ss, s_researchscore, ',');
         researchscore = atoi(s_researchscore.c_str());
 
-        // create new instance of DomesticStudent, leave blank fields for Lab 1 required setting
-        DomesticStudent currentDStudent(firstname, lastname, cgpa, 0, "N/A");
-
-        // set values for Lab Assignment 1
-        currentDStudent.set_researchscore(researchscore);
-        currentDStudent.set_province(province);
+        // create new instance of DomesticStudent, add to vector, increment count
+        DomesticStudent currentDStudent(firstname, lastname, cgpa, researchscore, province);
+        domestic_students.push_back(currentDStudent);
+        unsigned d_count = unsigned(domestic_student_count++);
 
         //print the student info to the screen using getters
-        cout << "Domestic student " << domestic_student_count << " "
-             << currentDStudent.firstname() << " " << currentDStudent.lastname()
-             << " from " << currentDStudent.province() << " has a CGPA of "
-             << currentDStudent.cgpa() << ", and a research score of "
-             << currentDStudent.researchscore() << endl;
-
-        domestic_student_count++;
+        cout << "Domestic student " << domestic_student_count
+             << domestic_students[d_count]
+             << endl;
     }
 
     //close your file
@@ -94,17 +73,16 @@ int main(){
         return -1;
     }
 
-    // read the first line of international-stu.txt, and print it on screen
+    // read the first line of international-stu.txt, and (don't)print it on screen
     getline(internationalFile, line);
     //cout << "File format: " << line << endl;
 
-    // keep reading lines with each piece of data separated
-    // by a comma, and print it on screen.
-    int international_student_count = 1;
+    // keep reading data separated by a comma, and print it on screen.
+    int international_student_count = 0;
 
     // initialize InternationalStudent array
-    vector<InternationalStudent> i_students;
-    i_students.reserve(2); // CURRENTLY AN ARBITRARY VALUE (and not really needed)
+    vector<InternationalStudent> international_students;
+    international_students.reserve(100); // vector size as specified in lab doc
 
     while (getline(internationalFile, line)) {
         // process each line, get each field separated by a comma.
@@ -116,10 +94,14 @@ int main(){
         int researchscore, reading, listening, speaking, writing;
 
         // get data from file as done previously above, converting as needed
-        getline(ss, firstname, ','); // retrieve student first name
-        getline(ss, lastname, ','); // retrieve student last name
+        getline(ss, firstname, ','); // retrieve student first name and condition
+        transform(firstname.begin(), firstname.end(), firstname.begin(), ::tolower);
+        firstname[0] = toupper(firstname[0]);
+        getline(ss, lastname, ','); // retrieve student last name and condition
+        transform(lastname.begin(), lastname.end(), lastname.begin(), ::tolower);
+        lastname[0] = toupper(lastname[0]);
         getline(ss, country, ','); // retrieve student home country
-        getline(ss, s_cgpa, ','); // retrieve student CGPA and convert
+        getline(ss, s_cgpa, ','); // retrieve student cgpa and convert
         cgpa = strtof(s_cgpa.c_str(), NULL); // replaced as above
         getline(ss, s_researchscore, ','); // retrieve student research score and convert
         researchscore = atoi(s_researchscore.c_str());
@@ -134,25 +116,23 @@ int main(){
         getline(ss, s_writing, ','); // Toelf writing score
         writing = atoi(s_writing.c_str());
 
-        // create new instance of InternationalStudent, leave blank fields for Lab 1 required setting
-        InternationalStudent currentIStudent(firstname, "N/A", cgpa, researchscore, country, reading, speaking, listening, writing);
+        // create new instance of InternationalStudent, add to vector, increment count
+        InternationalStudent currentIStudent(firstname, lastname, cgpa, researchscore, country, reading, speaking, listening, writing);
+        international_students.push_back(currentIStudent);
+        unsigned i_count = unsigned(international_student_count++);
 
         // print the student info to the screen using getters, including international specific data
-        cout << "International student " << international_student_count << " "
-             << currentIStudent.firstname() << " " << currentIStudent.lastname()
-             << " from " << currentIStudent.country() << " has a CGPA of "
-             << currentIStudent.cgpa() << ", and a research score of "
-             << currentIStudent.researchscore() << endl
-             << "    TOELF scores are as follows: Reading " << currentIStudent.reading()
-             << ", Listening: " << currentIStudent.listening() << ", Speaking: "
-             << currentIStudent.speaking() << ", Writing: " << currentIStudent.writing()
-             << ", Total: " << currentIStudent.total() << endl;
-
-        international_student_count++;
+        cout << "International student " << international_student_count
+             << international_students[i_count]
+             << endl;
     }
 
     // close the file
     internationalFile.close();
+
+    // at this point data has populated the vectors and is ready to use
+    // now request user input
+    start_sort(domestic_students, international_students);
 
     return 0;
 }

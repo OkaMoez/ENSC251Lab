@@ -1,7 +1,9 @@
 //student.cpp to implement your classes
+#include <iostream>
 #include "student.hpp"
+using namespace std;
 
-// Student constructor
+// Student Constructor
 Student::Student() { Student("empty", "empty", 0.0, 0); }
 Student::Student(string firstname, string lastname, float cgpa,
     int researchscore)
@@ -12,13 +14,13 @@ Student::Student(string firstname, string lastname, float cgpa,
     set_researchscore(researchscore);
 }
 
-// Student member functions
+// Student Member Functions
 void Student::set_firstname(string firstname) { firstname_ = firstname; }
 void Student::set_lastname(string lastname) { lastname_ = lastname; }
 void Student::set_cgpa(float cgpa) { cgpa_ = cgpa; }
 void Student::set_researchscore(int researchscore) { researchscore_ = researchscore; }
 
-// DomesticStudent constructor
+// DomesticStudent Constructor
 DomesticStudent::DomesticStudent() { DomesticStudent("empty", "empty", 0.0, 0, "empty"); }
 DomesticStudent::DomesticStudent(string firstname, string lastname,
     float cgpa, int researchscore, string province) :
@@ -27,10 +29,20 @@ DomesticStudent::DomesticStudent(string firstname, string lastname,
     set_province(province);
 }
 
-// DomesticStudent member function
+// DomesticStudent Member Function
 void DomesticStudent::set_province(string province) { province_ = province; }
 
-// ToelfScore constructor
+// Overloading << for DomesticStudent
+std::ostream &operator<<( ostream &output, const DomesticStudent& student){
+    output << " " << student.firstname()
+           << " " << student.lastname()
+           << " from " << student.province()
+           << " has a CGPA of " << student.cgpa()
+           << ", and a research score of " << student.researchscore();
+    return output;
+}
+
+// ToelfScore Constructor
 ToelfScore::ToelfScore(){ ToelfScore(0, 0, 0, 0); }
 ToelfScore::ToelfScore(int reading, int listening, int speaking, int writing)
 {
@@ -41,14 +53,25 @@ ToelfScore::ToelfScore(int reading, int listening, int speaking, int writing)
     update_total();
 }
 
-// ToelfScore member function
+// ToelfScore Member Function
 void ToelfScore::set_reading(int reading) { reading_ = reading; update_total(); }
 void ToelfScore::set_listening(int listening) { listening_ = listening; update_total(); }
 void ToelfScore::set_speaking(int speaking) { speaking_ = speaking; update_total(); }
 void ToelfScore::set_writing(int writing) { writing_ = writing; update_total(); }
-void ToelfScore::update_total() { total_ = reading_ + listening_ + speaking_ + writing_; }
+void ToelfScore::update_total() {
+    total_ = reading_ + listening_ + speaking_ + writing_;
+    update_requirements();
+}
+void ToelfScore::update_requirements(){ // Logic sets boolean for later sorting.  (See print_vector() in functions.cpp.)
+    int min = 20;
+    int min_total = 93;
+    if ((reading() < min) || (listening() < min) || (speaking() < min) || (writing() < min) || (total() < min_total))
+        meets_requirements_ = false;
+    else
+        meets_requirements_ = true;
+}
 
-// InternationalStudent constructor
+// InternationalStudent Constructor
 InternationalStudent::InternationalStudent() { InternationalStudent("empty", "empty", 0.0, 0, "empty", 0, 0, 0, 0); }
 InternationalStudent::InternationalStudent(string firstname, string lastname,
     float cgpa,	int researchscore, string country, int reading, int listening,
@@ -61,9 +84,24 @@ InternationalStudent::InternationalStudent(string firstname, string lastname,
     set_writing(writing);
 }
 
-// InternationalStudent member function
+// InternationalStudent Member Function
 void InternationalStudent::set_country(string country) { country_ = country; }
 void InternationalStudent::set_reading(int reading) { my_toelf_.set_reading(reading);}
 void InternationalStudent::set_listening(int listening) { my_toelf_.set_speaking(listening);}
 void InternationalStudent::set_speaking(int speaking) { my_toelf_.set_listening(speaking);}
 void InternationalStudent::set_writing(int writing) { my_toelf_.set_writing(writing);}
+
+// Overloading << for InternationalStudent
+std::ostream &operator<<( ostream &output, const InternationalStudent& student) {
+    output << " " << student.firstname()
+           << " " << student.lastname()
+           << " from " << student.country()
+           << " has a CGPA of " << student.cgpa()
+           << ", and a research score of " << student.researchscore()
+           << " [TOELF] reading: " << student.reading()
+           << ", listening: " << student.listening()
+           << ", speaking: " << student.speaking()
+           << ", writing: " << student.writing()
+           << ", total: " << student.total();
+    return output;
+}

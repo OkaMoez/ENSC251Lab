@@ -4,10 +4,13 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
+        functions.cpp \
         main.cpp \
         student.cpp
 
 HEADERS += \
+    constants.hpp \
+    functions.hpp \
     student.hpp
 
 DISTFILES += \

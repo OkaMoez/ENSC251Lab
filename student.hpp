@@ -1,8 +1,8 @@
-//header file student.hpp to declare your classes
+// Headers contain empty declarations and trivial functions.
 #ifndef STUDENT_HPP
 #define STUDENT_HPP
-#include <string> //you will have to use string in C++
-using namespace std; //use namespace std
+#include "constants.hpp"
+using namespace std;
 
 class Student
 {
@@ -16,15 +16,25 @@ public:
     Student();
 	Student(string firstname, string lastname, float cgpa, int researchscore);
 
-	string firstname() { return firstname_; }
-	string lastname() { return lastname_; }
-	float cgpa() { return cgpa_; }
-	int researchscore() { return researchscore_; }
+    string firstname() const { return firstname_; }
+    string lastname() const { return lastname_; }
+    float cgpa() const { return cgpa_; }
+    int researchscore() const { return researchscore_; }
 
 	void set_firstname(string firstname);
 	void set_lastname(string lastname);
 	void set_cgpa(float cgpa);
-	void set_researchscore(int researchscore);
+    void set_researchscore(int researchscore);
+
+    // Friend Functions
+    template <class T>
+    friend int compare_firstname(const T& student1, const T& student2);
+    template <class T>
+    friend int compare_lastname(const T& student1, const T& student2);
+    template <class T>
+    friend int compare_cgpa(const T& student1, const T& student2);
+    template <class T>
+    friend int compare_researchscore(const T& student1, const T& student2);
 };
 
 class DomesticStudent : public Student
@@ -37,9 +47,12 @@ public:
 	DomesticStudent(string firstname, string lastname, float cgpa,
 		int researchscore, string province);
 
-	string province() { return province_; }
+    string province() const { return province_; }
 
-	void set_province(string province);
+    void set_province(string province);
+
+    // << Operator Overload
+    friend ostream& operator<<( ostream& output, const DomesticStudent& student);
 };
 
 class ToelfScore
@@ -50,22 +63,25 @@ private:
 	int speaking_;
 	int writing_;
 	int total_;
+    bool meets_requirements_;  // Added for sorting.
 
 public:
     ToelfScore();
     ToelfScore(int reading, int listening, int speaking, int writing);
 
-	int reading() { return reading_; }
-	int listening() { return listening_; }
-	int speaking() { return speaking_; }
-	int writing() { return writing_; }
-	int total() { return total_; }
+    int reading() const { return reading_; }
+    int listening() const { return listening_; }
+    int speaking() const { return speaking_; }
+    int writing() const { return writing_; }
+    int total() const { return total_; }
+    bool check_requirements() const { return meets_requirements_; }  // Added for sorting.
 
 	void set_reading(int reading);
     void set_listening(int listening);
     void set_speaking(int speaking);
 	void set_writing(int writing);
-	void update_total();
+    void update_requirements();  // Added for sorting.
+    void update_total();
 };
 
 class InternationalStudent : public Student
@@ -80,17 +96,22 @@ public:
         int researchscore, string country, int reading, int listening,
         int speaking, int writing);
 
-	string country() { return country_; }
-    int reading() { return my_toelf_.reading(); }
-    int listening() { return my_toelf_.listening(); }
-    int speaking() { return my_toelf_.speaking(); }
-    int writing() { return my_toelf_.writing(); }
-    int total() { return my_toelf_.total(); }
+    string country() const { return country_; }
+    int reading() const { return my_toelf_.reading(); }
+    int listening() const { return my_toelf_.listening(); }
+    int speaking() const { return my_toelf_.speaking(); }
+    int writing() const { return my_toelf_.writing(); }
+    int total() const { return my_toelf_.total(); }
+    bool check_requirements() const { return my_toelf_.check_requirements(); }  // Added for sorting.
 
-	void set_country(string country);
+    void set_country(string country);
     void set_reading(int reading);
     void set_listening(int listening);
     void set_speaking(int speaking);
     void set_writing(int writing);
+
+    // << Operator Overload
+    friend ostream& operator<<( ostream& output, const InternationalStudent& student);
 };
-#endif
+
+#endif //STUDENT_HPP
