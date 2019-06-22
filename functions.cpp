@@ -16,7 +16,6 @@ void start_sort(vector<DomesticStudent> &D_vector,
     while (valid_selection != true) {
         cout << "Sort [Domestic] or [International] Students? " << endl;
         cin >> user_input;
-        cout << endl;
 
         // First letters are used to forgive typos.
         if ((user_input.at(0) == 'D') | (user_input.at(0) == 'd')) {
@@ -35,82 +34,72 @@ void start_sort(vector<DomesticStudent> &D_vector,
 }
 
 template <class T> // Allows function to take either student type.
-void get_sort_method(int type, vector<T> &loaded_vector){
+void get_sort_method(int student_type, vector<T> &loaded_vector){
     string user_input;
-    string text;
-
-    if (type == kDomestic)
-        text = "domestic";
-    else
-        text = "international";
+    string text = kStudentWordList[student_type];
+    int sort_type = 0;
+    bool sort_ready = false;
 
     bool valid_selection = false;  // Loop continues until user chooses to quit.
     while (valid_selection != true) {
         cout << "Sort " << text << " students by [First] name, [Last] name, "
              << "[CGPA], [Research] score, or [Overall] academics?" << endl;
         cin >> user_input;
-        cout << endl;
 
         // First letters are used to forgive typos.
         if ((user_input.at(0) == 'F') | (user_input.at(0) == 'f')) {
-            sort_firstname(loaded_vector);
+            sort_type = kFirstName;
+            sort_ready = true;
         }
         else if ((user_input.at(0) == 'L') | (user_input.at(0) == 'l')){
-            sort_lastname(loaded_vector);
+            sort_type = kLastName;
+            sort_ready = true;
         }
         else if ((user_input.at(0) == 'C') | (user_input.at(0) == 'c')){
-            sort_cgpa(loaded_vector);
+            sort_type = kCgpa;
+            sort_ready = true;
         }
         else if ((user_input.at(0) == 'R') | (user_input.at(0) == 'r')){
-            sort_researchscore(loaded_vector);
+            sort_type = kResearchScore;
+            sort_ready = true;
         }
         else if ((user_input.at(0) == 'O') | (user_input.at(0) == 'o')){
-            sort_overall(loaded_vector);
+            sort_type = kOverall + student_type;
+            sort_ready = true;
         }
         else if ((user_input.at(0) == 'Q') | (user_input.at(0) == 'q'))
             valid_selection = true;
-        else
+        else{
             cout << "Invalid input. " // Looped text is to help user correct invalid inputs.
                  << "Please select [First], [Last], "
                  << "[CGPA], [Research], [Overall], or [Quit]."
                  << endl;
+        }
+        if (sort_ready == true){
+            sort_students(sort_type, loaded_vector);
+        }
+        sort_ready = false;
     }
 }
 
 // Sorting Function Implementations
 template <class T>
-void sort_firstname(vector<T> &loaded_vector){
-    sort(loaded_vector.begin(), loaded_vector.end(), CompareStudent(kFirstName));
-    print_vector(kSelectBasic, loaded_vector);
+void sort_students(int sort_type, vector<T> &loaded_vector){
+    sort(loaded_vector.begin(), loaded_vector.end(), CompareStudent(sort_type));
+    if (sort_type != (kOverall + kInternational))
+        print_vector(kSelectBasic, loaded_vector);
+    else {
+        print_vector(kSelectToelf, loaded_vector);
+    }
 }
-template <class T>
-void sort_lastname(vector<T> &loaded_vector){
-    sort(loaded_vector.begin(), loaded_vector.end(), CompareStudent(kLastName));
-    print_vector(kSelectBasic, loaded_vector);
-}
-template <class T>
-void sort_cgpa(vector<T> &loaded_vector){
-    sort(loaded_vector.begin(), loaded_vector.end(), CompareStudent(kCgpa));
-    print_vector(kSelectBasic, loaded_vector);
-}
-template <class T>
-void sort_researchscore(vector<T> &loaded_vector){
-    sort(loaded_vector.begin(), loaded_vector.end(), CompareStudent(kResearchScore));
-    print_vector(kSelectBasic, loaded_vector);
-}
-template <class T>
-void sort_overall(vector<T> &loaded_vector){
-    sort(loaded_vector.begin(), loaded_vector.end(), CompareStudent(kOverall));
-    print_vector(kSelectToelf, loaded_vector);
-}
-void sort_country(vector<InternationalStudent> &loaded_vector){
-    sort(loaded_vector.begin(), loaded_vector.end(), CompareStudent(kCountry));
-    print_vector(kSelectBasic, loaded_vector);
-}
-void sort_province(vector<DomesticStudent> &loaded_vector){
-    sort(loaded_vector.begin(), loaded_vector.end(), CompareStudent(kProvince));
-    print_vector(kSelectBasic, loaded_vector);
-}
+//void sort_country(vector<InternationalStudent> &loaded_vector){
+//    sort(loaded_vector.begin(), loaded_vector.end(), CompareStudent(kCountry));
+//    print_vector(kSelectBasic, loaded_vector);
+//}
+//void sort_province(vector<DomesticStudent> &loaded_vector){
+//    sort(loaded_vector.begin(), loaded_vector.end(), CompareStudent(kProvince));
+//    print_vector(kSelectBasic, loaded_vector);
+//}
 
 CompareStudent::CompareStudent(int attribute){this->attribute = attribute;}
 template <class T>

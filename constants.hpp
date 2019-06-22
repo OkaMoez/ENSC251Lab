@@ -1,5 +1,7 @@
 #ifndef CONSTANTS_HPP
 #define CONSTANTS_HPP
+#include <string>
+using namespace std;
 
 // Constants are provided for easily passing through functions.
 // Basic Class Constants
@@ -23,5 +25,23 @@ const int kInternational = 14;
 // Selection Filters
 const int kSelectBasic = 15;
 const int kSelectToelf = 16;
+
+// Commonly Used Word Array
+const string kStudentWordList[14] = {
+    "first name",
+    "last name",
+    "CGPA",
+    "research score",
+    "province",
+    "country",
+    "reading",
+    "listening",
+    "speaking",
+    "writing",
+    "toelf total",
+    "overall",
+    "domestic",
+    "international"
+};
 
 #endif // CONSTANTS_HPP

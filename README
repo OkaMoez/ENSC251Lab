@@ -17,14 +17,15 @@ Lab 1 Requirements [COMPLETE] [9/10]
 
 Note: Lost Marks
 0.5 - didn't complile on server, error with "nullptr"
-    Need to test future builds.
+    *** Using NULL results in no complile errors
+    Fixed.
 0.5 - used inheritance instead of getters/setters to link ToelfScore to students
     Fixed.
 Forgot some out-of-place code (vectors, blank fields, etc)
     Cleaned in Lab_2 [20/06/2019]
 
 ------------------
-Lab 2 Requirements
+Lab 2 Requirements [COMPLETE] [10/10]
 ------------------
 1. Implement arrays/vectors [COMPLETE]
 2. Comparator functions [COMPLETE]
@@ -34,7 +35,10 @@ Lab 2 Requirements
 6. Unit test [COMPLETE]
 7. Comments [COMPLETE]
 
-Note:
+Note: Feedback
+ - Make sure to thouroughly comment things not learnt in class
 Using Templates to handle differing vector inputs, but lots of repeats
     Maybe look for a cleaner way of handling ~10x repeated templates
+    Am using overloaded function and consolidating functions
+    Maybe look into polymorphism and unions?
 

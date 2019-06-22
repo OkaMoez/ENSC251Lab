@@ -1,7 +1,7 @@
 // Headers contain empty declarations and trivial functions.
 #ifndef STUDENT_HPP
 #define STUDENT_HPP
-#include <string>
+#include "constants.hpp"
 using namespace std;
 
 class Student
