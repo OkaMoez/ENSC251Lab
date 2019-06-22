@@ -26,7 +26,7 @@ Forgot some out-of-place code (vectors, blank fields, etc)
 ------------------
 Lab 2 Requirements
 ------------------
-1. Inplement arrays/vectors [COMPLETE]
+1. Implement arrays/vectors [COMPLETE]
 2. Comparator functions [COMPLETE]
 3. Overload << opperator [COMPLETE]
 4. Sort based on user input, single field [COMPLETE]

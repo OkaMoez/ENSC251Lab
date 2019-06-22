@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
+#include <algorithm> // included to use std::sort (see https://www.geeksforgeeks.org/sort-c-stl/)
 #include "constants.hpp"
 #include "functions.hpp"
 #include "student.hpp"
@@ -11,10 +11,10 @@ using namespace std;
 void start_sort(vector<DomesticStudent> &D_vector,
                 vector<InternationalStudent> &I_vector){
     string user_input;
-    cout << "Sort [Domestic] or [International] Students? " << endl;
 
     bool valid_selection = false;  // Loop continues until user chooses to quit.
     while (valid_selection != true) {
+        cout << "Sort [Domestic] or [International] Students? " << endl;
         cin >> user_input;
         cout << endl;
 
