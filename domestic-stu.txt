@@ -98,4 +98,4 @@ Savannah,Gonzales,MB,3.85,99
 Audrey,Bryant,NB,3.75,98
 Brooklyn,Alexander,NL,3.65,97
 Bella,Russell,NT,3.55,96
-Claire,Griffin,NS,3.45,95
+Claire,Griffin,NS,3.4511,95

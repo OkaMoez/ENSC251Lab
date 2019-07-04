@@ -1,9 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm> // included to use std::sort (see https://www.geeksforgeeks.org/sort-c-stl/)
-#include "constants.hpp"
 #include "functions.hpp"
-#include "student.hpp"
 using namespace std;
 
 // User Input Function Implementations
@@ -92,14 +90,6 @@ void sort_students(int sort_type, vector<T> &loaded_vector){
         print_vector(kSelectToelf, loaded_vector);
     }
 }
-//void sort_country(vector<InternationalStudent> &loaded_vector){
-//    sort(loaded_vector.begin(), loaded_vector.end(), CompareStudent(kCountry));
-//    print_vector(kSelectBasic, loaded_vector);
-//}
-//void sort_province(vector<DomesticStudent> &loaded_vector){
-//    sort(loaded_vector.begin(), loaded_vector.end(), CompareStudent(kProvince));
-//    print_vector(kSelectBasic, loaded_vector);
-//}
 
 CompareStudent::CompareStudent(int attribute){this->attribute = attribute;}
 template <class T>
@@ -136,8 +126,9 @@ bool CompareStudent::operator()(const T &student1, const T &student2){
             int compared_cgpa = compare_cgpa(student1,student2);
             int compared_researchscore = compare_researchscore(student1,student2);
             int compared_location = compare_location(student1,student2);
-            if ((compared_cgpa > 0) || ((compared_cgpa == 0) && (compared_researchscore > 0))
-                || ((compared_cgpa == 0) && (compared_researchscore == 0) && (compared_location < 0)))
+            if ((compared_cgpa > 0) ||
+               ((compared_cgpa == 0) && (compared_researchscore > 0)) ||
+               ((compared_cgpa == 0) && (compared_researchscore == 0) && (compared_location < 0)))
                 return true;
             else
                 return false;

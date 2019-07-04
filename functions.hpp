@@ -2,7 +2,6 @@
 #ifndef FUNCTIONS_HPP
 #define FUNCTIONS_HPP
 #include <vector>
-#include "constants.hpp"
 #include "student.hpp"
 using namespace std;
 

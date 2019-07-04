@@ -2,7 +2,6 @@
 #ifndef STUDENT_HPP
 #define STUDENT_HPP
 #include "constants.hpp"
-using namespace std;
 
 class Student
 {
@@ -10,7 +9,7 @@ private:
 	string firstname_;
 	string lastname_;
 	float cgpa_;
-	int researchscore_;
+    int researchscore_;
 
 public:
     Student();
@@ -40,7 +39,7 @@ public:
 class DomesticStudent : public Student
 {
 private:
-	string province_;
+    string province_;
 
 public:
     DomesticStudent();
@@ -113,5 +112,4 @@ public:
     // << Operator Overload
     friend ostream& operator<<( ostream& output, const InternationalStudent& student);
 };
-
 #endif //STUDENT_HPP

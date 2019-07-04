@@ -6,12 +6,14 @@ CONFIG -= qt
 SOURCES += \
         functions.cpp \
         main.cpp \
-        student.cpp
+        student.cpp \
+        studentlists.cpp
 
 HEADERS += \
     constants.hpp \
     functions.hpp \
-    student.hpp
+    student.hpp \
+    studentlists.hpp
 
 DISTFILES += \
     README \

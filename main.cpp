@@ -5,9 +5,8 @@
 #include <sstream> //formatted string processing
 #include <cstdlib> //atof and atoi
 #include <vector> // vectors for holding student objects
-#include <algorithm> // for tranforming strings etc
-#include "functions.hpp" // custom functions for Lab 2
-#include "student.hpp" // header file from Lab 1
+#include <algorithm> // for tranforming strings etc #### Revise ####
+#include "studentlists.hpp" // header includes info from Labs 1, 2, and 3
 
 int main(){
     string line; //Read the domestic-stu.txt file and exit if failed
@@ -27,8 +26,7 @@ int main(){
     int domestic_student_count = 0;
 
     // initialize InternationalStudent array
-    vector<DomesticStudent> domestic_students;
-    domestic_students.reserve(100); // vector size as specified in lab doc
+    DStudentList domestic_students;
 
     while( getline(domesticFile, line) ) {
     // Process each line, get each field separated by a comma.
@@ -46,24 +44,30 @@ int main(){
         getline(ss, lastname, ',');
         getline(ss, province, ',');
         getline(ss, s_cgpa, ',');
-        cgpa = strtof(s_cgpa.c_str(), NULL); // replaced atof with strtof to remove warning
+        cgpa = strtof(s_cgpa.c_str(), nullptr); // replaced atof with strtof to remove warning
         getline(ss, s_researchscore, ',');
         researchscore = atoi(s_researchscore.c_str());
 
         // create new instance of DomesticStudent, add to vector, increment count
         DomesticStudent currentDStudent(firstname, lastname, cgpa, researchscore, province);
-        domestic_students.push_back(currentDStudent);
-        unsigned d_count = unsigned(domestic_student_count++);
+        //cout << "make new object" << endl;
+        domestic_students.NewStudent(currentDStudent);
+        //cout << "made" << endl;
+        domestic_student_count++;
 
         //print the student info to the screen using getters
-        cout << "Domestic student " << domestic_student_count
-             << domestic_students[d_count]
-             << endl;
+        //cout << "Domestic student " << domestic_student_count;
+        //domestic_students.Print(domestic_student_count);
+        //cout << endl;
     }
+
+    domestic_students.PrintList();
+    //domestic_students.PrintTarget(99);
+    //domestic_students.PrintTarget(100);
 
     //close your file
     domesticFile.close();
-
+/*
     // TEACHER COMMENTS END HERE
 
     // repeat process for International Students
@@ -102,7 +106,7 @@ int main(){
         lastname[0] = toupper(lastname[0]);
         getline(ss, country, ','); // retrieve student home country
         getline(ss, s_cgpa, ','); // retrieve student cgpa and convert
-        cgpa = strtof(s_cgpa.c_str(), NULL); // replaced as above
+        cgpa = strtof(s_cgpa.c_str(), nullptr); // replaced as above
         getline(ss, s_researchscore, ','); // retrieve student research score and convert
         researchscore = atoi(s_researchscore.c_str());
 
@@ -122,9 +126,9 @@ int main(){
         unsigned i_count = unsigned(international_student_count++);
 
         // print the student info to the screen using getters, including international specific data
-        cout << "International student " << international_student_count
-             << international_students[i_count]
-             << endl;
+        //cout << "International student " << international_student_count
+        //     << international_students[i_count]
+        //     << endl;
     }
 
     // close the file
@@ -132,7 +136,8 @@ int main(){
 
     // at this point data has populated the vectors and is ready to use
     // now request user input
-    start_sort(domestic_students, international_students);
+    //start_sort(domestic_students, international_students);
 
     return 0;
+*/
 }

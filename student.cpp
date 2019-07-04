@@ -1,6 +1,7 @@
 //student.cpp to implement your classes
 #include <iostream>
 #include "student.hpp"
+#include "functions.hpp"
 using namespace std;
 
 // Student Constructor
