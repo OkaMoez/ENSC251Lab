@@ -6,7 +6,7 @@
 #include <cstdlib> //atof and atoi
 #include <vector> // vectors for holding student objects
 #include <algorithm> // for tranforming strings etc #### Revise ####
-#include "studentlists.hpp" // header includes info from Labs 1, 2, and 3
+#include "functions.hpp" // header includes info from Labs 1, 2, and 3
 
 int main(){
     string line; //Read the domestic-stu.txt file and exit if failed
@@ -140,4 +140,5 @@ int main(){
 
     return 0;
 */
+    StartMenu(domestic_students);
 }

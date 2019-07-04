@@ -1,5 +1,6 @@
 #include <iostream>
-#include "studentlists.hpp"
+#include <algorithm> // For string transform().
+#include "functions.hpp"
 
 
 // StudentList Constructor
@@ -36,7 +37,7 @@ void DStudentList::NewStudent(DomesticStudent new_student)
 }
 void DStudentList::InsertOverall(DomesticStudent new_student)
 {
-    CompareStudent comparator(kOverall);
+    CompareStudent comparator(kOverall); // found in functions.hpp/cpp
     DNode *temp = new DNode;
     DNode *current = new DNode;
     DNode *previous = new DNode;
@@ -83,7 +84,7 @@ void DStudentList::InsertOverall(DomesticStudent new_student)
         }
     }
 }
-void DStudentList::InsertFirst(DomesticStudent new_student)
+void DStudentList::InsertFirst(DomesticStudent new_student) // reduntant?
 {
     DNode *temp = new DNode;
     temp -> a_student_ = new_student;
@@ -91,11 +92,11 @@ void DStudentList::InsertFirst(DomesticStudent new_student)
     head_ = temp;
     list_length_++;
 }
-void DStudentList::InsertLast(DomesticStudent new_student)
+void DStudentList::InsertLast(DomesticStudent new_student) // reduntant?
 {
     NewStudent(new_student);
 }
-void DStudentList::InsertStudent(int target, DomesticStudent new_student)
+void DStudentList::InsertStudent(int target, DomesticStudent new_student) // reduntant?
 {
     if (target == 1) {InsertFirst(new_student);}
     else if (target == list_length_) {InsertLast(new_student);}
@@ -118,7 +119,7 @@ void DStudentList::InsertStudent(int target, DomesticStudent new_student)
         list_length_++;
     }
 }
-void DStudentList::DeleteFirst()
+void DStudentList::DeleteFirst() // part 2
 {
     DNode *temp = new DNode;
     temp = head_;
@@ -126,7 +127,7 @@ void DStudentList::DeleteFirst()
     delete temp;
     list_length_--;
 }
-void DStudentList::DeleteLast()
+void DStudentList::DeleteLast() // part 2
 {
     DNode *previous = new DNode;
     DNode *current = new DNode;
@@ -143,7 +144,7 @@ void DStudentList::DeleteLast()
     delete current;
     list_length_--;
 }
-void DStudentList::DeleteStudent(int target)
+void DStudentList::DeleteStudent(int target) // part 2
 {
     if(target == 1) {DeleteFirst();}
     else if(target == list_length_) {DeleteLast();}
@@ -152,44 +153,39 @@ void DStudentList::DeleteStudent(int target)
         DNode *previous = new DNode;
         DNode *current = new DNode;
         current = head_;
+        if(target == 0) {DeleteFirst();}
+        else if(target == list_length_) {DeleteFirst();}
+        else
+            for(int i=1; i<target; i++)
+            {
+                previous = current;
+                current = current -> next_;
+            }
 
-        for(int i=1; i<target; i++)
-        {
-            previous = current;
-            current = current -> next_;
-        }
-
-        previous -> next_ = current -> next_;
-        list_length_--;
+            previous -> next_ = current -> next_;
+            list_length_--;
     }
 }
-void DStudentList::PrintTarget(int target)
-{
+void DStudentList::PrintTarget(int target){ // for testing specifically
     DNode *previous = new DNode;
     DNode *current = new DNode;
     current = head_;
 
-    for(int i=1; i<target; i++)
-    {
+    for(int i=1; i<target; i++){
         previous = current;
         current = current -> next_;
     }
 
     cout << current -> a_student_ << endl;
 }
-void DStudentList::PrintList()
-{
+void DStudentList::PrintList(){
     DNode *temp = new DNode;
     temp = head_;
-    int count = 1;
 
     cout << list_length_ << endl;
 
-    bool idk = false;
-    while(idk != true)
-    {
-        cout << count++ << temp -> a_student_ << endl;
+    for(int i=0; i<list_length_; i++){
+        cout << i+1 << temp -> a_student_ << endl;
         temp = temp -> next_;
-        if (count == list_length_ +1) {cout << "done" << endl;; break;}
     }
 }

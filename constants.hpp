@@ -27,7 +27,8 @@ const int kSelectBasic = 15;
 const int kSelectToelf = 16;
 
 // Commonly Used Word Array
-const string kStudentWordList[14] = {
+const string kStudentWordList[15] = {
+    "N/A",
     "first name",
     "last name",
     "CGPA",

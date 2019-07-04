@@ -42,3 +42,15 @@ Using Templates to handle differing vector inputs, but lots of repeats
     Am using overloaded function and consolidating functions
     Maybe look into polymorphism and unions?
 
+------------------
+Lab 3 Requirements [IN PROGRESS] [X/10]
+------------------
+1. Linked list [IN PROGRESS]
+2. Sorting input [IN PROGRESS]
+3. Search matching fields [IN PROGRESS]
+4. Insert new student sorted [IN PROGRESS]
+5. Delete students [IN PROGRESS]
+6. Merge lists [TODO]
+7. Rewrite sorting functions [TODO]
+8. Comments [IN PROGRESS]
+

@@ -2,7 +2,7 @@
 #ifndef FUNCTIONS_HPP
 #define FUNCTIONS_HPP
 #include <vector>
-#include "student.hpp"
+#include "studentlists.hpp"
 using namespace std;
 
 // User Input Function Prototypes
@@ -10,6 +10,17 @@ void start_sort(vector<DomesticStudent> &D_vector,
                 vector<InternationalStudent> &I_vector);
 template <class T> // This allows function to take either student derivative.
 void get_sort_method(int student_type, vector<T> &loaded_vector);
+
+void StartMenu(DStudentList &D_list/*, IStudentList &I_List*/);
+void ListMenu(int kDomestic, DStudentList &loaded_list);
+void SearchType(int student_type, DStudentList &loaded_list);
+void Search(int search_type, DStudentList &loaded_list);
+void MakeNewStudent(int student_type,DStudentList &loaded_list);
+void SearchAndDestroy(DStudentList &loaded_list);
+string GetTarget(string target_type);
+float GetTarget(float target_type);
+int GetTarget(int target_type);
+string CleanNameInput(string dirty_string);
 
 // Sorting Function Protoypes
 template <class T>
