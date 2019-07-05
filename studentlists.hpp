@@ -2,30 +2,30 @@
 #define STUDENTLISTS_H
 #include "student.hpp"
 
-struct DNode
+struct Node
 {
-    DomesticStudent a_student_;
-    DNode *next_;
+    Student a_student_;
+    Node *next_;
 };
 
-class DStudentList
+class StudentList
 {
 private:
-    DNode *head_;
-    DNode *tail_;
+    Node *head_;
+    Node *tail_;
     int list_length_;
 
 public:
-    DStudentList();
+    StudentList();
 
-    DNode head() const {return *head_;}
+    Node head() const {return *head_;}
     int list_length() const {return list_length_;}
 
-    void NewStudent(DomesticStudent new_student);
-    void InsertOverall(DomesticStudent new_student);
-    void InsertFirst(DomesticStudent new_student);
-    void InsertLast(DomesticStudent new_student);// kinda redundent #### REVISE ####
-    void InsertStudent(int target, DomesticStudent new_student);// #### REVISE ####
+    void NewStudent(Student &new_student);
+    void InsertOverall(Student &new_student);
+    void InsertFirst(Student &new_student);
+    void InsertLast(Student &new_student);// kinda redundent #### REVISE ####
+    void InsertStudent(int target, Student &new_student);// #### REVISE ####
     void DeleteFirst();
     void DeleteLast();
     void DeleteStudent(int target);

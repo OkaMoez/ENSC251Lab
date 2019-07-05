@@ -20,6 +20,13 @@ void Student::set_firstname(string firstname) { firstname_ = firstname; }
 void Student::set_lastname(string lastname) { lastname_ = lastname; }
 void Student::set_cgpa(float cgpa) { cgpa_ = cgpa; }
 void Student::set_researchscore(int researchscore) { researchscore_ = researchscore; }
+void Student::Print(ostream &output) const { output << " Untyped Student" << endl; }
+
+// Overloading << for DomesticStudent
+std::ostream &operator<<( ostream &output, const Student& student){
+    student.Print(output);
+    return output;
+}
 
 // DomesticStudent Constructor
 DomesticStudent::DomesticStudent() { DomesticStudent("empty", "empty", 0.0, 0, "empty"); }
@@ -32,14 +39,17 @@ DomesticStudent::DomesticStudent(string firstname, string lastname,
 
 // DomesticStudent Member Function
 void DomesticStudent::set_province(string province) { province_ = province; }
+void DomesticStudent::Print(ostream &output) const {
+    output << " " << firstname()
+           << " " << lastname()
+           << " from " << province()
+           << " has a CGPA of " << cgpa()
+           << ", and a research score of " << researchscore();
+}
 
 // Overloading << for DomesticStudent
 std::ostream &operator<<( ostream &output, const DomesticStudent& student){
-    output << " " << student.firstname()
-           << " " << student.lastname()
-           << " from " << student.province()
-           << " has a CGPA of " << student.cgpa()
-           << ", and a research score of " << student.researchscore();
+    student.Print(output);
     return output;
 }
 
@@ -91,18 +101,21 @@ void InternationalStudent::set_reading(int reading) { my_toelf_.set_reading(read
 void InternationalStudent::set_listening(int listening) { my_toelf_.set_speaking(listening);}
 void InternationalStudent::set_speaking(int speaking) { my_toelf_.set_listening(speaking);}
 void InternationalStudent::set_writing(int writing) { my_toelf_.set_writing(writing);}
+void InternationalStudent::Print(ostream &output) const{
+    output << " " << firstname()
+           << " " << lastname()
+           << " from " << country()
+           << " has a CGPA of " << cgpa()
+           << ", and a research score of " << researchscore()
+           << " [TOELF] reading: " << reading()
+           << ", listening: " << listening()
+           << ", speaking: " << speaking()
+           << ", writing: " << writing()
+           << ", total: " << total();
+}
 
 // Overloading << for InternationalStudent
 std::ostream &operator<<( ostream &output, const InternationalStudent& student) {
-    output << " " << student.firstname()
-           << " " << student.lastname()
-           << " from " << student.country()
-           << " has a CGPA of " << student.cgpa()
-           << ", and a research score of " << student.researchscore()
-           << " [TOELF] reading: " << student.reading()
-           << ", listening: " << student.listening()
-           << ", speaking: " << student.speaking()
-           << ", writing: " << student.writing()
-           << ", total: " << student.total();
+    student.Print(output);
     return output;
 }

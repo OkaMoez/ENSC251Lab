@@ -26,7 +26,7 @@ int main(){
     int domestic_student_count = 0;
 
     // initialize InternationalStudent array
-    DStudentList domestic_students;
+    StudentList domestic_students;
 
     while( getline(domesticFile, line) ) {
     // Process each line, get each field separated by a comma.
@@ -50,9 +50,8 @@ int main(){
 
         // create new instance of DomesticStudent, add to vector, increment count
         DomesticStudent currentDStudent(firstname, lastname, cgpa, researchscore, province);
-        //cout << "make new object" << endl;
+        cout << "made" << currentDStudent << endl;
         domestic_students.NewStudent(currentDStudent);
-        //cout << "made" << endl;
         domestic_student_count++;
 
         //print the student info to the screen using getters

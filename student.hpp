@@ -14,16 +14,19 @@ private:
 public:
     Student();
 	Student(string firstname, string lastname, float cgpa, int researchscore);
+    virtual ~Student() {}
 
     string firstname() const { return firstname_; }
     string lastname() const { return lastname_; }
     float cgpa() const { return cgpa_; }
     int researchscore() const { return researchscore_; }
+    virtual string location() const { return "No Location."; }
 
 	void set_firstname(string firstname);
 	void set_lastname(string lastname);
 	void set_cgpa(float cgpa);
     void set_researchscore(int researchscore);
+    virtual void Print(ostream &output) const;
 
     // Friend Functions
     template <class T>
@@ -34,6 +37,7 @@ public:
     friend int compare_cgpa(const T& student1, const T& student2);
     template <class T>
     friend int compare_researchscore(const T& student1, const T& student2);
+    friend ostream& operator<<( ostream& output, const Student& student);
 };
 
 class DomesticStudent : public Student
@@ -44,11 +48,14 @@ private:
 public:
     DomesticStudent();
 	DomesticStudent(string firstname, string lastname, float cgpa,
-		int researchscore, string province);
+        int researchscore, string province);
+
+    virtual string location() const override {return province_;}
 
     string province() const { return province_; }
 
     void set_province(string province);
+    virtual void Print(ostream &output) const override;
 
     // << Operator Overload
     friend ostream& operator<<( ostream& output, const DomesticStudent& student);
@@ -95,6 +102,7 @@ public:
         int researchscore, string country, int reading, int listening,
         int speaking, int writing);
 
+    virtual string location() const override {return country_;}
     string country() const { return country_; }
     int reading() const { return my_toelf_.reading(); }
     int listening() const { return my_toelf_.listening(); }
@@ -108,6 +116,7 @@ public:
     void set_listening(int listening);
     void set_speaking(int speaking);
     void set_writing(int writing);
+    virtual void Print(ostream &output) const override;
 
     // << Operator Overload
     friend ostream& operator<<( ostream& output, const InternationalStudent& student);

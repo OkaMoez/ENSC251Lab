@@ -6,82 +6,7 @@
 using namespace std;
 
 // User Input Function Implementations
-// Vectors are passed by reference for efficiency.
-void start_sort(vector<DomesticStudent> &D_vector,
-                vector<InternationalStudent> &I_vector){
-    string user_input;
-
-    bool valid_selection = false;  // Loop continues until user chooses to quit.
-    while (valid_selection != true) {
-        cout << "Sort [Domestic] or [International] Students? " << endl;
-        cin >> user_input;
-
-        // First letters are used to forgive typos.
-        if ((user_input.at(0) == 'D') | (user_input.at(0) == 'd')) {
-            get_sort_method(kDomestic, D_vector);
-        }
-        else if ((user_input.at(0) == 'I') | (user_input.at(0) == 'i')){
-            get_sort_method(kInternational, I_vector);
-        }
-        else if ((user_input.at(0) == 'Q') | (user_input.at(0) == 'q')){
-            valid_selection = true;
-        }
-        else
-            cout << "Invalid input. " // Looped text is to help user correct invalid inputs.
-                 << "Please enter [International], [Domestic], or [Quit]."
-                 << endl;
-    }
-}
-
-template <class T> // Allows function to take either student type.
-void get_sort_method(int student_type, vector<T> &loaded_vector){
-    string user_input;
-    string text = kStudentWordList[student_type];
-    int sort_type = 0;
-    bool sort_ready = false;
-
-    bool valid_selection = false;  // Loop continues until user chooses to quit.
-    while (valid_selection != true) {
-        cout << "Sort " << text << " students by [First] name, [Last] name, "
-             << "[CGPA], [Research] score, or [Overall] academics?" << endl;
-        cin >> user_input;
-
-        // First letters are used to forgive typos.
-        if ((user_input.at(0) == 'F') | (user_input.at(0) == 'f')) {
-            sort_type = kFirstName;
-            sort_ready = true;
-        }
-        else if ((user_input.at(0) == 'L') | (user_input.at(0) == 'l')){
-            sort_type = kLastName;
-            sort_ready = true;
-        }
-        else if ((user_input.at(0) == 'C') | (user_input.at(0) == 'c')){
-            sort_type = kCgpa;
-            sort_ready = true;
-        }
-        else if ((user_input.at(0) == 'R') | (user_input.at(0) == 'r')){
-            sort_type = kResearchScore;
-            sort_ready = true;
-        }
-        else if ((user_input.at(0) == 'O') | (user_input.at(0) == 'o')){
-            sort_type = kOverall + student_type;
-            sort_ready = true;
-        }
-        else if ((user_input.at(0) == 'Q') | (user_input.at(0) == 'q')){
-            valid_selection = true;
-        }
-        else
-            cout << "Invalid input. " // Looped text is to help user correct invalid inputs.
-                 << "Please select [First], [Last], "
-                 << "[CGPA], [Research], [Overall], or [Quit]."
-                 << endl;
-        if (sort_ready == true){
-            sort_students(sort_type, loaded_vector);
-        }
-        sort_ready = false;
-    }
-}
-void StartMenu(DStudentList &D_list/*,
+void StartMenu(StudentList &D_list/*,
                 IStudentList &I_List*/){
     string user_input;
 
@@ -110,7 +35,7 @@ void StartMenu(DStudentList &D_list/*,
                  << endl;
     }
 }
-void ListMenu(int student_type, DStudentList &loaded_list)
+void ListMenu(int student_type, StudentList &loaded_list)
 {
     string user_input;
 
@@ -142,7 +67,7 @@ void ListMenu(int student_type, DStudentList &loaded_list)
                  << endl;
     }
 }
-void SearchType(int student_type, DStudentList &loaded_list)
+void SearchType(int student_type, StudentList &loaded_list)
 {
     string user_input;
     string text = kStudentWordList[student_type];
@@ -177,7 +102,7 @@ void SearchType(int student_type, DStudentList &loaded_list)
         search_ready = false;
     }
 }
-void Search(int search_type, DStudentList &loaded_list)
+void Search(int search_type, StudentList &loaded_list)
 {
     if((search_type == kFirstName) | (search_type == kCgpa)){
         string target_firstname = kStudentWordList[kFirstName];
@@ -185,8 +110,8 @@ void Search(int search_type, DStudentList &loaded_list)
         float target_cgpa = kCgpa;
         int target_researchscore = kResearchScore;
 
-        DNode *previous = new DNode;
-        DNode *current = new DNode;
+        Node *previous = new Node;
+        Node *current = new Node;
         *current = loaded_list.head();
 
         if (search_type == kFirstName){
@@ -218,14 +143,16 @@ void Search(int search_type, DStudentList &loaded_list)
     else
         cout << "Error: Untyped Search Request" << endl;
 }
-void MakeNewStudent(int student_type, DStudentList &loaded_list){
+void MakeNewStudent(int student_type, StudentList &loaded_list){
     string user_input;
     string first_name_input;
     string last_name_input;
     string location_input;
     float cgpa_input;
     int researchscore_input;
+    Student newStudent;
     DomesticStudent newDStudent;
+    InternationalStudent newIStudent;
     string text = kStudentWordList[student_type];
 
     bool done = false;
@@ -253,11 +180,12 @@ void MakeNewStudent(int student_type, DStudentList &loaded_list){
             //cin >>
         }
         else {
-            newDStudent = DomesticStudent(first_name_input, last_name_input, cgpa_input, researchscore_input, location_input);
-            loaded_list.NewStudent(newDStudent);
+            //newDStudent = DomesticStudent(first_name_input, last_name_input, cgpa_input, researchscore_input, location_input);
+            //loaded_list.NewStudent(*newDStudent);
+            //newStudent = *newDStudent;
         }
         cout << "Please confirm details. [Yes/No]" << endl
-             << newDStudent;
+             << newStudent;
         cin >> user_input;
         if((user_input.at(0) == 'Y') | (user_input.at(0) == 'y')){
             done = true;
@@ -265,11 +193,11 @@ void MakeNewStudent(int student_type, DStudentList &loaded_list){
     }
 
 }
-void SearchAndDestroy(DStudentList &loaded_list){
+void SearchAndDestroy(StudentList &loaded_list){
     string target_firstname = GetTarget(kStudentWordList[kFirstName]);
     string target_lastname = GetTarget(kStudentWordList[kLastName]);
-    DNode *previous = new DNode;
-    DNode *current = new DNode;
+    Node *previous = new Node;
+    Node *current = new Node;
     *current = loaded_list.head();
 
     for(int i=0; i<loaded_list.list_length(); i++){
@@ -302,8 +230,7 @@ int GetTarget(int target_type){
     cin >> user_input;
     return user_input;
 }
-string CleanNameInput(string dirty_string){
-    string user_input;
+string CleanNameInput(string user_input){
     // Conditioning input.
     transform(user_input.begin(), user_input.end(), user_input.begin(), ::tolower);
     // Removing whitespace. (See: https://www.techiedelight.com/remove-whitespaces-string-cpp/)
@@ -316,19 +243,9 @@ string CleanNameInput(string dirty_string){
 }
 
 // Sorting Function Implementations
-template <class T>
-void sort_students(int sort_type, vector<T> &loaded_vector){
-    sort(loaded_vector.begin(), loaded_vector.end(), CompareStudent(sort_type));
-    if (sort_type != (kOverall + kInternational))
-        print_vector(kSelectBasic, loaded_vector);
-    else {
-        print_vector(kSelectToelf, loaded_vector);
-    }
-}
-
 CompareStudent::CompareStudent(int attribute){this->attribute = attribute;}
-template <class T>
-bool CompareStudent::operator()(const T &student1, const T &student2){
+//template <class T>
+bool CompareStudent::operator()(const Student &student1, const Student &student2){
         if (attribute == kFirstName){
             compared_value = compare_firstname(student1,student2);
             if (compared_value < 0)
@@ -370,7 +287,6 @@ bool CompareStudent::operator()(const T &student1, const T &student2){
         }
         else
             return false;
-        return false;
 };
 
 // Friend Function Implementations
@@ -403,48 +319,12 @@ int compare_researchscore(const T& student1, const T& student2){
     else
         return 1;
 }
-// Compare location is overloaded to allow comparing both province and country.
-// This was an issue previously using templates.
-int compare_location(const DomesticStudent& student1, const DomesticStudent& student2){
-    if (student1.province() == student2.province())
+template <class T>
+int compare_location(const T& student1, const T& student2){
+    if (student1.location() == student2.location())
         return 0;
-    else if (student1.province() < student2.province())
+    else if (student1.location() < student2.location())
         return (-1);
     else
         return 1;
-}
-int compare_location(const InternationalStudent& student1, const InternationalStudent& student2){
-    if (student1.country() == student2.country())
-        return 0;
-    else if (student1.country() < student2.country())
-        return (-1);
-    else
-        return 1;
-}
-
-// Printing Function Implementation (overloaded)
-void print_vector(int selection, vector<DomesticStudent> &loaded_vector){
-    for(int i=0; i < signed(loaded_vector.size()); i++){
-        if (selection != 0) // for possible future filters/to remove warning
-        cout << "Domestic student " << (i+1)
-             << loaded_vector[unsigned(i)]
-             << endl;;
-    }
-}
-
-void print_vector(int selection, vector<InternationalStudent> &loaded_vector){
-    int student_num = 1;
-    for(int i=0; i < signed(loaded_vector.size()); i++){
-        if (selection == kSelectBasic){ // Regular filter/no filter prints all.
-            cout << "International student " << (student_num)
-                 << loaded_vector[unsigned(i)] << endl;
-            student_num++;
-        }
-        // Toelf filter avoids printing objects under cut-off during overall sorting.
-        else if ((selection == kSelectToelf) && (loaded_vector[unsigned(i)].check_requirements() == true)){
-            cout << "International student " << (student_num)
-                 << loaded_vector[unsigned(i)] << endl;
-            student_num++;
-        }
-    }
 }
