@@ -6,8 +6,8 @@
 using namespace std;
 
 // User Input Function Implementations
-void StartMenu(StudentList &D_list/*,
-                IStudentList &I_List*/){
+void StartMenu(StudentList &D_list,
+                StudentList &I_list){
     string user_input;
 
     bool valid_selection = false;  // Loop continues until user chooses to quit.
@@ -20,11 +20,12 @@ void StartMenu(StudentList &D_list/*,
             ListMenu(kDomestic, D_list);
         }
         else if ((user_input.at(0) == 'I') | (user_input.at(0) == 'i')){
-            //get_sort_method(kInternational, I_vector);
+            ListMenu(kInternational, I_list);
         }
 
         else if ((user_input.at(0) == 'B') | (user_input.at(0) == 'b')){
-            //get_sort_method(kInternational, I_vector);
+            StudentList B_list = MergeList(D_list, I_list);
+            ListMenu(kOverall, B_list);
         }
         else if ((user_input.at(0) == 'Q') | (user_input.at(0) == 'q')){
             valid_selection = true;
@@ -66,6 +67,19 @@ void ListMenu(int student_type, StudentList &loaded_list)
                  << "Please enter [International], [Domestic], or [Quit]."
                  << endl;
     }
+}
+StudentList MergeList(StudentList &list1, StudentList &list2){
+    StudentList list_out = list1;
+    Node *previous = new Node;
+    Node *current = new Node;
+    *current = list2.head();
+
+    for(int i=0; i<list2.list_length(); i++){
+        list_out.NewStudent(current->a_student_);
+        previous = current;
+        current = current -> next_;
+    }
+    list_out.PrintList();
 }
 void SearchType(int student_type, StudentList &loaded_list)
 {
@@ -125,15 +139,16 @@ void Search(int search_type, StudentList &loaded_list)
 
         for(int i=0; i<loaded_list.list_length(); i++){
             if (search_type == kFirstName){
-                if((current ->a_student_.firstname() == target_firstname) &&
-                  (current ->a_student_.lastname() == target_lastname)){
+                if((current ->a_student_->firstname() == target_firstname) &&
+                  (current ->a_student_->lastname() == target_lastname)){
                     cout << current -> a_student_ << endl;
                 }
             }
             else if (search_type == kCgpa) {
-                if((current ->a_student_.cgpa() == target_cgpa) &&
-                  (current ->a_student_.researchscore() == target_researchscore)){
-                    cout << current -> a_student_ << endl;
+                if ((current ->a_student_->cgpa() == target_cgpa)) {
+                    if((current ->a_student_->researchscore() == target_researchscore)){
+                        cout << current -> a_student_ << endl;
+                    }
                 }
             }
             previous = current;
@@ -143,6 +158,26 @@ void Search(int search_type, StudentList &loaded_list)
     else
         cout << "Error: Untyped Search Request" << endl;
 }
+void SearchAndDestroy(StudentList &loaded_list){
+    string target_firstname = GetTarget(kStudentWordList[kFirstName]);
+    string target_lastname = GetTarget(kStudentWordList[kLastName]);
+    Node *previous = new Node;
+    Node *current = new Node;
+    int count = 0;
+    *current = loaded_list.head();
+
+    for(int i=0; i<loaded_list.list_length(); i++){
+        count++;
+            if((current ->a_student_->firstname() == target_firstname) &&
+              (current ->a_student_->lastname() == target_lastname)){
+                loaded_list.DeleteStudent(count);
+                count--;
+            }
+        previous = current;
+        current = current -> next_;
+    }
+
+}
 void MakeNewStudent(int student_type, StudentList &loaded_list){
     string user_input;
     string first_name_input;
@@ -150,8 +185,11 @@ void MakeNewStudent(int student_type, StudentList &loaded_list){
     string location_input;
     float cgpa_input;
     int researchscore_input;
+    int reading_input;
+    int listening_input;
+    int speaking_input;
+    int writing_input;
     Student newStudent;
-    DomesticStudent newDStudent;
     InternationalStudent newIStudent;
     string text = kStudentWordList[student_type];
 
@@ -175,14 +213,23 @@ void MakeNewStudent(int student_type, StudentList &loaded_list){
             cout << "Country: ";
         }
         cin >> location_input;
-        if(student_type == kInternational){ // OH DEAR.
-            cout << "Toelf Scores: ";
-            //cin >>
+        if(student_type == kInternational){
+            cout << "Toelf Reading: ";
+            cin >> reading_input;
+            cout << "Toelf Listening: ";
+            cin >> listening_input;
+            cout << "Toelf Reading: ";
+            cin >> speaking_input;
+            cout << "Toelf Reading: ";
+            cin >> writing_input;
+            Student* newStudent = new InternationalStudent(first_name_input, last_name_input, cgpa_input, researchscore_input, location_input,
+                                                           reading_input, listening_input, speaking_input, writing_input);
+            loaded_list.NewStudent(newStudent);
+
         }
         else {
-            //newDStudent = DomesticStudent(first_name_input, last_name_input, cgpa_input, researchscore_input, location_input);
-            //loaded_list.NewStudent(*newDStudent);
-            //newStudent = *newDStudent;
+            Student* newStudent = new DomesticStudent(first_name_input, last_name_input, cgpa_input, researchscore_input, location_input);
+            loaded_list.NewStudent(newStudent);
         }
         cout << "Please confirm details. [Yes/No]" << endl
              << newStudent;
@@ -190,23 +237,6 @@ void MakeNewStudent(int student_type, StudentList &loaded_list){
         if((user_input.at(0) == 'Y') | (user_input.at(0) == 'y')){
             done = true;
         }
-    }
-
-}
-void SearchAndDestroy(StudentList &loaded_list){
-    string target_firstname = GetTarget(kStudentWordList[kFirstName]);
-    string target_lastname = GetTarget(kStudentWordList[kLastName]);
-    Node *previous = new Node;
-    Node *current = new Node;
-    *current = loaded_list.head();
-
-    for(int i=0; i<loaded_list.list_length(); i++){
-            if((current ->a_student_.firstname() == target_firstname) &&
-              (current ->a_student_.lastname() == target_lastname)){
-                loaded_list.DeleteStudent(i+1);
-            }
-        previous = current;
-        current = current -> next_;
     }
 
 }

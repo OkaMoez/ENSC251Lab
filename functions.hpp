@@ -5,8 +5,9 @@
 using namespace std;
 
 // User Input Function Prototypes
-void StartMenu(StudentList &D_list/*, IStudentList &I_List*/);
+void StartMenu(StudentList &D_list, StudentList &I_list);
 void ListMenu(int kDomestic, StudentList &loaded_list);
+StudentList MergeList(StudentList &list1, StudentList &list2);
 void SearchType(int student_type, StudentList &loaded_list);
 void Search(int search_type, StudentList &loaded_list);
 void MakeNewStudent(int student_type,StudentList &loaded_list);

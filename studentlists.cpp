@@ -18,7 +18,6 @@ void StudentList::NewStudent(Student* new_student)
     // ie. 'temp -> a_student_' is same as '(*temp).a_student_'
     // Mainly to save typing brackets too often, since brackets are needed
     // to resolve the '*' before the '.' operator.
-    cout << "pass1" << new_student << endl;
     Node *temp = new Node;
     temp -> a_student_ = new_student;
     temp -> next_ = nullptr;
@@ -31,14 +30,11 @@ void StudentList::NewStudent(Student* new_student)
     else
     {
         InsertOverall(new_student);
-        //tail_ -> next_ = temp;
-        //tail_ = temp;
     }
     list_length_++;
 }
 void StudentList::InsertOverall(Student* new_student)
 {
-    cout << "pass2" << new_student << endl;
     CompareStudent comparator(kOverall); // found in functions.hpp/cpp
     Node *temp = new Node;
     Node *current = new Node;
@@ -70,8 +66,6 @@ void StudentList::InsertOverall(Student* new_student)
                 previous -> next_ = temp;
                 temp -> next_ = current;
                 sorted = true;
-
-                cout << "placed" << temp->a_student_ << endl;
             }
             // reached end of list
             else
@@ -79,7 +73,6 @@ void StudentList::InsertOverall(Student* new_student)
                 tail_ -> next_ = temp;
                 tail_ = temp;
                 sorted = true;
-                cout << "placed" << tail_->a_student_ << endl;
             }
         }
     }

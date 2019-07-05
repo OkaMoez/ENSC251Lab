@@ -50,7 +50,6 @@ int main(){
 
         // create new instance of DomesticStudent, add to vector, increment count
         Student* currentDStudent = new DomesticStudent(firstname, lastname, cgpa, researchscore, province);
-        cout << "made" << currentDStudent << endl;
         domestic_students.NewStudent(currentDStudent);
         domestic_student_count++;
 
@@ -66,7 +65,7 @@ int main(){
 
     //close your file
     domesticFile.close();
-/*
+
     // TEACHER COMMENTS END HERE
 
     // repeat process for International Students
@@ -84,8 +83,7 @@ int main(){
     int international_student_count = 0;
 
     // initialize InternationalStudent array
-    vector<InternationalStudent> international_students;
-    international_students.reserve(100); // vector size as specified in lab doc
+    StudentList international_students;
 
     while (getline(internationalFile, line)) {
         // process each line, get each field separated by a comma.
@@ -120,9 +118,10 @@ int main(){
         writing = atoi(s_writing.c_str());
 
         // create new instance of InternationalStudent, add to vector, increment count
-        InternationalStudent currentIStudent(firstname, lastname, cgpa, researchscore, country, reading, speaking, listening, writing);
-        international_students.push_back(currentIStudent);
-        unsigned i_count = unsigned(international_student_count++);
+        Student* currentIStudent = new InternationalStudent(firstname, lastname, cgpa, researchscore, country,
+                                                       reading, listening, speaking, writing);
+        international_students.NewStudent(currentIStudent);
+        international_student_count++;
 
         // print the student info to the screen using getters, including international specific data
         //cout << "International student " << international_student_count
@@ -133,11 +132,9 @@ int main(){
     // close the file
     internationalFile.close();
 
-    // at this point data has populated the vectors and is ready to use
-    // now request user input
-    //start_sort(domestic_students, international_students);
+    international_students.PrintList();
+
+    StartMenu(domestic_students, international_students);
 
     return 0;
-*/
-    StartMenu(domestic_students);
 }
