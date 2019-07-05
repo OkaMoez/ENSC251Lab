@@ -12,7 +12,7 @@ StudentList::StudentList()
 }
 
 // StudentList Member Functions
-void StudentList::NewStudent(Student &new_student)
+void StudentList::NewStudent(Student* new_student)
 {
     // '->' operator is synonymous to '.' on a pointer.
     // ie. 'temp -> a_student_' is same as '(*temp).a_student_'
@@ -36,7 +36,7 @@ void StudentList::NewStudent(Student &new_student)
     }
     list_length_++;
 }
-void StudentList::InsertOverall(Student &new_student)
+void StudentList::InsertOverall(Student* new_student)
 {
     cout << "pass2" << new_student << endl;
     CompareStudent comparator(kOverall); // found in functions.hpp/cpp
@@ -48,7 +48,7 @@ void StudentList::InsertOverall(Student &new_student)
     temp -> next_ = nullptr;
 
     bool sorted = false;
-    if(comparator(temp->a_student_,current->a_student_)) // new first student case
+    if(comparator(*temp->a_student_,*current->a_student_)) // new first student case
     {
         temp -> next_ = head_;
         head_ = temp;
@@ -59,13 +59,13 @@ void StudentList::InsertOverall(Student &new_student)
         while(sorted != true)
         {
             // go until a match
-            if(comparator(current->a_student_,temp->a_student_)&&(current!=tail_))
+            if(comparator(*current->a_student_,*temp->a_student_)&&(current!=tail_))
             {
                 previous = current;
                 current = current -> next_;
             }
             // found match
-            else if(comparator(temp->a_student_,current->a_student_)&&(current!=tail_))
+            else if(comparator(*temp->a_student_,*current->a_student_)&&(current!=tail_))
             {
                 previous -> next_ = temp;
                 temp -> next_ = current;
@@ -84,7 +84,7 @@ void StudentList::InsertOverall(Student &new_student)
         }
     }
 }
-void StudentList::InsertFirst(Student &new_student) // reduntant?
+void StudentList::InsertFirst(Student* new_student) // reduntant?
 {
     Node *temp = new Node;
     temp -> a_student_ = new_student;
@@ -92,11 +92,11 @@ void StudentList::InsertFirst(Student &new_student) // reduntant?
     head_ = temp;
     list_length_++;
 }
-void StudentList::InsertLast(Student &new_student) // reduntant?
+void StudentList::InsertLast(Student* new_student) // reduntant?
 {
     NewStudent(new_student);
 }
-void StudentList::InsertStudent(int target, Student &new_student) // reduntant?
+void StudentList::InsertStudent(int target, Student* new_student) // reduntant?
 {
     if (target == 1) {InsertFirst(new_student);}
     else if (target == list_length_) {InsertLast(new_student);}
@@ -186,7 +186,7 @@ void StudentList::PrintList(){
     cout << list_length_ << endl;
 
     for(int i=0; i<list_length_; i++){
-        cout << i+1 << temp -> a_student_ << endl;
+        cout << i+1 << *temp -> a_student_ << endl;
         temp = temp -> next_;
     }
 }

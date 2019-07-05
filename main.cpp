@@ -49,7 +49,7 @@ int main(){
         researchscore = atoi(s_researchscore.c_str());
 
         // create new instance of DomesticStudent, add to vector, increment count
-        DomesticStudent currentDStudent(firstname, lastname, cgpa, researchscore, province);
+        Student* currentDStudent = new DomesticStudent(firstname, lastname, cgpa, researchscore, province);
         cout << "made" << currentDStudent << endl;
         domestic_students.NewStudent(currentDStudent);
         domestic_student_count++;
