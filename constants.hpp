@@ -45,4 +45,38 @@ const string kStudentWordList[15] = {
     "international"
 };
 
+const string kProvinceList[13] = {
+    "BC",
+    "AB",
+    "SK",
+    "MB",
+    "ON",
+    "QC",
+    "NL",
+    "NB",
+    "PE",
+    "NS",
+    "YT",
+    "NT",
+    "NU"
+};
+
+const string kRangeList[15] = {
+    "N/A",
+    "N/A",
+    "N/A",
+    "0 and 4.33", // CGPA
+    "0 and 100", // Research Score
+    "N/A",
+    "N/A",
+    "0 and 30", // Toelf Reading
+    "0 and 30", // Toelf Listening
+    "0 and 30", // Toelf Speaking
+    "0 and 30", // Toelf Writing
+    "0 and 120", // Toelf Any
+    "N/A",
+    "N/A",
+    "N/A",
+};
+
 #endif // CONSTANTS_HPP

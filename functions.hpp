@@ -12,16 +12,16 @@ void SearchType(int student_type, StudentList &loaded_list);
 void Search(int search_type, StudentList &loaded_list);
 void MakeNewStudent(int student_type,StudentList &loaded_list);
 void SearchAndDestroy(StudentList &loaded_list);
-string GetTarget(string target_type);
-float GetTarget(float target_type);
-int GetTarget(int target_type);
-string CleanNameInput(string dirty_string);
+string GetString(int target_type);
+float GetCGPA();
+int GetIntScore(int traget_type);
+string CleanPNounInput(string dirty_string);
+string CleanProvinceInput(string dirty_string);
 
 // Sorting Functor Prototype
 struct CompareStudent{ // This is specifically to work with std::sort as a comparator.
     int type;
     int attribute;
-    int compared_value;
 
     CompareStudent(int attribute);
     //template <class T>

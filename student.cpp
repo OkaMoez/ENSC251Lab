@@ -5,10 +5,11 @@
 using namespace std;
 
 // Student Constructor
-Student::Student() { Student("empty", "empty", 0.0, 0); }
-Student::Student(string firstname, string lastname, float cgpa,
+Student::Student() { Student(0, "empty", "empty", 0.0, 0); }
+Student::Student(int student_type, string firstname, string lastname, float cgpa,
     int researchscore)
 {
+    set_student_type(student_type);
     set_firstname(firstname);
     set_lastname(lastname);
     set_cgpa(cgpa);
@@ -16,6 +17,7 @@ Student::Student(string firstname, string lastname, float cgpa,
 }
 
 // Student Member Functions
+void Student::set_student_type(int student_type) { student_type_ = student_type; }
 void Student::set_firstname(string firstname) { firstname_ = firstname; }
 void Student::set_lastname(string lastname) { lastname_ = lastname; }
 void Student::set_cgpa(float cgpa) { cgpa_ = cgpa; }
@@ -32,7 +34,7 @@ std::ostream &operator<<( ostream &output, const Student& student){
 DomesticStudent::DomesticStudent() { DomesticStudent("empty", "empty", 0.0, 0, "empty"); }
 DomesticStudent::DomesticStudent(string firstname, string lastname,
     float cgpa, int researchscore, string province) :
-    Student(firstname, lastname, cgpa, researchscore)
+    Student(kDomestic, firstname, lastname, cgpa, researchscore)
 {
     set_province(province);
 }
@@ -86,7 +88,7 @@ void ToelfScore::update_requirements(){ // Logic sets boolean for later sorting.
 InternationalStudent::InternationalStudent() { InternationalStudent("empty", "empty", 0.0, 0, "empty", 0, 0, 0, 0); }
 InternationalStudent::InternationalStudent(string firstname, string lastname,
     float cgpa,	int researchscore, string country, int reading, int listening,
-    int speaking, int writing): Student(firstname, lastname, cgpa, researchscore)
+    int speaking, int writing): Student(kInternational, firstname, lastname, cgpa, researchscore)
 {
     set_country(country);
     set_reading(reading);

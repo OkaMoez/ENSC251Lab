@@ -43,14 +43,20 @@ Using Templates to handle differing vector inputs, but lots of repeats
     Maybe look into polymorphism and unions?
 
 ------------------
-Lab 3 Requirements [IN PROGRESS] [X/10]
+Lab 3 Requirements [IN PROGRESS] [8.5/10]
 ------------------
-1. Linked list [IN PROGRESS]
-2. Sorting input [IN PROGRESS]
-3. Search matching fields [IN PROGRESS]
-4. Insert new student sorted [IN PROGRESS]
-5. Delete students [IN PROGRESS]
-6. Merge lists [TODO]
-7. Rewrite sorting functions [TODO]
+1. Linked list [COMPLETE] (May need revision)
+2. Sorting input [COMPLETE]
+3. Search matching fields [COMPLETE]
+4. Insert new student sorted [COMPLETE]
+5. Delete students [COMPLETE]
+6. Merge lists [COMPLETE]
+7. Rewrite sorting functions [COMPLETE]
 8. Comments [IN PROGRESS]
 
+Note: Lost Marks
+1 - Couldn't merge at time of submition
+    Fixed pointers and removed use of references except to compare
+    Fixed.
+0.5 - Could not demonstrate sorting once merged
+    Fixed.

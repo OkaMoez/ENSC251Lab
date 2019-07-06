@@ -80,6 +80,7 @@ StudentList MergeList(StudentList &list1, StudentList &list2){
         current = current -> next_;
     }
     list_out.PrintList();
+    return list_out;
 }
 void SearchType(int student_type, StudentList &loaded_list)
 {
@@ -129,12 +130,12 @@ void Search(int search_type, StudentList &loaded_list)
         *current = loaded_list.head();
 
         if (search_type == kFirstName){
-            target_firstname = GetTarget(target_firstname);
-            target_lastname = GetTarget(target_lastname);
+            target_firstname = GetString(kFirstName);
+            target_lastname = GetString(kLastName);
         }
         else if (search_type == kCgpa) {
-            target_cgpa = GetTarget(target_cgpa);
-            target_researchscore = GetTarget(target_researchscore);
+            target_cgpa = GetCGPA();
+            target_researchscore = GetIntScore(kResearchScore);
         }
 
         for(int i=0; i<loaded_list.list_length(); i++){
@@ -159,8 +160,8 @@ void Search(int search_type, StudentList &loaded_list)
         cout << "Error: Untyped Search Request" << endl;
 }
 void SearchAndDestroy(StudentList &loaded_list){
-    string target_firstname = GetTarget(kStudentWordList[kFirstName]);
-    string target_lastname = GetTarget(kStudentWordList[kLastName]);
+    string target_firstname = GetString(kFirstName);
+    string target_lastname = GetString(kLastName);
     Node *previous = new Node;
     Node *current = new Node;
     int count = 0;
@@ -197,31 +198,31 @@ void MakeNewStudent(int student_type, StudentList &loaded_list){
     while(done != true){
         cout << "To create a new " << text << " student, please input the following: " << endl
              << "First name: ";
-        cin >> first_name_input;
-        first_name_input = CleanNameInput(first_name_input);
+        first_name_input = GetString(kFirstName);
         cout << "Last name: ";
         cin >> last_name_input;
-        last_name_input = CleanNameInput(last_name_input);
+        last_name_input = GetString(kLastName);
         cout << "CGPA: ";
-        cin >> cgpa_input;
+        cgpa_input = GetCGPA();
         cout << "Research Score: ";
-        cin >> researchscore_input;
+        researchscore_input = GetIntScore(kResearchScore);
         if(student_type == kDomestic){
             cout << "Province: ";
+            location_input = GetString(kProvince);
         }
         else {
             cout << "Country: ";
+            location_input = GetString(kCountry);
         }
-        cin >> location_input;
         if(student_type == kInternational){
             cout << "Toelf Reading: ";
-            cin >> reading_input;
+            reading_input = GetIntScore(kReading);
             cout << "Toelf Listening: ";
-            cin >> listening_input;
-            cout << "Toelf Reading: ";
-            cin >> speaking_input;
-            cout << "Toelf Reading: ";
-            cin >> writing_input;
+            listening_input = GetIntScore(kListening);
+            cout << "Toelf Speaking: ";
+            speaking_input = GetIntScore(kSpeaking);
+            cout << "Toelf Writing: ";
+            writing_input = GetIntScore(kWriting);
             Student* newStudent = new InternationalStudent(first_name_input, last_name_input, cgpa_input, researchscore_input, location_input,
                                                            reading_input, listening_input, speaking_input, writing_input);
             loaded_list.NewStudent(newStudent);
@@ -240,27 +241,56 @@ void MakeNewStudent(int student_type, StudentList &loaded_list){
     }
 
 }
-string GetTarget(string target_type){
-    string user_input;
+string GetString(int target_type){
+    string user_input = " ";
 
-    cout << "Please type the " << target_type << " to search by: " << endl;
-    cin >> user_input;
-    user_input = CleanNameInput(user_input);
+    cout << "Please input a " << kStudentWordList[target_type] << ": " << endl;
+    bool valid_input = false;
+    while(valid_input != true){
+        cin >> user_input;
+        if (target_type == kProvince)
+            user_input = CleanProvinceInput(user_input);
+        else
+            user_input = CleanPNounInput(user_input);
+        if (std::find(begin(kProvinceList), end(kProvinceList), user_input) != end(kProvinceList))
+            valid_input = true;
+        else
+            cout << "Invalid input. \n" << "Input a valid CGPA between 0 and 4.33" << endl;
+    }
     return user_input;
 }
-float GetTarget(float target_type){
-    float user_input = target_type;
-    cout << "Please type the CGPA to search by: " << endl;
-    cin >> user_input;
+float GetCGPA(){
+    float user_input = 0;
+    cout << "Please input a CGPA: " << endl;
+    bool valid_input = false;
+    while(valid_input != true){
+        cin >> user_input;
+        if ((user_input >= 0) && (user_input <= float(4.33)))
+            valid_input = true;
+        else
+            cout << "Invalid input. \n" << "Input a valid CGPA between 0 and 4.33" << endl;
+    }
     return user_input;
 }
-int GetTarget(int target_type){
-    int user_input = target_type;
-    cout << "Please type the research score to search by: " << endl;
-    cin >> user_input;
+int GetIntScore(int target_type){
+    int user_input = 0;
+    cout << "Please type the " << target_type <<" to search by: " << endl;
+    bool valid_input = false;
+    while(valid_input != true){
+        cin >> user_input;
+        if ((target_type == kResearchScore)&&((user_input >= 0) && (user_input <= 100)))
+            valid_input = true;
+        if (((target_type == kReading) || (target_type == kSpeaking) ||
+           (target_type == kListening) || (target_type == kWriting)) &&
+           ((user_input >= 0) && (user_input <= 30)))
+            valid_input = true;
+        else
+            cout << "Invalid input. \n" << "Input a valid " << target_type << " between "
+                 << kRangeList[target_type] << "." << endl;
+    }
     return user_input;
 }
-string CleanNameInput(string user_input){
+string CleanPNounInput(string user_input){
     // Conditioning input.
     transform(user_input.begin(), user_input.end(), user_input.begin(), ::tolower);
     // Removing whitespace. (See: https://www.techiedelight.com/remove-whitespaces-string-cpp/)
@@ -271,35 +301,47 @@ string CleanNameInput(string user_input){
     user_input[0] = toupper(user_input[0]);
     return user_input;
 }
+string CleanProvinceInput(string user_input){
+    // Conditioning input.
+    transform(user_input.begin(), user_input.end(), user_input.begin(), ::toupper);
+    // Removing whitespace. (See: https://www.techiedelight.com/remove-whitespaces-string-cpp/)
+    user_input.erase(std::remove_if(user_input.begin(), user_input.end(),
+                           [](char &c) {return std::isspace<char>(c, std::locale::classic());                            }),
+                            user_input.end());
+    return user_input;
+}
 
 // Sorting Function Implementations
 CompareStudent::CompareStudent(int attribute){this->attribute = attribute;}
-//template <class T>
 bool CompareStudent::operator()(const Student &student1, const Student &student2){
         if (attribute == kFirstName){
-            compared_value = compare_firstname(student1,student2);
-            if (compared_value < 0)
+            int compared_firstname = compare_firstname(student1,student2);
+            if (compared_firstname < 0)
                 return true;
             else
                 return false;
         }
         else if (attribute == kLastName){
-            compared_value = compare_lastname(student1,student2);
-            if (compared_value < 0)
+            int compared_lastname = compare_lastname(student1,student2);
+            if (compared_lastname < 0)
                 return true;
             else
                 return false;
         }
         else if (attribute == kCgpa){
-            compared_value = compare_cgpa(student1,student2);
-            if (compared_value > 0)
+            int compared_firstname = compare_firstname(student1,student2);
+            int compared_cgpa = compare_cgpa(student1,student2);
+            if ((compared_cgpa > 0)||
+               ((compared_cgpa == 0) && (compared_firstname < 0)))
                 return true;
             else
                 return false;
         }
         else if (attribute == kResearchScore){
-            compared_value = compare_researchscore(student1,student2);
-            if (compared_value > 0)
+            int compared_firstname = compare_firstname(student1,student2);
+            int compared_researchscore = compare_researchscore(student1,student2);
+            if ((compared_researchscore > 0)||
+               ((compared_researchscore == 0) && (compared_firstname < 0)))
                 return true;
             else
                 return false;
@@ -333,12 +375,12 @@ int compare_lastname(const T& student1, const T& student2){
 }
 template <class T>
 int compare_cgpa(const T& student1, const T& student2){
-    if (student1.cgpa_ == student2.cgpa_)
-        return 0;
-    else if (student1.cgpa_ < student2.cgpa_)
-        return (-1);
-    else
-        return (1);
+    if (student1.cgpa_ == student2.cgpa_){
+        return 0;}
+    else if (student1.cgpa_ < student2.cgpa_){
+        return (-1);}
+    else{
+        return (1);}
 }
 template <class T>
 int compare_researchscore(const T& student1, const T& student2){
@@ -351,7 +393,9 @@ int compare_researchscore(const T& student1, const T& student2){
 }
 template <class T>
 int compare_location(const T& student1, const T& student2){
-    if (student1.location() == student2.location())
+    if (student1.student_type() > student2.student_type())
+        return 1;
+    else if(student1.location() == student2.location())
         return 0;
     else if (student1.location() < student2.location())
         return (-1);

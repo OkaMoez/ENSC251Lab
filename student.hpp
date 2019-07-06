@@ -6,6 +6,7 @@
 class Student
 {
 private:
+    int student_type_;
 	string firstname_;
 	string lastname_;
 	float cgpa_;
@@ -13,15 +14,17 @@ private:
 
 public:
     Student();
-	Student(string firstname, string lastname, float cgpa, int researchscore);
+    Student(int student_type_, string firstname, string lastname, float cgpa, int researchscore);
     virtual ~Student() {}
 
+    int student_type() const { return student_type_; }
     string firstname() const { return firstname_; }
     string lastname() const { return lastname_; }
     float cgpa() const { return cgpa_; }
     int researchscore() const { return researchscore_; }
     virtual string location() const { return "No Location."; }
 
+    void set_student_type(int student_type);
 	void set_firstname(string firstname);
 	void set_lastname(string lastname);
 	void set_cgpa(float cgpa);
