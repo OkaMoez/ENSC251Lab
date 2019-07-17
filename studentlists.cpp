@@ -35,7 +35,7 @@ void StudentList::NewStudent(Student* new_student)
 }
 void StudentList::InsertOverall(Student* new_student)
 {
-    CompareStudent comparator(kCgpa); // found in functions.hpp/cpp
+    CompareStudent comparator(kOverall); // found in functions.hpp/cpp
     Node *temp = new Node;
     Node *current = new Node;
     Node *previous = new Node;
@@ -46,8 +46,6 @@ void StudentList::InsertOverall(Student* new_student)
     bool sorted = false;
     if(comparator(*temp->a_student_,*current->a_student_)) // new first student case
     {
-
-        //cout << "case0" << endl;
         temp -> next_ = head_;
         head_ = temp;
         sorted = true;
@@ -60,14 +58,12 @@ void StudentList::InsertOverall(Student* new_student)
                 // go until a match
                 if(comparator(*current->a_student_,*temp->a_student_))
                 {
-                    //cout << "case1 " << endl;
                     previous = current;
                     current = current -> next_;
                 }
                 // found match
                 else //if(comparator(*temp->a_student_,*current->a_student_))
                 {
-                    //cout << "case2.0" << endl;
                     previous -> next_ = temp;
                     temp -> next_ = current;
                     sorted = true;
@@ -75,7 +71,6 @@ void StudentList::InsertOverall(Student* new_student)
             }
             else if(comparator(*temp->a_student_,*current->a_student_))
             {
-                //cout << "case2.1" << endl;
                 previous -> next_ = temp;
                 temp -> next_ = current;
                 sorted = true;
@@ -83,7 +78,6 @@ void StudentList::InsertOverall(Student* new_student)
             // reached end of list
             else
             {
-                //cout << "case3" << endl;
                 tail_ -> next_ = temp;
                 tail_ = temp;
                 sorted = true;
