@@ -395,6 +395,8 @@ template <class T>
 int compare_location(const T& student1, const T& student2){
     if (student1.student_type() > student2.student_type())
         return 1;
+    else if (student1.student_type() < student2.student_type())
+        return (-1);
     else if(student1.location() == student2.location())
         return 0;
     else if (student1.location() < student2.location())
