@@ -43,7 +43,7 @@ Using Templates to handle differing vector inputs, but lots of repeats
     Maybe look into polymorphism and unions?
 
 ------------------
-Lab 3 Requirements [IN PROGRESS] [8.5/10]
+Lab 3 Requirements [COMPLETE] [8.5/10]
 ------------------
 1. Linked list [COMPLETE] (May need revision)
 2. Sorting input [COMPLETE]
@@ -52,7 +52,7 @@ Lab 3 Requirements [IN PROGRESS] [8.5/10]
 5. Delete students [COMPLETE]
 6. Merge lists [COMPLETE]
 7. Rewrite sorting functions [COMPLETE]
-8. Comments [IN PROGRESS]
+8. Comments [COMPLETE]
 
 Note: Lost Marks
 1 - Couldn't merge at time of submition
@@ -60,3 +60,17 @@ Note: Lost Marks
     Fixed.
 0.5 - Could not demonstrate sorting once merged
     Fixed.
+
+------------------
+Lab 4 Requirements [IN PROGRESS] [X/10]
+------------------
+1. Missing Field Error
+2a. Province Error
+2b. CGPA Error
+2c. Research Score Error
+2d. Toelf Errors
+3. Menus Catch Invalid Options [IN PROGRESS]
+4. Create Error Input
+5. Unit Test
+6. Algorithm Complexity
+7. Comments [IN PROGRESS]
