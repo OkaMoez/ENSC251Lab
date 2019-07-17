@@ -45,7 +45,7 @@ Using Templates to handle differing vector inputs, but lots of repeats
 ------------------
 Lab 3 Requirements [COMPLETE] [8.5/10]
 ------------------
-1. Linked list [COMPLETE] (May need revision)
+1. Linked list [COMPLETE]
 2. Sorting input [COMPLETE]
 3. Search matching fields [COMPLETE]
 4. Insert new student sorted [COMPLETE]
@@ -64,8 +64,8 @@ Note: Lost Marks
 ------------------
 Lab 4 Requirements [IN PROGRESS] [X/10]
 ------------------
-1. Missing Field Error
-2a. Province Error
+1. Missing Field Error [COMPLETE]
+2a. Province Error [COMPLETE]
 2b. CGPA Error
 2c. Research Score Error
 2d. Toelf Errors

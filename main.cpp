@@ -1,3 +1,4 @@
+// ENSC251 Summer 2019 Semester Lab
 //main.cpp, put your driver code here,
 //you can manipulate your class objects here
 #include <iostream> //cin and cout
@@ -5,7 +6,7 @@
 #include <sstream> //formatted string processing
 #include <cstdlib> //atof and atoi
 #include <vector> // vectors for holding student objects
-#include <algorithm> // for tranforming strings etc #### Revise ####
+#include <algorithm> // for tranforming strings etc
 #include "functions.hpp" // header includes info from Labs 1, 2, and 3
 
 void PopulateStudentList (int student_type, StudentList& student_list, string file_path);
@@ -21,6 +22,43 @@ int main(){
     StartMenu(domestic_students, international_students);
 
     return 0;
+}
+
+void TestIOString (int student_type, string& string_in) { // Part 1.1 Implementation
+    int num_actual = int(std::count(string_in.begin(), string_in.end(), ','));
+    int num_expected = 0;
+    if (student_type == kDomestic){
+        num_expected = 4;
+    }
+    else if (student_type == kInternational) {
+        num_expected = 8;
+    }
+    else {
+        cout << "Error: No Student Format Type Specified" << endl;
+    }
+
+    if ( num_actual < num_expected){
+        cout << "Error: Invalid File Line Format (" << (num_expected - num_actual) << " "
+             << kStudentWordList[student_type] << " field(s) less than expected)" << endl;
+        cout << "Error Line: " << string_in << endl;
+        exit(EXIT_FAILURE);
+    }
+    else if (num_actual > num_expected) {
+        cout << "Error: Invalid File Line Format (" << (num_actual - num_expected) << " "
+             << kStudentWordList[student_type] << " field(s) more than expected)" << endl;
+        cout << "Error Line: " << string_in << endl;
+        exit(EXIT_FAILURE);
+    }
+}
+
+string TestProvince (string province, string string_in) { // Part 1.2a
+    province = CleanProvinceInput(province);
+    if ((std::find(begin(kProvinceList), end(kProvinceList), province)) == end(kProvinceList)){
+        cout << "Error: Invalid Province Specified in File" << endl;
+        cout << "Error Line: "  << string_in << endl;
+                exit(EXIT_FAILURE);
+    }
+    return province;
 }
 
 void PopulateStudentList (int student_type, StudentList& student_list, string file_path) {
@@ -41,6 +79,9 @@ void PopulateStudentList (int student_type, StudentList& student_list, string fi
         // Process each line, get each field separated by a comma.
         // using istringstream to handle it
             istringstream ss(file_line);
+            string ss_test = ss.str();
+
+            TestIOString(student_type, ss_test); // Part 1.1
 
             string firstname, lastname, province, s_cgpa, s_researchscore;
             float cgpa;
@@ -51,6 +92,7 @@ void PopulateStudentList (int student_type, StudentList& student_list, string fi
             getline(ss, firstname, ',');
             getline(ss, lastname, ',');
             getline(ss, province, ',');
+            province = TestProvince(province, ss_test);
             getline(ss, s_cgpa, ',');
             cgpa = strtof(s_cgpa.c_str(), nullptr); // replaced atof with strtof to remove warning
             getline(ss, s_researchscore, ',');
@@ -65,6 +107,9 @@ void PopulateStudentList (int student_type, StudentList& student_list, string fi
         while (getline(student_file, file_line)) {
             // process each line, get each field separated by a comma.
             istringstream ss(file_line);
+            string ss_test = ss.str();
+
+            TestIOString(student_type, ss_test); // Part 1.1
 
             string firstname, lastname, country, s_cgpa, s_researchscore,
                     s_reading, s_listening, s_speaking, s_writing;
@@ -101,7 +146,7 @@ void PopulateStudentList (int student_type, StudentList& student_list, string fi
         }
     }
     else {
-        cout << "Error: No StudentList type specified." << endl;
+        cout << "Error: No StudentList Type Specified" << endl;
     }
     //close your file
     student_file.close();

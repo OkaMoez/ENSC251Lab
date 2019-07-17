@@ -45,7 +45,7 @@ const string kStudentWordList[15] = {
     "international"
 };
 
-const string kProvinceList[13] = {
+const string kProvinceList[14] = {
     "BC",
     "AB",
     "SK",
@@ -58,7 +58,8 @@ const string kProvinceList[13] = {
     "NS",
     "YT",
     "NT",
-    "NU"
+    "NU",
+    "N/A"
 };
 
 const string kRangeList[15] = {
