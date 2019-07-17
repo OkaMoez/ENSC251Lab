@@ -15,12 +15,8 @@ int main(){
     // Use function calls to reduce repeated code
     StudentList domestic_students;
     PopulateStudentList(kDomestic, domestic_students, "domestic-stu.txt");
-    domestic_students.PrintList();
-
-
     StudentList international_students;
     PopulateStudentList(kInternational, international_students, "international-stu.txt");
-    international_students.PrintList();
 
     StartMenu(domestic_students, international_students);
 

@@ -9,6 +9,7 @@ using namespace std;
 void StartMenu(StudentList &D_list,
                 StudentList &I_list){
     string user_input;
+    StudentList B_list = MergeList(D_list, I_list);
 
     bool valid_selection = false;  // Loop continues until user chooses to quit.
     while (valid_selection != true) {
@@ -17,14 +18,16 @@ void StartMenu(StudentList &D_list,
 
         // First letters are used to forgive typos.
         if ((user_input.at(0) == 'D') | (user_input.at(0) == 'd')) {
+            D_list.PrintList();
             ListMenu(kDomestic, D_list);
         }
         else if ((user_input.at(0) == 'I') | (user_input.at(0) == 'i')){
+            I_list.PrintList();
             ListMenu(kInternational, I_list);
         }
 
         else if ((user_input.at(0) == 'B') | (user_input.at(0) == 'b')){
-            StudentList B_list = MergeList(D_list, I_list);
+            B_list.PrintList();
             ListMenu(kOverall, B_list);
         }
         else if ((user_input.at(0) == 'Q') | (user_input.at(0) == 'q')){
@@ -79,7 +82,6 @@ StudentList MergeList(StudentList &list1, StudentList &list2){
         previous = current;
         current = current -> next_;
     }
-    list_out.PrintList();
     return list_out;
 }
 void SearchType(int student_type, StudentList &loaded_list)
