@@ -51,14 +51,97 @@ void TestIOString (int student_type, string& string_in) { // Part 1.1 Implementa
     }
 }
 
-string TestProvince (string province, string string_in) { // Part 1.2a
-    province = CleanProvinceInput(province);
+string TestProvince (string province_in, string string_in) { // Part 1.2a Implementation
+    string province = CleanProvinceInput(province_in);
     if ((std::find(begin(kProvinceList), end(kProvinceList), province)) == end(kProvinceList)){
         cout << "Error: Invalid Province Specified in File" << endl;
         cout << "Error Line: "  << string_in << endl;
-                exit(EXIT_FAILURE);
+        exit(EXIT_FAILURE);
     }
     return province;
+}
+
+float TestCgpa (string s_cgpa_in, string string_in) { // Part 1.2b Implementation
+    string s_cgpa = s_cgpa_in;
+    s_cgpa_in.erase(std::remove(s_cgpa_in.begin(), s_cgpa_in.end(), '.'), s_cgpa_in.end());
+    if (s_cgpa_in[0] == '\0') {
+        cout << "Error: Missing CGPA Value in File" << endl;
+        cout << "Error Line: "  << string_in << endl;
+        exit(EXIT_FAILURE);
+    }
+    else if (std::find(s_cgpa.begin(),s_cgpa.end(), '.') == s_cgpa.end()) {
+        cout << "Warning: Low CGPA Precision in File" << endl;
+        cout << "Warning Line: "  << string_in << endl;
+    }
+    for (int unsigned i = 0; s_cgpa_in[i] != '\0'; i++) {
+        if (isdigit(s_cgpa_in[i]) == 0) {
+            cout << "Error: Invalid CGPA from File" << endl;
+            cout << "Error Line: "  << string_in << endl;
+            exit(EXIT_FAILURE);
+        }
+    }
+
+    float cgpa = strtof(s_cgpa.c_str(), nullptr);
+    if ((cgpa < 0) || (double(cgpa) > 4.33)) {
+        cout << "Error: Out of Range CGPA from File" << endl;
+        cout << "Error Line: "  << string_in << endl;
+        exit(EXIT_FAILURE);
+    }
+    return cgpa;
+}
+
+int TestResearchScore (string s_rscore_in, string string_in) { // Part 1.2c Implementation
+    if (s_rscore_in[0] == '\0') {
+        cout << "Error: Missing Research Score Value in File" << endl;
+        cout << "Error Line: "  << string_in << endl;
+        exit(EXIT_FAILURE);
+    }
+    else if (std::find(s_rscore_in.begin(),s_rscore_in.end(), '.') != s_rscore_in.end()) {
+        cout << "Warning: Research Score Precision Too High in File" << endl;
+        cout << "Warning Line: "  << string_in << endl;
+    }
+    for (int unsigned i = 0; s_rscore_in[i] != '\0'; i++) {
+        if (isdigit(s_rscore_in[i]) == 0) {
+            cout << "Error: Invalid Research Score from File" << endl;
+            cout << "Error Line: "  << string_in << endl;
+            exit(EXIT_FAILURE);
+        }
+    }
+
+    int rscore = atoi(s_rscore_in.c_str());
+    if ((rscore < 0) || (rscore > 100)) {
+        cout << "Error: Out of Range Research Score from File" << endl;
+        cout << "Error Line: "  << string_in << endl;
+        exit(EXIT_FAILURE);
+    }
+    return rscore;
+}
+
+int TestToelfScore (string s_tscore_in, string string_in) { // Part 1.2d Implementation
+    if (s_tscore_in[0] == '\0') {
+        cout << "Error: Missing Toelf Score Value in File" << endl;
+        cout << "Error Line: "  << string_in << endl;
+        exit(EXIT_FAILURE);
+    }
+    else if (std::find(s_tscore_in.begin(),s_tscore_in.end(), '.') != s_tscore_in.end()) {
+        cout << "Warning: Toelf Score Precision Too High in File" << endl;
+        cout << "Warning Line: "  << string_in << endl;
+    }
+    for (int unsigned i = 0; s_tscore_in[i] != '\0'; i++) {
+        if (isdigit(s_tscore_in[i]) == 0) {
+            cout << "Error: Invalid Toelf Score from File" << endl;
+            cout << "Error Line: "  << string_in << endl;
+            exit(EXIT_FAILURE);
+        }
+    }
+
+    int tscore = atoi(s_tscore_in.c_str());
+    if ((tscore < 0) || (tscore > 30)) {
+        cout << "Error: Out of Range Toelf Score from File" << endl;
+        cout << "Error Line: "  << string_in << endl;
+        exit(EXIT_FAILURE);
+    }
+    return tscore;
 }
 
 void PopulateStudentList (int student_type, StudentList& student_list, string file_path) {
@@ -81,7 +164,6 @@ void PopulateStudentList (int student_type, StudentList& student_list, string fi
             istringstream ss(file_line);
             string ss_test = ss.str();
 
-            TestIOString(student_type, ss_test); // Part 1.1
 
             string firstname, lastname, province, s_cgpa, s_researchscore;
             float cgpa;
@@ -92,11 +174,14 @@ void PopulateStudentList (int student_type, StudentList& student_list, string fi
             getline(ss, firstname, ',');
             getline(ss, lastname, ',');
             getline(ss, province, ',');
-            province = TestProvince(province, ss_test);
             getline(ss, s_cgpa, ',');
-            cgpa = strtof(s_cgpa.c_str(), nullptr); // replaced atof with strtof to remove warning
             getline(ss, s_researchscore, ',');
-            researchscore = atoi(s_researchscore.c_str());
+
+            // Error Checks (Part 1)
+            TestIOString(student_type, ss_test); // Part 1.1
+            province = TestProvince(province, ss_test); // Part 1.2a
+            cgpa = TestCgpa(s_cgpa, ss_test); // Part 1.2b
+            researchscore = TestResearchScore(s_researchscore, ss_test); // Part 1.2c
 
             // create new instance of Student, add to list
             Student* currentDStudent = new DomesticStudent(firstname, lastname, cgpa, researchscore, province);
@@ -108,8 +193,6 @@ void PopulateStudentList (int student_type, StudentList& student_list, string fi
             // process each line, get each field separated by a comma.
             istringstream ss(file_line);
             string ss_test = ss.str();
-
-            TestIOString(student_type, ss_test); // Part 1.1
 
             string firstname, lastname, country, s_cgpa, s_researchscore,
                     s_reading, s_listening, s_speaking, s_writing;
@@ -125,19 +208,23 @@ void PopulateStudentList (int student_type, StudentList& student_list, string fi
             lastname[0] = toupper(lastname[0]);
             getline(ss, country, ','); // retrieve student home country
             getline(ss, s_cgpa, ','); // retrieve student cgpa and convert
-            cgpa = strtof(s_cgpa.c_str(), nullptr); // replaced as above
             getline(ss, s_researchscore, ','); // retrieve student research score and convert
-            researchscore = atoi(s_researchscore.c_str());
 
             // get ToelfScores separated by commas, and convert each to int
             getline(ss, s_reading, ','); // Toelf reading score
-            reading = atoi(s_reading.c_str());
             getline(ss, s_listening, ','); // Toelf listening score
-            listening = atoi(s_listening.c_str());
             getline(ss, s_speaking, ','); // Toelf speaking score
-            speaking = atoi(s_speaking.c_str());
             getline(ss, s_writing, ','); // Toelf writing score
-            writing = atoi(s_writing.c_str());
+
+            // Error Checks (Part 1)
+            TestIOString(student_type, ss_test); // Part 1.1
+            //province = TestProvince(province, ss_test); // Part 1.2a
+            cgpa = TestCgpa(s_cgpa, ss_test); // Part 1.2b
+            researchscore = TestResearchScore(s_researchscore, ss_test); // Part 1.2c
+            reading = TestToelfScore(s_reading, ss_test); // Part 1.2d
+            listening = TestToelfScore(s_listening, ss_test);
+            speaking = TestToelfScore(s_speaking, ss_test);
+            writing = TestToelfScore(s_writing, ss_test);
 
             // create new instance of InternationalStudent, add to vector, increment count
             Student* currentIStudent = new InternationalStudent(firstname, lastname, cgpa, researchscore, country,

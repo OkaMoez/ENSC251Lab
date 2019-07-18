@@ -66,9 +66,9 @@ Lab 4 Requirements [IN PROGRESS] [X/10]
 ------------------
 1. Missing Field Error [COMPLETE]
 2a. Province Error [COMPLETE]
-2b. CGPA Error
-2c. Research Score Error
-2d. Toelf Errors
+2b. CGPA Error [COMPLETE]
+2c. Research Score Error [COMPLETE]
+2d. Toelf Errors [COMPLETE]
 3. Menus Catch Invalid Options [IN PROGRESS]
 4. Create Error Input
 5. Unit Test
