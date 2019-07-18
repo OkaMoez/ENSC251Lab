@@ -51,9 +51,30 @@ void TestIOString (int student_type, string& string_in) { // Part 1.1 Implementa
     }
 }
 
+string TestName(string name_in, string string_in) {
+    if (name_in[0] == '\0') {
+        cout << "Error: Missing Name in File" << endl;
+        cout << "Error Line: "  << string_in << endl;
+        exit(EXIT_FAILURE);
+    }
+    for (int unsigned i = 0; name_in[i] != '\0'; i++) {
+        if (isdigit(name_in[i]) != 0) {
+            cout << "Error: Invalid Name from File" << endl;
+            cout << "Error Line: "  << string_in << endl;
+            exit(EXIT_FAILURE);
+        }
+    }
+    return CleanPNounInput(name_in);
+}
+
 string TestProvince (string province_in, string string_in) { // Part 1.2a Implementation
     string province = CleanProvinceInput(province_in);
-    if ((std::find(begin(kProvinceList), end(kProvinceList), province)) == end(kProvinceList)){
+    if (province[0] == '\0') {
+        cout << "Error: Missing Province in File" << endl;
+        cout << "Error Line: "  << string_in << endl;
+        exit(EXIT_FAILURE);
+    }
+    else if ((std::find(begin(kProvinceList), end(kProvinceList), province)) == end(kProvinceList)){
         cout << "Error: Invalid Province Specified in File" << endl;
         cout << "Error Line: "  << string_in << endl;
         exit(EXIT_FAILURE);
@@ -179,6 +200,8 @@ void PopulateStudentList (int student_type, StudentList& student_list, string fi
 
             // Error Checks (Part 1)
             TestIOString(student_type, ss_test); // Part 1.1
+            firstname = TestName(firstname, ss_test);
+            lastname = TestName(lastname, ss_test);
             province = TestProvince(province, ss_test); // Part 1.2a
             cgpa = TestCgpa(s_cgpa, ss_test); // Part 1.2b
             researchscore = TestResearchScore(s_researchscore, ss_test); // Part 1.2c
@@ -201,11 +224,7 @@ void PopulateStudentList (int student_type, StudentList& student_list, string fi
 
             // get data from file as done previously above, converting as needed
             getline(ss, firstname, ','); // retrieve student first name and condition
-            transform(firstname.begin(), firstname.end(), firstname.begin(), ::tolower);
-            firstname[0] = toupper(firstname[0]);
             getline(ss, lastname, ','); // retrieve student last name and condition
-            transform(lastname.begin(), lastname.end(), lastname.begin(), ::tolower);
-            lastname[0] = toupper(lastname[0]);
             getline(ss, country, ','); // retrieve student home country
             getline(ss, s_cgpa, ','); // retrieve student cgpa and convert
             getline(ss, s_researchscore, ','); // retrieve student research score and convert
@@ -218,6 +237,8 @@ void PopulateStudentList (int student_type, StudentList& student_list, string fi
 
             // Error Checks (Part 1)
             TestIOString(student_type, ss_test); // Part 1.1
+            firstname = TestName(firstname, ss_test);
+            lastname = TestName(lastname, ss_test);
             //province = TestProvince(province, ss_test); // Part 1.2a
             cgpa = TestCgpa(s_cgpa, ss_test); // Part 1.2b
             researchscore = TestResearchScore(s_researchscore, ss_test); // Part 1.2c
