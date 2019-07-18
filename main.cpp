@@ -118,7 +118,7 @@ int TestResearchScore (string s_rscore_in, string string_in) { // Part 1.2c Impl
         exit(EXIT_FAILURE);
     }
     else if (std::find(s_rscore_in.begin(),s_rscore_in.end(), '.') != s_rscore_in.end()) {
-        cout << "Warning: Research Score Precision Too High in File" << endl;
+        cout << "Warning: Research Score with Decimal in File" << endl;
         cout << "Warning Line: "  << string_in << endl;
     }
     for (int unsigned i = 0; s_rscore_in[i] != '\0'; i++) {
@@ -239,7 +239,6 @@ void PopulateStudentList (int student_type, StudentList& student_list, string fi
             TestIOString(student_type, ss_test); // Part 1.1
             firstname = TestName(firstname, ss_test);
             lastname = TestName(lastname, ss_test);
-            //province = TestProvince(province, ss_test); // Part 1.2a
             cgpa = TestCgpa(s_cgpa, ss_test); // Part 1.2b
             researchscore = TestResearchScore(s_researchscore, ss_test); // Part 1.2c
             reading = TestToelfScore(s_reading, ss_test); // Part 1.2d

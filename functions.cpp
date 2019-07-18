@@ -67,7 +67,7 @@ void ListMenu(int student_type, StudentList &loaded_list)
         }
         else
             cout << "Invalid input. " // Looped text is to help user correct invalid inputs.
-                 << "Please enter [International], [Domestic], or [Quit]."
+                 << "Please enter [Search], [Add], [Delete], [Reprint], or [Quit]."
                  << endl;
     }
 }
@@ -102,7 +102,8 @@ void SearchType(int student_type, StudentList &loaded_list)
             search_type = kFirstName;
             search_ready = true;
         }
-        else if ((user_input.at(0) == 'C') | (user_input.at(0) == 'c')){
+        else if ((user_input.at(0) == 'C') | (user_input.at(0) == 'c')
+                 | (user_input.at(0) == 'R') | (user_input.at(0) == 'r')){
             search_type = kCgpa;
             search_ready = true;
         }
@@ -110,7 +111,7 @@ void SearchType(int student_type, StudentList &loaded_list)
             valid_selection = true;
         else{
             cout << "Invalid input. " // Looped text is to help user correct invalid inputs.
-                 << "Please select [First], [CGPA], or [Quit]."
+                 << "Please select [Name], [CGPA], [Research], or [Quit]."
                  << endl;
         }
         if (search_ready == true){
