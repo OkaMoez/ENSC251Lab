@@ -23,9 +23,9 @@ public:
 
     void NewStudent(Student* new_student);
     void InsertOverall(Student* new_student);
+    void DeleteStudent(int target);
     void DeleteFirst();
     void DeleteLast();
-    void DeleteStudent(int target);
     void PrintTarget(int target);
     void PrintList();
 };

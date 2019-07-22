@@ -85,32 +85,7 @@ void StudentList::InsertOverall(Student* new_student)
         }
     }
 }
-void StudentList::DeleteFirst() // part 2
-{
-    Node *temp = new Node;
-    temp = head_;
-    head_ = head_ -> next_;
-    delete temp;
-    list_length_--;
-}
-void StudentList::DeleteLast() // part 2
-{
-    Node *previous = new Node;
-    Node *current = new Node;
-    current = head_;
-
-    while(current -> next_ != nullptr)
-    {
-      previous = current;
-      current = current -> next_;
-    }
-
-    tail_ = previous;
-    previous -> next_ = nullptr;
-    delete current;
-    list_length_--;
-}
-void StudentList::DeleteStudent(int target) // part 2
+void StudentList::DeleteStudent(int target)
 {
     if(target == 1) {DeleteFirst();}
     else if(target == list_length_) {DeleteLast();}
@@ -133,20 +108,31 @@ void StudentList::DeleteStudent(int target) // part 2
         }
     }
 }
-/*
-void StudentList::PrintTarget(int target){ // for testing specifically
+void StudentList::DeleteFirst()
+{
+    Node *temp = new Node;
+    temp = head_;
+    head_ = head_ -> next_;
+    delete temp;
+    list_length_--;
+}
+void StudentList::DeleteLast()
+{
     Node *previous = new Node;
     Node *current = new Node;
     current = head_;
 
-    for(int i=1; i<target; i++){
-        previous = current;
-        current = current -> next_;
+    while(current -> next_ != nullptr)
+    {
+      previous = current;
+      current = current -> next_;
     }
 
-    cout << current -> a_student_ << endl;
+    tail_ = previous;
+    previous -> next_ = nullptr;
+    delete current;
+    list_length_--;
 }
-*/
 void StudentList::PrintList(){
     Node *temp = new Node;
     temp = head_;
