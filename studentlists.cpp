@@ -85,41 +85,6 @@ void StudentList::InsertOverall(Student* new_student)
         }
     }
 }
-void StudentList::InsertFirst(Student* new_student) // reduntant?
-{
-    Node *temp = new Node;
-    temp -> a_student_ = new_student;
-    temp -> next_ = head_;
-    head_ = temp;
-    list_length_++;
-}
-void StudentList::InsertLast(Student* new_student) // reduntant?
-{
-    NewStudent(new_student);
-}
-void StudentList::InsertStudent(int target, Student* new_student) // reduntant?
-{
-    if (target == 1) {InsertFirst(new_student);}
-    else if (target == list_length_) {InsertLast(new_student);}
-    else
-    {
-        Node *previous = new Node;
-        Node *current = new Node;
-        Node *temp = new Node;
-        current = head_;
-
-        for(int i=1; i<target; i++)
-        {
-            previous = current;
-            current = current -> next_;
-        }
-
-        temp -> a_student_ = new_student;
-        previous -> next_ = temp;
-        temp -> next_ = current;
-        list_length_++;
-    }
-}
 void StudentList::DeleteFirst() // part 2
 {
     Node *temp = new Node;

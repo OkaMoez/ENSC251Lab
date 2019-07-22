@@ -23,9 +23,6 @@ public:
 
     void NewStudent(Student* new_student);
     void InsertOverall(Student* new_student);
-    void InsertFirst(Student* new_student);
-    void InsertLast(Student* new_student);
-    void InsertStudent(int target, Student* new_student);
     void DeleteFirst();
     void DeleteLast();
     void DeleteStudent(int target);
