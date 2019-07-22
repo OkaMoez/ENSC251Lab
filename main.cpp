@@ -74,7 +74,7 @@ string TestProvince (string province_in, string string_in) { // Part 1.2a Implem
         cout << "Error Line: "  << string_in << endl;
         exit(EXIT_FAILURE);
     }
-    else if ((std::find(begin(kProvinceList), end(kProvinceList), province)) == end(kProvinceList)){
+    else if (!StringArrayContains(kProvinceList, province)){
         cout << "Error: Invalid Province Specified in File" << endl;
         cout << "Error Line: "  << string_in << endl;
         exit(EXIT_FAILURE);
@@ -84,13 +84,13 @@ string TestProvince (string province_in, string string_in) { // Part 1.2a Implem
 
 float TestCgpa (string s_cgpa_in, string string_in) { // Part 1.2b Implementation
     string s_cgpa = s_cgpa_in;
-    s_cgpa_in.erase(std::remove(s_cgpa_in.begin(), s_cgpa_in.end(), '.'), s_cgpa_in.end());
+    s_cgpa_in = CleanCharacter(s_cgpa_in, kDecimal);
     if (s_cgpa_in[0] == '\0') {
         cout << "Error: Missing CGPA Value in File" << endl;
         cout << "Error Line: "  << string_in << endl;
         exit(EXIT_FAILURE);
     }
-    else if (std::find(s_cgpa.begin(),s_cgpa.end(), '.') == s_cgpa.end()) {
+    else if (!StringContains(s_cgpa, '.')) {
         cout << "Warning: Low CGPA Precision in File" << endl;
         cout << "Warning Line: "  << string_in << endl;
     }
@@ -117,7 +117,7 @@ int TestResearchScore (string s_rscore_in, string string_in) { // Part 1.2c Impl
         cout << "Error Line: "  << string_in << endl;
         exit(EXIT_FAILURE);
     }
-    else if (std::find(s_rscore_in.begin(),s_rscore_in.end(), '.') != s_rscore_in.end()) {
+    else if (StringContains(s_rscore_in, '.')) {
         cout << "Warning: Research Score with Decimal in File" << endl;
         cout << "Warning Line: "  << string_in << endl;
     }
@@ -144,7 +144,7 @@ int TestToelfScore (string s_tscore_in, string string_in) { // Part 1.2d Impleme
         cout << "Error Line: "  << string_in << endl;
         exit(EXIT_FAILURE);
     }
-    else if (std::find(s_tscore_in.begin(),s_tscore_in.end(), '.') != s_tscore_in.end()) {
+    else if (StringContains(s_tscore_in, '.')) {
         cout << "Warning: Toelf Score Precision Too High in File" << endl;
         cout << "Warning Line: "  << string_in << endl;
     }

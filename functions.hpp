@@ -17,6 +17,7 @@ float GetCGPA();
 int GetIntScore(int traget_type);
 string CleanPNounInput(string dirty_string);
 string CleanProvinceInput(string dirty_string);
+string CleanCharacter(string string_in, char char_in);
 
 // Sorting Functor Prototype
 struct CompareStudent{ // This is specifically to work with std::sort as a comparator.
@@ -39,5 +40,9 @@ template <class T>
 int compare_researchscore(const T& student1, const T& student2);
 template <class T>
 int compare_location(const T& student1, const T& student2);
+
+// Std::Replacement Function Prototypes
+bool StringContains(string string_in, char char_in);
+bool StringArrayContains(const string array_in[], string string_in);
 
 #endif // FUNCTIONS_HPP

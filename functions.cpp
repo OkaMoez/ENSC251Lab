@@ -255,7 +255,7 @@ string GetString(int target_type){
             user_input = CleanProvinceInput(user_input);
         else
             user_input = CleanPNounInput(user_input);
-        if (std::find(begin(kProvinceList), end(kProvinceList), user_input) != end(kProvinceList))
+        if (find(begin(kProvinceList), end(kProvinceList), user_input) != end(kProvinceList))
             valid_input = true;
         else
             cout << "Invalid input. \n" << "Input a valid CGPA between 0 and 4.33" << endl;
@@ -296,10 +296,8 @@ int GetIntScore(int target_type){
 string CleanPNounInput(string user_input){
     // Conditioning input.
     transform(user_input.begin(), user_input.end(), user_input.begin(), ::tolower);
-    // Removing whitespace. (See: https://www.techiedelight.com/remove-whitespaces-string-cpp/)
-    user_input.erase(std::remove_if(user_input.begin(), user_input.end(),
-                           [](char &c) {return std::isspace<char>(c, std::locale::classic());                            }),
-                            user_input.end());
+    // Removing whitespace.
+    user_input = CleanCharacter(user_input, kWhitespace);
     // Set first letter case.
     user_input[0] = toupper(user_input[0]);
     return user_input;
@@ -307,11 +305,19 @@ string CleanPNounInput(string user_input){
 string CleanProvinceInput(string user_input){
     // Conditioning input.
     transform(user_input.begin(), user_input.end(), user_input.begin(), ::toupper);
-    // Removing whitespace. (See: https://www.techiedelight.com/remove-whitespaces-string-cpp/)
-    user_input.erase(std::remove_if(user_input.begin(), user_input.end(),
-                           [](char &c) {return std::isspace<char>(c, std::locale::classic());                            }),
-                            user_input.end());
+    // Removing whitespace.
+    user_input = CleanCharacter(user_input, kWhitespace);
     return user_input;
+}
+
+string CleanCharacter(string string_in, char char_in){
+    string string_out = "";
+    for (int unsigned i = 0; string_in[i] != '\0'; i++){
+        if ((string_in)[i] != char_in){
+            string_out.push_back(string_in[i]);
+        }
+    }
+    return string_out;
 }
 
 // Sorting Function Implementations
@@ -406,4 +412,23 @@ int compare_location(const T& student1, const T& student2){
         return (-1);
     else
         return 1;
+}
+
+// Std::Replacement Functions
+bool StringContains(string string_in, char char_in){
+    for (int unsigned i = 0; (string_in)[i] != '\0'; i++){
+        if ((string_in)[i] == char_in){
+            return true;
+        }
+    }
+    return false;
+}
+
+bool StringArrayContains(const string array_in[], string string_in){
+    for (int unsigned i = 0; (array_in)[i] != "N/A"; i++){
+        if ((array_in)[i] == string_in){
+            return true;
+        }
+    }
+    return false;
 }

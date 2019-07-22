@@ -26,6 +26,10 @@ const int kInternational = 14;
 const int kSelectBasic = 15;
 const int kSelectToelf = 16;
 
+// Character Filters
+const char kWhitespace = ' ';
+const char kDecimal = '.';
+
 // Commonly Used Word Array
 const string kStudentWordList[15] = {
     "N/A",
