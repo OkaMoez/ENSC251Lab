@@ -18,7 +18,6 @@ int main(){
     PopulateStudentList(kDomestic, domestic_students, "domestic-stu.txt");
     StudentList international_students;
     PopulateStudentList(kInternational, international_students, "international-stu.txt");
-
     StartMenu(domestic_students, international_students);
 
     return 0;

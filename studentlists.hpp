@@ -17,6 +17,7 @@ private:
 
 public:
     StudentList();
+    StudentList(const StudentList &old_list);
 
     Node head() const {return *head_;}
     int list_length() const {return list_length_;}

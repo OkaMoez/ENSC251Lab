@@ -72,16 +72,15 @@ void ListMenu(int student_type, StudentList &loaded_list)
     }
 }
 StudentList MergeList(StudentList &list1, StudentList &list2){
-    StudentList list_out = list1;
-    Node *previous = new Node;
+    StudentList list_out(list1);
+
     Node *current = new Node;
     *current = list2.head();
-
     for(int i=0; i<list2.list_length(); i++){
         list_out.NewStudent(current->a_student_);
-        previous = current;
         current = current -> next_;
     }
+
     return list_out;
 }
 void SearchType(int student_type, StudentList &loaded_list)
@@ -128,7 +127,6 @@ void Search(int search_type, StudentList &loaded_list)
         float target_cgpa = kCgpa;
         int target_researchscore = kResearchScore;
 
-        Node *previous = new Node;
         Node *current = new Node;
         *current = loaded_list.head();
 
@@ -155,7 +153,6 @@ void Search(int search_type, StudentList &loaded_list)
                     }
                 }
             }
-            previous = current;
             current = current -> next_;
         }
     }
@@ -165,7 +162,6 @@ void Search(int search_type, StudentList &loaded_list)
 void SearchAndDestroy(StudentList &loaded_list){
     string target_firstname = GetString(kFirstName);
     string target_lastname = GetString(kLastName);
-    Node *previous = new Node;
     Node *current = new Node;
     int count = 0;
     *current = loaded_list.head();
@@ -177,7 +173,6 @@ void SearchAndDestroy(StudentList &loaded_list){
                 loaded_list.DeleteStudent(count);
                 count--;
             }
-        previous = current;
         current = current -> next_;
     }
 
@@ -251,14 +246,27 @@ string GetString(int target_type){
     bool valid_input = false;
     while(valid_input != true){
         cin >> user_input;
-        if (target_type == kProvince)
+        if (target_type == kProvince){
             user_input = CleanProvinceInput(user_input);
-        else
+            if (find(begin(kProvinceList), end(kProvinceList), user_input) != end(kProvinceList)) {
+                valid_input = true;
+            }
+            else {
+                cout << "Invalid input. \n" << "Input a valid province" << endl;
+            }
+        }
+        else {
             user_input = CleanPNounInput(user_input);
-        if (find(begin(kProvinceList), end(kProvinceList), user_input) != end(kProvinceList))
             valid_input = true;
-        else
-            cout << "Invalid input. \n" << "Input a valid CGPA between 0 and 4.33" << endl;
+            for (int unsigned i = 0; user_input[i] != '\0'; i++) {
+                if (isdigit(user_input[i]) != 0) {
+                    cout << "Invalid input. \n" << "Non-alphabetic characters detected." << endl;
+                    cout << "Input a " << kStudentWordList[target_type] << endl;
+                    valid_input = false;
+                    break;
+                }
+            }
+        }
     }
     return user_input;
 }
