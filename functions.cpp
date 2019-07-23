@@ -122,8 +122,7 @@ void SearchType(int student_type, StudentList &loaded_list)
         search_ready = false;
     }
 }
-void Search(int search_type, StudentList &loaded_list)
-{
+void Search(int search_type, StudentList &loaded_list){ // O(N), one sweep
     if((search_type == kFirstName) | (search_type == kCgpa)){
         string target_firstname = kStudentWordList[kFirstName];
         string target_lastname = kStudentWordList[kLastName];
@@ -162,7 +161,7 @@ void Search(int search_type, StudentList &loaded_list)
     else
         cout << "Error: Untyped Search Request" << endl;
 }
-void SearchAndDestroy(StudentList &loaded_list){
+void SearchAndDestroy(StudentList &loaded_list){ // O(N), makes 1 search and 1 delete sweep (2N)
     string target_firstname = GetString(kFirstName);
     string target_lastname = GetString(kLastName);
     Node *current = new Node;
@@ -180,7 +179,7 @@ void SearchAndDestroy(StudentList &loaded_list){
     }
 
 }
-void MakeNewStudent(int student_type, StudentList &loaded_list){
+void MakeNewStudent(int student_type, StudentList &loaded_list){ // O(N), 1 sweep after making Student
     string user_input;
     string first_name_input;
     string last_name_input;

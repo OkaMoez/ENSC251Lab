@@ -14,6 +14,9 @@ private:
     Node* head_;
     Node* tail_;
     int list_length_;
+    void DeleteFirst();
+    void DeleteLast();
+    void InsertOverall(Student* new_student);
 
 public:
     StudentList();
@@ -23,11 +26,7 @@ public:
     int list_length() const {return list_length_;}
 
     void NewStudent(Student* new_student);
-    void InsertOverall(Student* new_student);
     void DeleteStudent(int target);
-    void DeleteFirst();
-    void DeleteLast();
-    void PrintTarget(int target);
     void PrintList();
 };
 

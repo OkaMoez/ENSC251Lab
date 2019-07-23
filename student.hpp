@@ -73,6 +73,7 @@ private:
 	int writing_;
 	int total_;
     bool meets_requirements_;  // Added for sorting.
+    void update_total();
 
 public:
     ToelfScore();
@@ -90,7 +91,6 @@ public:
     void set_speaking(int speaking);
 	void set_writing(int writing);
     void update_requirements();  // Added for sorting.
-    void update_total();
 };
 
 class InternationalStudent : public Student
