@@ -21,22 +21,23 @@ void StartMenu(StudentList &D_list,
             D_list.PrintList();
             ListMenu(kDomestic, D_list);
         }
-        else if ((user_input.at(0) == 'I') | (user_input.at(0) == 'i')){
+        else if ((user_input.at(0) == 'I') | (user_input.at(0) == 'i')) {
             I_list.PrintList();
             ListMenu(kInternational, I_list);
         }
 
-        else if ((user_input.at(0) == 'B') | (user_input.at(0) == 'b')){
+        else if ((user_input.at(0) == 'B') | (user_input.at(0) == 'b')) {
             B_list.PrintList();
             ListMenu(kOverall, B_list);
         }
-        else if ((user_input.at(0) == 'Q') | (user_input.at(0) == 'q')){
+        else if ((user_input.at(0) == 'Q') | (user_input.at(0) == 'q')) {
             valid_selection = true;
         }
-        else
+        else {
             cout << "Invalid input. " // Looped text is to help user correct invalid inputs.
                  << "Please enter [International], [Domestic], or [Quit]."
                  << endl;
+        }
     }
 }
 void ListMenu(int student_type, StudentList &loaded_list)
@@ -52,23 +53,24 @@ void ListMenu(int student_type, StudentList &loaded_list)
         if ((user_input.at(0) == 'S') | (user_input.at(0) == 's')) {
             SearchType(student_type, loaded_list);
         }
-        else if ((user_input.at(0) == 'A') | (user_input.at(0) == 'a')){
+        else if ((user_input.at(0) == 'A') | (user_input.at(0) == 'a')) {
             MakeNewStudent(student_type, loaded_list);
         }
 
-        else if ((user_input.at(0) == 'D') | (user_input.at(0) == 'd')){
+        else if ((user_input.at(0) == 'D') | (user_input.at(0) == 'd')) {
             SearchAndDestroy(loaded_list);
         }
-        else if ((user_input.at(0) == 'R') | (user_input.at(0) == 'r')){
+        else if ((user_input.at(0) == 'R') | (user_input.at(0) == 'r')) {
             loaded_list.PrintList();
         }
-        else if ((user_input.at(0) == 'Q') | (user_input.at(0) == 'q')){
+        else if ((user_input.at(0) == 'Q') | (user_input.at(0) == 'q')) {
             valid_selection = true;
         }
-        else
+        else {
             cout << "Invalid input. " // Looped text is to help user correct invalid inputs.
                  << "Please enter [Search], [Add], [Delete], [Reprint], or [Quit]."
                  << endl;
+        }
     }
 }
 StudentList MergeList(StudentList &list1, StudentList &list2){
@@ -102,13 +104,14 @@ void SearchType(int student_type, StudentList &loaded_list)
             search_ready = true;
         }
         else if ((user_input.at(0) == 'C') | (user_input.at(0) == 'c')
-                 | (user_input.at(0) == 'R') | (user_input.at(0) == 'r')){
+                 | (user_input.at(0) == 'R') | (user_input.at(0) == 'r')) {
             search_type = kCgpa;
             search_ready = true;
         }
-        else if ((user_input.at(0) == 'Q') | (user_input.at(0) == 'q'))
+        else if ((user_input.at(0) == 'Q') | (user_input.at(0) == 'q')) {
             valid_selection = true;
-        else{
+        }
+        else {
             cout << "Invalid input. " // Looped text is to help user correct invalid inputs.
                  << "Please select [Name], [CGPA], [Research], or [Quit]."
                  << endl;
@@ -143,13 +146,13 @@ void Search(int search_type, StudentList &loaded_list)
             if (search_type == kFirstName){
                 if((current ->a_student_->firstname() == target_firstname) &&
                   (current ->a_student_->lastname() == target_lastname)){
-                    cout << current -> a_student_ << endl;
+                    cout << *current -> a_student_ << endl;
                 }
             }
             else if (search_type == kCgpa) {
                 if ((current ->a_student_->cgpa() == target_cgpa)) {
                     if((current ->a_student_->researchscore() == target_researchscore)){
-                        cout << current -> a_student_ << endl;
+                        cout << *current -> a_student_ << endl;
                     }
                 }
             }
@@ -188,53 +191,70 @@ void MakeNewStudent(int student_type, StudentList &loaded_list){
     int listening_input;
     int speaking_input;
     int writing_input;
-    Student newStudent;
-    InternationalStudent newIStudent;
     string text = kStudentWordList[student_type];
+    Student* newStudent = nullptr;
 
     bool done = false;
     while(done != true){
-        cout << "To create a new " << text << " student, please input the following: " << endl
-             << "First name: ";
+        cout << "To create a new " << text << " student, please input the following: " << endl;
         first_name_input = GetString(kFirstName);
-        cout << "Last name: ";
-        cin >> last_name_input;
         last_name_input = GetString(kLastName);
-        cout << "CGPA: ";
         cgpa_input = GetCGPA();
-        cout << "Research Score: ";
         researchscore_input = GetIntScore(kResearchScore);
         if(student_type == kDomestic){
-            cout << "Province: ";
             location_input = GetString(kProvince);
         }
-        else {
-            cout << "Country: ";
+        else if (student_type == kInternational) {
             location_input = GetString(kCountry);
         }
+        else {
+            bool valid_selection = false;  // Loop continues until user chooses to quit.
+            while (valid_selection != true) {
+                cout << "Please Select Student Type. [Domestic] or [International]" << endl;
+                cin >> user_input;
+
+                // First letters are used to forgive typos.
+                if ((user_input.at(0) == 'D') | (user_input.at(0) == 'd')) {
+                    location_input = GetString(kProvince);
+                    student_type = kDomestic;
+                    valid_selection = true;
+                }
+                else if ((user_input.at(0) == 'I') | (user_input.at(0) == 'i')){
+                    location_input = GetString(kCountry);
+                    student_type = kInternational;
+                    valid_selection = true;
+                }
+                else {
+                    cout << "Invalid input. " // Looped text is to help user correct invalid inputs.
+                         << "Please enter [International], [Domestic], or [Quit]."
+                         << endl;
+                }
+            }
+        }
         if(student_type == kInternational){
-            cout << "Toelf Reading: ";
             reading_input = GetIntScore(kReading);
-            cout << "Toelf Listening: ";
             listening_input = GetIntScore(kListening);
-            cout << "Toelf Speaking: ";
             speaking_input = GetIntScore(kSpeaking);
-            cout << "Toelf Writing: ";
             writing_input = GetIntScore(kWriting);
-            Student* newStudent = new InternationalStudent(first_name_input, last_name_input, cgpa_input, researchscore_input, location_input,
+            newStudent = new InternationalStudent(first_name_input, last_name_input, cgpa_input, researchscore_input, location_input,
                                                            reading_input, listening_input, speaking_input, writing_input);
             loaded_list.NewStudent(newStudent);
 
         }
         else {
-            Student* newStudent = new DomesticStudent(first_name_input, last_name_input, cgpa_input, researchscore_input, location_input);
+            newStudent = new DomesticStudent(first_name_input, last_name_input, cgpa_input, researchscore_input, location_input);
             loaded_list.NewStudent(newStudent);
         }
-        cout << "Please confirm details. [Yes/No]" << endl
-             << newStudent;
-        cin >> user_input;
-        if((user_input.at(0) == 'Y') | (user_input.at(0) == 'y')){
-            done = true;
+
+        bool valid_input = false;
+        while(valid_input != true) {
+            cout << "Please confirm details. [Yes/No]" << endl
+                 << *newStudent;
+            cin >> user_input;
+            if((user_input.at(0) == 'Y') | (user_input.at(0) == 'y')){
+                valid_input = true;
+                done = true;
+            }
         }
     }
 
@@ -285,19 +305,22 @@ float GetCGPA(){
 }
 int GetIntScore(int target_type){
     int user_input = 0;
-    cout << "Please type the " << target_type <<" to search by: " << endl;
+    cout << "Please type a " << kStudentWordList[target_type] <<":" << endl;
     bool valid_input = false;
     while(valid_input != true){
         cin >> user_input;
-        if ((target_type == kResearchScore)&&((user_input >= 0) && (user_input <= 100)))
+        if ((target_type == kResearchScore)&&((user_input >= 0) && (user_input <= 100))) {
             valid_input = true;
-        if (((target_type == kReading) || (target_type == kSpeaking) ||
-           (target_type == kListening) || (target_type == kWriting)) &&
-           ((user_input >= 0) && (user_input <= 30)))
+        }
+        else if (((target_type == kReading) || (target_type == kSpeaking) ||
+                (target_type == kListening) || (target_type == kWriting)) &&
+                ((user_input >= 0) && (user_input <= 30))) {
             valid_input = true;
-        else
-            cout << "Invalid input. \n" << "Input a valid " << target_type << " between "
+        }
+        else {
+            cout << "Invalid input. \n" << "Input a valid " << kStudentWordList[target_type] << " between "
                  << kRangeList[target_type] << "." << endl;
+        }
     }
     return user_input;
 }
