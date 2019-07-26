@@ -8,18 +8,26 @@
 
 void PopulateStudentList (int student_type, StudentList& student_list, string file_path, int debug);
 bool TestInsert(StudentList& test_students, Student* student1, Student* student2,
-                Student* student3, Student* student4, Student* student5);
+                Student* student3, Student* student4, Student* student5, Student* student6,
+                Student* student7);
 bool TestSearchName(StudentList& test_students);
 bool TestSearchCgpa(StudentList& test_students);
 bool TestDelete(StudentList& test_students);
 
+void PrintBigO(){
+    cout << "Time Complexities in Big O Notation: " << endl;
+    cout << "Insert: O(N) [best case = O(1), worst case = O(N)]" << endl;
+    cout << "Search: O(N) [best case = worst case = O(N)]" << endl;
+    cout << "Delete: O(N) [best case = O(N+1), worst case = O(2N)]" << endl << endl;
+}
+
 void RunUnitTests(){
     cout << "***********************" << endl;
-    cout << "Preparing Unit Tests " << endl;
+    cout << "Preparing Unit Tests... " << endl;
 
     // Use Existing List
     StudentList test_students;
-    PopulateStudentList(kDomestic, test_students, "domestic-stu.txt", 0);
+    PopulateStudentList(kDomestic, test_students, "test-stu.txt", 0);
 
     // Students to Insert
     // Normal Student (No matching attributes)(
@@ -30,15 +38,16 @@ void RunUnitTests(){
     // Corner Case Students (First and Last)
     Student* student4 = new DomesticStudent("Aaron", "Alpha", float(4.33), 100, "AB");
     Student* student5 = new DomesticStudent("Zeke", "Zola", 1.00, 1, "YT");
+    Student* student6 = nullptr;
+    Student* student7 = NULL;
 
     cout << "Running Unit Tests: " << endl;
 
-    bool passI = TestInsert(test_students, student1, student2, student3, student4, student5);
+    bool passI = TestInsert(test_students, student1, student2, student3, student4,
+                            student5, student6, student7);
     bool passSN = TestSearchName(test_students);
     bool passSC = TestSearchCgpa(test_students);
     bool passD = TestDelete(test_students);
-
-    // cout << "Cleaning Up Unit Tests " << endl;
 
     cout << endl << "***********************" << endl;
     cout << "Report: " << endl;
@@ -56,8 +65,9 @@ void RunUnitTests(){
     cout << "***********************" << endl << endl;
 }
 bool TestInsert(StudentList& test_students, Student* student1, Student* student2,
-                Student* student3, Student* student4, Student* student5){
-    cout << endl << "** Begin 5 Insertion Tests **" << endl;
+                Student* student3, Student* student4, Student* student5, Student* student6,
+                Student* student7){
+    cout << endl << "** Begin 7 Insertion Tests **" << endl;
     // Normal Case, No Matching Students
     try {
         test_students.NewStudent(student1);
@@ -89,6 +99,12 @@ bool TestInsert(StudentList& test_students, Student* student1, Student* student2
         cout << "Insertion Failure on Student 4" << endl;
         return false;
     }
+    try {
+        assert(test_students.head().a_student_ == student4);
+        cout << "Insertion Success on Student 4" << endl;
+    } catch (...) {
+        cout << "Insertion Failure on Student 4" << endl;
+    }
     // Corner Case 4, Last Place
     try {
         test_students.NewStudent(student5);
@@ -97,18 +113,31 @@ bool TestInsert(StudentList& test_students, Student* student1, Student* student2
         return false;
     }
     try {
-        assert(test_students.head().a_student_ == student4);
-        cout << "Insertion Success on Student 4" << endl;
-    } catch (...) {
-        cout << "Insertion Failure on Student 4" << endl;
-    }
-    try {
         assert(test_students.tail().a_student_ == student5);
         cout << "Insertion Success on Student 5" << endl;
     } catch (...) {
         cout << "Insertion Failure on Student 5" << endl;
     }
-    test_students.PrintList();
+    // Illegal Case 1, nullptr
+    try {
+        int list_length = test_students.list_length();
+        test_students.NewStudent(student6);
+        assert(test_students.list_length() == list_length);
+        cout << "Insertion Success on Student 6" << endl;
+    } catch (...) {
+        cout << "Insertion Failure on Student 6" << endl;
+        return false;
+    }
+    // Illegal Case 2, NULL
+    try {
+        int list_length = test_students.list_length();
+        test_students.NewStudent(student7);
+        assert(test_students.list_length() == list_length);
+        cout << "Insertion Success on Student 7" << endl;
+    } catch (...) {
+        cout << "Insertion Failure on Student 7" << endl;
+        return false;
+    }
     return true;
 }
 bool TestSearchName(StudentList& test_students){

@@ -19,4 +19,5 @@ HEADERS += \
 DISTFILES += \
     README \
     domestic-stu.txt \
-    international-stu.txt
+    international-stu.txt \
+    test-stu.txt

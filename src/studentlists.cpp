@@ -28,17 +28,19 @@ void StudentList::NewStudent(Student* new_student){
     // Mainly to save typing brackets too often, since brackets are needed
     // to resolve the '*' before the '.' operator.
     Node *temp = new Node;
-    temp -> a_student_ = new_student;
-    temp -> next_ = nullptr;
-    if(head_ == nullptr) {
-        head_ = temp;
-        tail_ = temp;
-        temp = nullptr;
+    if ((new_student != NULL) && (new_student != nullptr)) {
+        temp -> a_student_ = new_student;
+        temp -> next_ = nullptr;
+        if(head_ == nullptr) {
+            head_ = temp;
+            tail_ = temp;
+            temp = nullptr;
+        }
+        else {
+            InsertOverall(new_student);
+        }
+        list_length_++;
     }
-    else {
-        InsertOverall(new_student);
-    }
-    list_length_++;
 }
 void StudentList::InsertOverall(Student* new_student){
     CompareStudent comparator(kOverall); // found in functions.hpp/cpp

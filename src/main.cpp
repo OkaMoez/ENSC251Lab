@@ -15,6 +15,7 @@ void PopulateStudentList (int student_type, StudentList& student_list, string fi
 int main(){
 
     RunUnitTests();
+    PrintBigO();
 
     // Use function calls to reduce repeated code
     StudentList domestic_students;
