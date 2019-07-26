@@ -23,6 +23,11 @@ void SearchType(int student_type, StudentList &loaded_list);
 
 void Search(int search_type, StudentList &loaded_list);
     // Pre: A student list and specified type (ie Domestic) and call from SearchType()
+    // Post: Called SearchLoop() to print targets
+
+void SearchLoop(StudentList &loaded_list, int search_type, string target_firstname, string target_lastname,
+                float target_cgpa, int target_researchscore);
+    // Pre: A student list, specified type (ie Domestic), and target attributes
     // Post: Printed target students if found
 
 void MakeNewStudent(int student_type,StudentList &loaded_list);
@@ -31,6 +36,10 @@ void MakeNewStudent(int student_type,StudentList &loaded_list);
 
 void SearchAndDestroy(StudentList &loaded_list);
     // Pre: A student list
+    // Post: Called loop to delete based on target names
+
+void SearchAndDestroyLoop(StudentList &loaded_list, string target_firstname, string target_lastname);
+    // Pre: A student list and target names
     // Post: Deleted targets from list who matched input
 
 string GetString(int target_type);

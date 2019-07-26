@@ -6,7 +6,7 @@
 class Student
 {
 private:
-    int student_type_;
+    int student_type_; // 0 for untyped, kDomestic, or kInternational
 	string firstname_;
 	string lastname_;
 	float cgpa_;

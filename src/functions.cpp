@@ -140,30 +140,40 @@ void Search(int search_type, StudentList &loaded_list){ // O(N), one sweep
             target_cgpa = GetCGPA();
             target_researchscore = GetIntScore(kResearchScore);
         }
-
-        for(int i=0; i<loaded_list.list_length(); i++){
-            if (search_type == kFirstName){
-                if((current ->a_student_->firstname() == target_firstname) &&
-                  (current ->a_student_->lastname() == target_lastname)){
-                    cout << *current -> a_student_ << endl;
-                }
-            }
-            else if (search_type == kCgpa) {
-                if ((current ->a_student_->cgpa() == target_cgpa)) {
-                    if((current ->a_student_->researchscore() == target_researchscore)){
-                        cout << *current -> a_student_ << endl;
-                    }
-                }
-            }
-            current = current -> next_;
-        }
+        SearchLoop(loaded_list, search_type, target_firstname, target_lastname,
+                   target_cgpa, target_researchscore);
     }
     else
         cout << "Error: Untyped Search Request" << endl;
 }
+void SearchLoop(StudentList &loaded_list, int search_type, string target_firstname, string target_lastname,
+                float target_cgpa, int target_researchscore) {
+    Node *current = new Node;
+    *current = loaded_list.head();
+
+    for(int i=0; i<loaded_list.list_length(); i++){
+        if (search_type == kFirstName){
+            if((current ->a_student_->firstname() == target_firstname) &&
+              (current ->a_student_->lastname() == target_lastname)){
+                cout << *current -> a_student_ << endl;
+            }
+        }
+        else if (search_type == kCgpa) {
+            if ((current ->a_student_->cgpa() == target_cgpa)) {
+                if((current ->a_student_->researchscore() == target_researchscore)){
+                    cout << *current -> a_student_ << endl;
+                }
+            }
+        }
+        current = current -> next_;
+    }
+}
 void SearchAndDestroy(StudentList &loaded_list){ // O(N), makes 1 search and 1 delete sweep (2N)
     string target_firstname = GetString(kFirstName);
     string target_lastname = GetString(kLastName);
+    SearchAndDestroyLoop(loaded_list, target_firstname, target_lastname);
+}
+void SearchAndDestroyLoop(StudentList &loaded_list, string target_firstname, string target_lastname){
     Node *current = new Node;
     int count = 0;
     *current = loaded_list.head();
@@ -177,7 +187,6 @@ void SearchAndDestroy(StudentList &loaded_list){ // O(N), makes 1 search and 1 d
             }
         current = current -> next_;
     }
-
 }
 void MakeNewStudent(int student_type, StudentList &loaded_list){ // O(N), 1 sweep after making Student
     string user_input;

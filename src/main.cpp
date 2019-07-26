@@ -8,16 +8,20 @@
 #include <vector> // vectors for holding student objects
 #include <algorithm> // for tranforming strings etc
 #include "functions.hpp" // header includes info from Labs 1, 2, and 3
+#include "unittest.hpp"
 
-void PopulateStudentList (int student_type, StudentList& student_list, string file_path);
+void PopulateStudentList (int student_type, StudentList& student_list, string file_path, int debug);
 
 int main(){
 
+    RunUnitTests();
+
     // Use function calls to reduce repeated code
     StudentList domestic_students;
-    PopulateStudentList(kDomestic, domestic_students, "domestic-stu.txt");
+    PopulateStudentList(kDomestic, domestic_students, "domestic-stu.txt", 1);
     StudentList international_students;
-    PopulateStudentList(kInternational, international_students, "international-stu.txt");
+    PopulateStudentList(kInternational, international_students, "international-stu.txt", 1);
+    cout << endl;
     StartMenu(domestic_students, international_students);
 
     return 0;
@@ -57,7 +61,7 @@ string TestName(string name_in, string string_in) {
         exit(EXIT_FAILURE);
     }
     for (int unsigned i = 0; name_in[i] != '\0'; i++) {
-        if (isdigit(name_in[i]) != 0) {
+        if ((isalpha(name_in[i]) == 0)&&((name_in[i] != ' ')&&(name_in[i] != '/')&&(name_in[i] != '-'))) {
             cout << "Error: Invalid Name from File" << endl;
             cout << "Error Line: "  << string_in << endl;
             exit(EXIT_FAILURE);
@@ -164,7 +168,7 @@ int TestToelfScore (string s_tscore_in, string string_in) { // Part 1.2d Impleme
     return tscore;
 }
 
-void PopulateStudentList (int student_type, StudentList& student_list, string file_path) {
+void PopulateStudentList (int student_type, StudentList& student_list, string file_path, int debug) {
     string file_line; //Read the student file and exit if failed
     ifstream student_file(file_path);
     if(!student_file.is_open()) {
@@ -174,7 +178,9 @@ void PopulateStudentList (int student_type, StudentList& student_list, string fi
     // Read the first line of student file, which specifies
     // the file format and(don't) print it out to the screen
     getline(student_file, file_line);
-    cout << "File format: " << file_line << endl;
+    if (debug == 1) {
+        cout << "File format: " << file_line << endl;
+    }
 
     if (student_type == kDomestic){
 

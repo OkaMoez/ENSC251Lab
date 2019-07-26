@@ -24,7 +24,7 @@ void Student::set_cgpa(float cgpa) { cgpa_ = cgpa; }
 void Student::set_researchscore(int researchscore) { researchscore_ = researchscore; }
 void Student::Print(ostream &output) const { output << " Untyped Student" << endl; }
 
-// Overloading << for DomesticStudent
+// Overloading << for Student
 std::ostream &operator<<( ostream &output, const Student& student){
     student.Print(output);
     return output;
