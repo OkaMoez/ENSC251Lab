@@ -8,7 +8,7 @@
 
 void PopulateStudentList (int student_type, StudentList& student_list, string file_path, int debug);
 bool TestInsert(StudentList& test_students, Student* student1, Student* student2,
-                Student* student3, Student* student4);
+                Student* student3, Student* student4, Student* student5);
 bool TestSearchName(StudentList& test_students);
 bool TestSearchCgpa(StudentList& test_students);
 bool TestDelete(StudentList& test_students);
@@ -27,13 +27,13 @@ void RunUnitTests(){
     // Corner Case Students (Some Matching Fields)
     Student* student2 = new DomesticStudent("Mary", "White", 4.00, 84, "BC");
     Student* student3 = new DomesticStudent("Mary", "White", 4.00, 85, "SK");
-    // Illegal Case Students? (What's an Illegal Case here?)
-    // Illegal Case Student (All Matching Fields?)
-    Student* student4 = new DomesticStudent("Mary", "White",4.00, 85, "BC");
+    // Corner Case Students (First and Last)
+    Student* student4 = new DomesticStudent("Aaron", "Alpha", float(4.33), 100, "AB");
+    Student* student5 = new DomesticStudent("Zeke", "Zola", 1.00, 1, "YT");
 
     cout << "Running Unit Tests: " << endl;
 
-    bool passI = TestInsert(test_students, student1, student2, student3, student4);
+    bool passI = TestInsert(test_students, student1, student2, student3, student4, student5);
     bool passSN = TestSearchName(test_students);
     bool passSC = TestSearchCgpa(test_students);
     bool passD = TestDelete(test_students);
@@ -56,7 +56,8 @@ void RunUnitTests(){
     cout << "***********************" << endl << endl;
 }
 bool TestInsert(StudentList& test_students, Student* student1, Student* student2,
-                Student* student3, Student* student4){
+                Student* student3, Student* student4, Student* student5){
+    cout << endl << "** Begin 5 Insertion Tests **" << endl;
     // Normal Case, No Matching Students
     try {
         test_students.NewStudent(student1);
@@ -81,14 +82,32 @@ bool TestInsert(StudentList& test_students, Student* student1, Student* student2
         cout << "Insertion Failure on Student 3" << endl;
         return false;
     }
+    // Corner Case 3, First Place
     try {
-        //test_students.NewStudent(1);
-        //cout << "Insertion Error on Student 4 Uncaught" << endl;
+        test_students.NewStudent(student4);
     } catch (...) {
-        cout << "Insertion Expected Error on Student 4" << endl;
+        cout << "Insertion Failure on Student 4" << endl;
         return false;
     }
-    // Verify Order?
+    // Corner Case 4, Last Place
+    try {
+        test_students.NewStudent(student5);
+    } catch (...) {
+        cout << "Insertion Failure on Student 5" << endl;
+        return false;
+    }
+    try {
+        assert(test_students.head().a_student_ == student4);
+        cout << "Insertion Success on Student 4" << endl;
+    } catch (...) {
+        cout << "Insertion Failure on Student 4" << endl;
+    }
+    try {
+        assert(test_students.tail().a_student_ == student5);
+        cout << "Insertion Success on Student 5" << endl;
+    } catch (...) {
+        cout << "Insertion Failure on Student 5" << endl;
+    }
     test_students.PrintList();
     return true;
 }
@@ -101,6 +120,7 @@ bool TestSearchName(StudentList& test_students){
     float cgpa = float(3.99);
     int rscore = 100;
 
+    cout << endl << "** Begin 3 Search Name Tests **" << endl;
     // No Results
     try {
         std::ostringstream the_stream;
@@ -111,10 +131,13 @@ bool TestSearchName(StudentList& test_students){
         std::cout << the_stream.str();
         assert(the_stream && the_stream.str() == "");
         if (the_stream && the_stream.str() == "") {
-            cout << "Search No Name Success" << endl;
+            cout << "1 - Search No Name Success" << endl;
+        }
+        else {
+            throw 1;
         }
     } catch (...) {
-        cout << "Search No Name Failure" << endl;
+        cout << "1 - Search No Name Failure" << endl;
     }
     // Single Result
     try {
@@ -126,10 +149,13 @@ bool TestSearchName(StudentList& test_students){
         std::cout << the_stream.str();
         assert(the_stream && the_stream.str() == " Kevin Todd from AB has a CGPA of 3.99, and a research score of 100\n");
         if (the_stream && the_stream.str() == " Kevin Todd from AB has a CGPA of 3.99, and a research score of 100\n") {
-            cout << "Search Single Name Success" << endl;
+            cout << "2 - Search Single Name Success" << endl;
+        }
+        else {
+            throw 1;
         }
     } catch (...) {
-        cout << "Search Single Name Failure" << endl;
+        cout << "2 - Search Single Name Failure" << endl;
     }
     // Multiple Results
     try {
@@ -140,15 +166,18 @@ bool TestSearchName(StudentList& test_students){
         std::cout.rdbuf(p_cout_streambuf);
         std::cout << the_stream.str();
         assert(the_stream && the_stream.str() == " Mary White from BC has a CGPA of 4, and a research score of 85\n "
-        "Mary White from SK has a CGPA of 4, and a research score of 85\n "
-        "Mary White from BC has a CGPA of 4, and a research score of 84\n");
+                                                 "Mary White from SK has a CGPA of 4, and a research score of 85\n "
+                                                 "Mary White from BC has a CGPA of 4, and a research score of 84\n");
         if (the_stream && the_stream.str() == " Mary White from BC has a CGPA of 4, and a research score of 85\n "
-                "Mary White from SK has a CGPA of 4, and a research score of 85\n "
-                "Mary White from BC has a CGPA of 4, and a research score of 84\n") {
-            cout << "Search Multiple Name Success" << endl;
+                                              "Mary White from SK has a CGPA of 4, and a research score of 85\n "
+                                              "Mary White from BC has a CGPA of 4, and a research score of 84\n") {
+            cout << "3 - Search Multiple Name Success" << endl;
+        }
+        else {
+            throw 1;
         }
     } catch (...) {
-        cout << "Search Multiple Name Failure" << endl;
+        cout << "3 - Search Multiple Name Failure" << endl;
     }
 
 
@@ -164,6 +193,7 @@ bool TestSearchCgpa(StudentList& test_students){
     float cgpa2 = float(4.33);
     int rscore2 = 99;
 
+    cout << endl << "** Begin 3 Search CGPA Tests **" << endl;
     // No Results
     try {
         std::ostringstream the_stream;
@@ -174,10 +204,13 @@ bool TestSearchCgpa(StudentList& test_students){
         std::cout << the_stream.str();
         assert(the_stream && the_stream.str() == "");
         if (the_stream && the_stream.str() == "") {
-            cout << "Search No CGPA Success" << endl;
+            cout << "1 - Search No CGPA Success" << endl;
+        }
+        else {
+            throw 1;
         }
     } catch (...) {
-        cout << "Search No CGPA Failure" << endl;
+        cout << "1 - Search No CGPA Failure" << endl;
     }
     // Single Result
     try {
@@ -189,10 +222,13 @@ bool TestSearchCgpa(StudentList& test_students){
         std::cout << the_stream.str();
         assert(the_stream && the_stream.str() == " Kevin Todd from AB has a CGPA of 3.99, and a research score of 100\n");
         if (the_stream && the_stream.str() == " Kevin Todd from AB has a CGPA of 3.99, and a research score of 100\n") {
-            cout << "Search Single CGPA Success" << endl;
+            cout << "2 - Search Single CGPA Success" << endl;
+        }
+        else {
+            throw 1;
         }
     } catch (...) {
-        cout << "Search Single CGPA Failure" << endl;
+        cout << "2 - Search Single CGPA Failure" << endl;
     }
     // Multiple Results
     try {
@@ -203,13 +239,16 @@ bool TestSearchCgpa(StudentList& test_students){
         std::cout.rdbuf(p_cout_streambuf);
         std::cout << the_stream.str();
         assert(the_stream && the_stream.str() == " Grayson Ross from NT has a CGPA of 4.33, and a research score of 99\n "
-        "Mila Richardson from QC has a CGPA of 4.33, and a research score of 99\n");
+                                                 "Mila Richardson from QC has a CGPA of 4.33, and a research score of 99\n");
         if (the_stream && the_stream.str() == " Grayson Ross from NT has a CGPA of 4.33, and a research score of 99\n "
-                "Mila Richardson from QC has a CGPA of 4.33, and a research score of 99\n") {
-            cout << "Search Multiple CGPA Success" << endl;
+                                              "Mila Richardson from QC has a CGPA of 4.33, and a research score of 99\n") {
+            cout << "3 - Search Multiple CGPA Success" << endl;
+        }
+        else {
+            throw 1;
         }
     } catch (...) {
-        cout << "Search Multiple CGPA Failure" << endl;
+        cout << "3 - Search Multiple CGPA Failure" << endl;
     }
     return true;
 }
@@ -217,22 +256,30 @@ bool TestDelete(StudentList& test_students){
     string firstname = "Kelvin";
     string firstname1 = "Kevin";
     string firstname2 = "Mary";
+    string firstnameA = "Aaron";
+    string firstnameZ = "Zeke";
     string lastname = "Todd";
     string lastname2 = "White";
+    string lastnameA = "Alpha";
+    string lastnameZ = "Zola";
     float cgpa = float(3.99);
     int rscore = 100;
 
+    cout << endl << "** Begin 5 Deletion Tests **" << endl;
     // Empty Deletion
     try {
         int list_length = test_students.list_length();
         SearchAndDestroyLoop(test_students, firstname, lastname);
         assert(test_students.list_length() == list_length);
         if (test_students.list_length() == list_length) {
-            cout << "Empty Deletion Success" << endl;
+            cout << "1 - Empty Deletion Success" << endl;
+        }
+        else {
+            throw 1;
         }
 
     } catch (...) {
-        cout << "Empty Deletion Failure" << endl;
+        cout << "1 - Empty Deletion Failure" << endl;
     }
 
     // Single Deletion
@@ -242,16 +289,19 @@ bool TestDelete(StudentList& test_students){
         std::ostringstream the_stream;
         std::streambuf* p_cout_streambuf = std::cout.rdbuf();
         std::cout.rdbuf(the_stream.rdbuf());
-        SearchLoop(test_students, kCgpa, firstname1, lastname, cgpa, rscore);
+        SearchLoop(test_students, kFirstName, firstname1, lastname, cgpa, rscore);
         std::cout.rdbuf(p_cout_streambuf);
         std::cout << the_stream.str();
         assert((the_stream && the_stream.str() == "") && (test_students.list_length() < list_length));
         if (the_stream && the_stream.str() == "") {
-            cout << "Single Deletion Success" << endl;
+            cout << "2 - Single Deletion Success" << endl;
+        }
+        else {
+            throw 1;
         }
 
     } catch (...) {
-        cout << "Single Deletion Failure" << endl;
+        cout << "2 - Single Deletion Failure" << endl;
     }
     // Multiple Deletion
     try {
@@ -260,16 +310,61 @@ bool TestDelete(StudentList& test_students){
         std::ostringstream the_stream;
         std::streambuf* p_cout_streambuf = std::cout.rdbuf();
         std::cout.rdbuf(the_stream.rdbuf());
-        SearchLoop(test_students, kCgpa, firstname2, lastname2, cgpa, rscore);
+        SearchLoop(test_students, kFirstName, firstname2, lastname2, cgpa, rscore);
         std::cout.rdbuf(p_cout_streambuf);
         std::cout << the_stream.str();
         assert((the_stream && the_stream.str() == "") && (test_students.list_length() < list_length));
         if ((the_stream && the_stream.str() == "") && (test_students.list_length() < list_length)) {
-            cout << "Multiple Deletion Success" << endl;
+            cout << "3 - Multiple Deletion Success" << endl;
+        }
+        else {
+            throw 1;
         }
 
     } catch (...) {
-        cout << "Multiple Deletion Failure" << endl;
+        cout << "3 - Multiple Deletion Failure" << endl;
+    }
+    // First Deletion
+    try {
+        int list_length = test_students.list_length();
+        SearchAndDestroyLoop(test_students, firstnameA, lastnameA); // Delete
+        std::ostringstream the_stream;
+        std::streambuf* p_cout_streambuf = std::cout.rdbuf();
+        std::cout.rdbuf(the_stream.rdbuf());
+        SearchLoop(test_students, kFirstName, firstnameA, lastnameA, cgpa, rscore); // Search for Target
+        std::cout.rdbuf(p_cout_streambuf);
+        std::cout << the_stream.str();
+        assert((the_stream && the_stream.str() == "") && (test_students.list_length() < list_length));
+        if ((the_stream && the_stream.str() == "") && (test_students.list_length() < list_length)) {
+            cout << "4 - First Deletion Success" << endl;
+        }
+        else {
+            throw 1;
+        }
+
+    } catch (...) {
+        cout << "4 - First Deletion Failure" << endl;
+    }
+    // Last Deletion
+    try {
+        int list_length = test_students.list_length();
+        SearchAndDestroyLoop(test_students, firstnameZ, lastnameZ);
+        std::ostringstream the_stream;
+        std::streambuf* p_cout_streambuf = std::cout.rdbuf();
+        std::cout.rdbuf(the_stream.rdbuf());
+        SearchLoop(test_students, kFirstName, firstnameZ, lastnameZ, cgpa, rscore);
+        std::cout.rdbuf(p_cout_streambuf);
+        std::cout << the_stream.str();
+        assert((the_stream && the_stream.str() == "") && (test_students.list_length() < list_length));
+        if ((the_stream && the_stream.str() == "") && (test_students.list_length() < list_length)) {
+            cout << "5 - Last Deletion Success" << endl;
+        }
+        else {
+            throw 1;
+        }
+
+    } catch (...) {
+        cout << "5 - Last Deletion Failure" << endl;
     }
 
     return true;

@@ -79,7 +79,9 @@ StudentList MergeList(StudentList &list1, StudentList &list2){
     Node *current = new Node;
     *current = list2.head();
     for(int i=0; i<list2.list_length(); i++){
-        list_out.NewStudent(current->a_student_);
+        if(current->a_student_->check_requirements()){
+            list_out.NewStudent(current->a_student_);
+        }
         current = current -> next_;
     }
 

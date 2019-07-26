@@ -26,6 +26,7 @@ public:
     float cgpa() const { return cgpa_; }
     int researchscore() const { return researchscore_; }
     virtual string location() const { return "No Location."; }
+    virtual bool check_requirements() const  { return true; }
 
     virtual void Print(ostream &output) const;
         // Pre: An open ostream
@@ -82,8 +83,9 @@ public:
 
 
     // Getters
-    virtual string location() const override {return province_;}
     string province() const { return province_; }
+    virtual string location() const override {return province_;}
+    virtual bool check_requirements() const override { return true; }
 
     virtual void Print(ostream &output) const override;
         // Pre: An open ostream
@@ -161,7 +163,7 @@ public:
     int speaking() const { return my_toelf_.speaking(); }
     int writing() const { return my_toelf_.writing(); }
     int total() const { return my_toelf_.total(); }
-    bool check_requirements() const { return my_toelf_.check_requirements(); }  // Added for sorting.
+    virtual bool check_requirements() const override { return my_toelf_.check_requirements(); }  // Added for sorting.
 
     virtual void Print(ostream &output) const override;
         // Pre: An open ostream

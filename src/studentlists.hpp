@@ -35,6 +35,7 @@ public:
 
     // Getters
     Node head() const {return *head_;}
+    Node tail() const {return *tail_;}
     int list_length() const {return list_length_;}
 
 
