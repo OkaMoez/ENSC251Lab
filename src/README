@@ -1,0 +1,77 @@
+# ENSC251Lab
+Brigham Okano's ENSC251 Summer 2019 Semester Lab Project
+
+A student information database with features added throught the course.
+Also an opportunity to learn to use git.
+
+------------------
+Lab 1 Requirements [COMPLETE] [9/10]
+------------------
+1. Student class [COMPLETE]
+2. DomesticStudent class [COMPLETE]
+3. InternationalStudent class [COMPLETE]
+4. ToelfScore class [COMPLETE]
+5. getter/setters [COMPLETE]
+5. .hpp/.cpp separation [COMPLETE]
+6. unit test [COMPLETE]
+
+Note: Lost Marks
+0.5 - didn't complile on server, error with "nullptr"
+    *** Using NULL results in no complile errors
+    Fixed.
+0.5 - used inheritance instead of getters/setters to link ToelfScore to students
+    Fixed.
+Forgot some out-of-place code (vectors, blank fields, etc)
+    Cleaned in Lab_2 [20/06/2019]
+
+------------------
+Lab 2 Requirements [COMPLETE] [10/10]
+------------------
+1. Implement arrays/vectors [COMPLETE]
+2. Comparator functions [COMPLETE]
+3. Overload << opperator [COMPLETE]
+4. Sort based on user input, single field [COMPLETE]
+5. Overall sort (C then R then Local, min Toelf) [COMPLETE]
+6. Unit test [COMPLETE]
+7. Comments [COMPLETE]
+
+Note: Feedback
+ - Make sure to thouroughly comment things not learnt in class
+Using Templates to handle differing vector inputs, but lots of repeats
+    Maybe look for a cleaner way of handling ~10x repeated templates
+    Am using overloaded function and consolidating functions
+    Maybe look into polymorphism and unions?
+
+------------------
+Lab 3 Requirements [COMPLETE] [8.5/10]
+------------------
+1. Linked list [COMPLETE]
+2. Sorting input [COMPLETE]
+3. Search matching fields [COMPLETE]
+4. Insert new student sorted [COMPLETE]
+5. Delete students [COMPLETE]
+6. Merge lists [COMPLETE]
+7. Rewrite sorting functions [COMPLETE]
+8. Comments [COMPLETE]
+
+Note: Lost Marks
+1 - Couldn't merge at time of submition
+    Fixed pointers and removed use of references except to compare
+    Fixed.
+0.5 - Could not demonstrate sorting once merged
+    Fixed.
+
+------------------
+Lab 4 Requirements [IN PROGRESS] [X/10]
+------------------
+1. Missing Field Error [COMPLETE]
+2a. Province Error [COMPLETE]
+2b. CGPA Error [COMPLETE]
+2c. Research Score Error [COMPLETE]
+2d. Toelf Errors [COMPLETE]
+3. Menus Catch Invalid Options [COMPLETE]
+4. Create Error Input
+5. Unit Test
+6. Algorithm Complexity [COMPLETE]
+7. Replace Std Library Functions [COMPLETE]
+8. Comments [IN PROGRESS]
