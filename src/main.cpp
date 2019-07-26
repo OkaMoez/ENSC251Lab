@@ -18,9 +18,9 @@ int main(){
     PrintBigO();
 
     // Use function calls to reduce repeated code
-    StudentList domestic_students;
+    StudentList domestic_students = StudentList();
     PopulateStudentList(kDomestic, domestic_students, "domestic-stu.txt", 1);
-    StudentList international_students;
+    StudentList international_students = StudentList();
     PopulateStudentList(kInternational, international_students, "international-stu.txt", 1);
     cout << endl;
     StartMenu(domestic_students, international_students);

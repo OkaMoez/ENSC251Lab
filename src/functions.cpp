@@ -8,7 +8,7 @@ using namespace std;
 // User Input Function Implementations
 void StartMenu(StudentList &D_list,
                 StudentList &I_list){
-    string user_input;
+    string user_input = "";
     StudentList B_list = MergeList(D_list, I_list);
 
     bool valid_selection = false;  // Loop continues until user chooses to quit.
@@ -42,7 +42,7 @@ void StartMenu(StudentList &D_list,
 }
 void ListMenu(int student_type, StudentList &loaded_list)
 {
-    string user_input;
+    string user_input = "";
 
     bool valid_selection = false;  // Loop continues until user chooses to quit.
     while (valid_selection != true) {
@@ -89,7 +89,7 @@ StudentList MergeList(StudentList &list1, StudentList &list2){
 }
 void SearchType(int student_type, StudentList &loaded_list)
 {
-    string user_input;
+    string user_input = "";
     string text = kStudentWordList[student_type];
     int search_type = 0;
     bool search_ready = false;
@@ -150,6 +150,7 @@ void Search(int search_type, StudentList &loaded_list){ // O(N), one sweep
 }
 void SearchLoop(StudentList &loaded_list, int search_type, string target_firstname, string target_lastname,
                 float target_cgpa, int target_researchscore) {
+    bool found = false;
     Node *current = new Node;
     *current = loaded_list.head();
 
@@ -158,16 +159,21 @@ void SearchLoop(StudentList &loaded_list, int search_type, string target_firstna
             if((current ->a_student_->firstname() == target_firstname) &&
               (current ->a_student_->lastname() == target_lastname)){
                 cout << *current -> a_student_ << endl;
+                found = true;
             }
         }
         else if (search_type == kCgpa) {
             if ((current ->a_student_->cgpa() == target_cgpa)) {
                 if((current ->a_student_->researchscore() == target_researchscore)){
                     cout << *current -> a_student_ << endl;
+                    found = true;
                 }
             }
         }
         current = current -> next_;
+    }
+    if (found != true) {
+        cout << " No match in database." << endl;
     }
 }
 void SearchAndDestroy(StudentList &loaded_list){ // O(N), makes 1 search and 1 delete sweep (2N)
@@ -178,6 +184,7 @@ void SearchAndDestroy(StudentList &loaded_list){ // O(N), makes 1 search and 1 d
 void SearchAndDestroyLoop(StudentList &loaded_list, string target_firstname, string target_lastname){
     Node *current = new Node;
     int count = 0;
+    bool found = false;
     *current = loaded_list.head();
 
     for(int i=0; i<loaded_list.list_length(); i++){
@@ -185,22 +192,26 @@ void SearchAndDestroyLoop(StudentList &loaded_list, string target_firstname, str
             if((current ->a_student_->firstname() == target_firstname) &&
               (current ->a_student_->lastname() == target_lastname)){
                 loaded_list.DeleteStudent(count);
+                found = true;
                 count--;
             }
         current = current -> next_;
     }
+    if (found != true) {
+        cout << " No match in database." << endl;
+    }
 }
 void MakeNewStudent(int student_type, StudentList &loaded_list){ // O(N), 1 sweep after making Student
-    string user_input;
-    string first_name_input;
-    string last_name_input;
-    string location_input;
-    float cgpa_input;
-    int researchscore_input;
-    int reading_input;
-    int listening_input;
-    int speaking_input;
-    int writing_input;
+    string user_input = nullptr;
+    string first_name_input = nullptr;
+    string last_name_input = nullptr;
+    string location_input = nullptr;
+    float cgpa_input = NULL;
+    int researchscore_input = NULL;
+    int reading_input = NULL;
+    int listening_input = NULL;
+    int speaking_input = NULL;
+    int writing_input = NULL;
     string text = kStudentWordList[student_type];
     Student* newStudent = nullptr;
 
@@ -270,7 +281,7 @@ void MakeNewStudent(int student_type, StudentList &loaded_list){ // O(N), 1 swee
 
 }
 string GetString(int target_type){
-    string user_input = " ";
+    string user_input = "";
 
     cout << "Please input a " << kStudentWordList[target_type] << ": " << endl;
     bool valid_input = false;
@@ -301,7 +312,7 @@ string GetString(int target_type){
     return user_input;
 }
 float GetCGPA(){
-    float user_input = 0;
+    float user_input = NULL;
     cout << "Please input a CGPA: " << endl;
     bool valid_input = false;
     while(valid_input != true){
@@ -314,7 +325,7 @@ float GetCGPA(){
     return user_input;
 }
 int GetIntScore(int target_type){
-    int user_input = 0;
+    int user_input = NULL;
     cout << "Please type a " << kStudentWordList[target_type] <<":" << endl;
     bool valid_input = false;
     while(valid_input != true){
