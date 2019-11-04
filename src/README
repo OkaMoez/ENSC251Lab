@@ -62,7 +62,7 @@ Note: Lost Marks
     Fixed.
 
 ------------------
-Lab 4 Requirements [IN PROGRESS] [X/10]
+Lab 4 Requirements [COMPLETE] [9.5/10]
 ------------------
 1. Missing Field Error [COMPLETE]
 2a. Province Error [COMPLETE]
@@ -75,3 +75,6 @@ Lab 4 Requirements [IN PROGRESS] [X/10]
 6. Algorithm Complexity [COMPLETE]
 7. Replace Std Library Functions [COMPLETE]
 8. Comments [IN PROGRESS]
+
+Note: Lost Marks
+0.5 - Badly initialized variables caused a crash.

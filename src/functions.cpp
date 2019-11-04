@@ -202,16 +202,16 @@ void SearchAndDestroyLoop(StudentList &loaded_list, string target_firstname, str
     }
 }
 void MakeNewStudent(int student_type, StudentList &loaded_list){ // O(N), 1 sweep after making Student
-    string user_input = nullptr;
-    string first_name_input = nullptr;
-    string last_name_input = nullptr;
-    string location_input = nullptr;
-    float cgpa_input = NULL;
-    int researchscore_input = NULL;
-    int reading_input = NULL;
-    int listening_input = NULL;
-    int speaking_input = NULL;
-    int writing_input = NULL;
+    string user_input = "";
+    string first_name_input = "";
+    string last_name_input = "";
+    string location_input = "";
+    float cgpa_input = 0;
+    int researchscore_input = 0;
+    int reading_input = 0;
+    int listening_input = 0;
+    int speaking_input = 0;
+    int writing_input = 0;
     string text = kStudentWordList[student_type];
     Student* newStudent = nullptr;
 
@@ -312,7 +312,7 @@ string GetString(int target_type){
     return user_input;
 }
 float GetCGPA(){
-    float user_input = NULL;
+    float user_input = 0;
     cout << "Please input a CGPA: " << endl;
     bool valid_input = false;
     while(valid_input != true){
@@ -325,7 +325,7 @@ float GetCGPA(){
     return user_input;
 }
 int GetIntScore(int target_type){
-    int user_input = NULL;
+    int user_input = 0;
     cout << "Please type a " << kStudentWordList[target_type] <<":" << endl;
     bool valid_input = false;
     while(valid_input != true){
